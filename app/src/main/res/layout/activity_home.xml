@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="18dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="@dimen/nav_clearance">
+
+            <!-- top bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="40dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/img_logo" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:text="RiceGuard "
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_19"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:text="AI"
+                            android:textColor="@color/green_ok"
+                            android:textSize="@dimen/text_19"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T.Small"
+                        android:layout_marginTop="1dp"
+                        android:text="Phát hiện bệnh lá lúa thông minh"
+                        android:textSize="@dimen/text_13" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- greeting -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Title"
+                    android:id="@+id/greeting"
+                    tools:text="Chào buổi sáng, Vinh"
+                    android:textSize="@dimen/text_27" />
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginStart="8dp"
+                    android:importantForAccessibility="no"
+                    android:id="@+id/greeting_icon"
+                    app:tint="#F5B82E" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/T.Sub"
+                android:layout_marginTop="4dp"
+                android:text="Cùng RiceGuard AI bảo vệ mùa màng hôm nay!"
+                android:textSize="@dimen/text_16" />
+
+            <!-- scan banner -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="150dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_hero_scan">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    style="@style/Round16"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_home_hero" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="60dp"
+                    android:background="@drawable/bg_fade_side"
+                    android:rotation="180" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="14dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T"
+                        android:text="Quét bệnh ngay"
+                        android:textColor="@color/ink_deep"
+                        android:textSize="@dimen/text_22"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        style="@style/T.Body"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="230dp"
+                        android:layout_marginEnd="48dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Chụp ảnh lá lúa để phát hiện bệnh, nhận tư vấn và giải pháp kịp thời."
+                        android:textColor="#3E5A4C"
+                        android:textSize="@dimen/text_15" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/btn_capture"
+                            style="@style/Btn.Primary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minHeight="44dp"
+                            android:drawableStart="@drawable/ic_photo_camera"
+                            android:drawableEnd="@drawable/ic_arrow_forward"
+                            android:drawablePadding="8dp"
+                            android:text="Chụp ảnh"
+                            android:textSize="@dimen/text_16" />
+
+                        <TextView
+                            android:id="@+id/btn_gallery"
+                            style="@style/Btn.Soft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minHeight="44dp"
+                                                        android:background="@drawable/bg_pill_white"
+                            android:drawableStart="@drawable/ic_photo_outline"
+                            android:drawablePadding="6dp"
+                            android:text="Từ thư viện"
+                            android:textSize="@dimen/text_15" />
+
+                        <androidx.constraintlayout.helper.widget.Flow
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            app:constraint_referenced_ids="btn_capture,btn_gallery"
+                            app:flow_horizontalBias="0"
+                            app:flow_horizontalGap="8dp"
+                            app:flow_horizontalStyle="packed"
+                            app:flow_verticalGap="8dp"
+                            app:flow_wrapMode="chain"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- weather -->
+            <LinearLayout
+                android:id="@+id/card_weather"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_weather"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.7"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T"
+                        android:drawableStart="@drawable/ic_location_on"
+                        android:drawablePadding="4dp"
+                        android:drawableTint="@color/primary"
+                        android:id="@+id/weather_place"
+                        tools:text="Huyện Thoại Sơn, An Giang"
+                        android:textSize="@dimen/text_15" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="34dp"
+                            android:importantForAccessibility="no"
+                            android:scaleType="fitCenter"
+                            android:id="@+id/weather_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:layout_marginStart="6dp"
+                            android:id="@+id/weather_temp"
+                            tools:text="28°C"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_30" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/T"
+                                android:id="@+id/weather_title"
+                                tools:text="Trời nắng nhẹ"
+                                android:textSize="@dimen/text_15"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_height="wrap_content"
+                                style="@style/T.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:id="@+id/weather_hint"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                tools:text="Thích hợp cho lúa phát triển"
+                                android:textSize="@dimen/text_14" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#CFDCCB" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_water_drop"
+                            app:tint="@color/blue" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1.25"
+                            android:text="Độ ẩm"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:id="@+id/weather_humidity"
+                            tools:text="78%"
+                            android:textSize="@dimen/text_15"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_cloud"
+                            app:tint="#6C8CB0" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:text="Mưa"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:id="@+id/weather_rain"
+                            tools:text="20%"
+                            android:textSize="@dimen/text_15"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_air"
+                            app:tint="#6C8CB0" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:text="Gió"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:id="@+id/weather_wind"
+                            tools:text="12 km/h"
+                            android:textSize="@dimen/text_15"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- guest invitation -->
+            <LinearLayout
+                android:id="@+id/guest_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_card_tint"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/T.H3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bạn đang xem ở chế độ khách" />
+
+                <TextView
+                    style="@style/T.Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Đăng nhập hoặc đăng ký để quét bệnh lúa, lưu ruộng, ghi nhật ký và tham gia cộng đồng." />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <TextView
+                        android:id="@+id/btn_guest_login"
+                        style="@style/Btn.Primary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="46dp"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
+                        android:text="Đăng nhập" />
+
+                    <TextView
+                        android:id="@+id/btn_guest_register"
+                        style="@style/Btn.Outline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="46dp"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="22dp"
+                        android:text="Đăng ký" />
+
+                    <androidx.constraintlayout.helper.widget.Flow
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="btn_guest_login,btn_guest_register"
+                        app:flow_horizontalBias="0"
+                        app:flow_horizontalGap="8dp"
+                        app:flow_horizontalStyle="packed"
+                        app:flow_verticalGap="8dp"
+                        app:flow_wrapMode="chain"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <!-- stat row -->
+            <LinearLayout
+                android:id="@+id/stat_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/stat_scans"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_tint"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_circle_tint">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_eco"
+                                app:tint="@color/primary" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/stat_scans_n"
+                            style="@style/T"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_24"
+                            android:textStyle="bold"
+                            tools:text="12" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/T"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Lần quét"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/text_15"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/stat_scans_sub"
+                        style="@style/T.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:textSize="@dimen/text_13"
+                        tools:text="Trong 30 ngày" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/stat_fields"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_tint"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_circle_tint">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_sprout"
+                                app:tint="@color/primary" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/stat_fields_n"
+                            style="@style/T"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_24"
+                            android:textStyle="bold"
+                            tools:text="12" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/T"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Ruộng lúa"
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/text_15"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/stat_fields_sub"
+                        style="@style/T.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:textSize="@dimen/text_13"
+                        tools:text="Tổng 2,4 ha" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/stat_alerts"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_red"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_circle_tint">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_warning"
+                                app:tint="@color/red" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/stat_alerts_n"
+                            style="@style/T"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_24"
+                            android:textStyle="bold"
+                            tools:text="12" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/T"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Cảnh báo"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/text_15"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/stat_alerts_sub"
+                        style="@style/T.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:textSize="@dimen/text_13"
+                        tools:text="Cần chú ý" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <!-- fields -->
+            <LinearLayout
+                android:id="@+id/fields_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/T.H2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Ruộng của bạn" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/link_fields"
+                    style="@style/T.Link"
+                    android:drawableEnd="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/primary"
+                    android:text="Xem tất cả"
+                    android:textSize="@dimen/text_15" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/list_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" />
+
+            <!-- recent scans -->
+            <LinearLayout
+                android:id="@+id/scans_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    style="@style/T.H2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Lần quét gần đây" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/link_history"
+                    style="@style/T.Link"
+                    android:drawableEnd="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/primary"
+                    android:text="Xem tất cả"
+                    android:textSize="@dimen/text_15" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/list_scans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="6dp" />
+
+            <!-- discover -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/T.H2"
+                android:layout_marginTop="16dp"
+                android:text="Khám phá" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/tile_community"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_tint"
+                    android:gravity="center_vertical"
+                    android:minHeight="64dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_group"
+                        app:tint="@color/primary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:text="Cộng đồng nông dân"
+                            android:textSize="@dimen/text_15"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="2dp"
+                            android:text="Chia sẻ kinh nghiệm"
+                            android:textSize="@dimen/text_13" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tile_map"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_blue"
+                    android:gravity="center_vertical"
+                    android:minHeight="64dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_map"
+                        app:tint="@color/primary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:text="Bản đồ nguy cơ dịch bệnh"
+                            android:textSize="@dimen/text_15"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="2dp"
+                            android:text="Xem tình hình khu vực"
+                            android:textSize="@dimen/text_13" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tile_library"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_amber"
+                    android:gravity="center_vertical"
+                    android:minHeight="64dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_menu_book"
+                        app:tint="#B9801B" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:text="Thư viện kiến thức"
+                            android:textSize="@dimen/text_15"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="2dp"
+                            android:text="Bệnh hại, giải pháp, kỹ thuật canh tác"
+                            android:textSize="@dimen/text_13" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.example.project_final.view.NavBar
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+</FrameLayout>

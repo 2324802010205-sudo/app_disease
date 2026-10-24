@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.Project_final.Splash" parent="Theme.Project_final">
+        <item name="android:windowSplashScreenBackground">@color/bg</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/img_logo</item>
+    </style>
+</resources>

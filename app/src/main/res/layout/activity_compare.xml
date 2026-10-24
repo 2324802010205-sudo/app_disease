@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <ImageView
+        android:tag="deco"
+        android:layout_width="150dp"
+        android:layout_height="110dp"
+        android:layout_gravity="end"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_deco_panicle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:minHeight="48dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/btn_back"
+                style="@style/Back"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="14dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/T.H2"
+                android:layout_gravity="center"
+                android:text="Đối chiếu kiểm tra"
+                android:textSize="@dimen/text_22" />
+        </FrameLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="12dp">
+
+                <LinearLayout
+                    android:id="@+id/row_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        style="@style/Round10"
+                        android:layout_width="92dp"
+                        android:layout_height="50dp"
+                        android:scaleType="centerCrop"
+                        android:id="@+id/field_thumb" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:id="@+id/field_name"
+                            tools:text="Ruộng Bờ Đông"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_18"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="2dp"
+                            android:drawableStart="@drawable/ic_location_on"
+                            android:drawablePadding="3dp"
+                            android:drawableTint="@color/primary"
+                            android:id="@+id/field_place"
+                            tools:text="Thửa A - Xã Thái Hưng, Huyện Thái Thụy, Thái Bình"
+                            android:textSize="@dimen/text_13" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T.Link"
+                        android:background="@drawable/bg_chip_soft"
+                        android:drawableEnd="@drawable/ic_chevron_right"
+                        android:drawableTint="@color/primary"
+                        android:paddingStart="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="Xem chi tiết"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/pick_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_calendar"
+                            app:tint="@color/primary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/T.Small"
+                                android:text="Lần 1"
+                                android:textSize="@dimen/text_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/date_1"
+                                style="@style/T"
+                                android:layout_marginTop="1dp"
+                                tools:text="24/04/2025"
+                                android:textSize="@dimen/text_17"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_expand_more"
+                            app:tint="@color/ink_deep" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/bg_circle_tint"
+                        android:importantForAccessibility="no"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_swap_horiz"
+                        app:tint="@color/primary" />
+
+                    <LinearLayout
+                        android:id="@+id/pick_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_calendar"
+                            app:tint="@color/primary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/T.Small"
+                                android:text="Lần 2"
+                                android:textSize="@dimen/text_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/date_2"
+                                style="@style/T"
+                                android:layout_marginTop="1dp"
+                                tools:text="01/05/2025"
+                                android:textSize="@dimen/text_17"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_expand_more"
+                            app:tint="@color/ink_deep" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:id="@+id/cards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+
+                    <TextView
+                        style="@style/T"
+                        android:layout_width="22dp"
+                        android:layout_height="wrap_content"
+        android:minHeight="22dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="70dp"
+                        android:background="@drawable/bg_circle_white"
+                        android:gravity="center"
+                        android:text="VS"
+                        android:textSize="@dimen/text_12"
+                        android:textStyle="bold" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T.H3"
+                        android:drawableStart="@drawable/ic_bar_chart"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/primary"
+                        android:text="So sánh kết quả" />
+
+                    <LinearLayout
+                        android:id="@+id/list_compare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_banner_tint"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_lightbulb"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:id="@+id/compare_note"
+                            tools:text="Đây là so sánh hình ảnh và kết quả từ các lần quét. Hãy tiếp tục theo dõi định kỳ để nắm bắt diễn biến bệnh trên ruộng."
+                            android:textColor="@color/ink"
+                            android:textSize="@dimen/text_14" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bar_bottom"
+            android:orientation="vertical"
+            android:paddingStart="14dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="8dp">
+
+            <com.example.project_final.view.IconTextView
+                android:layout_width="match_parent"
+                android:id="@+id/btn_other"
+                style="@style/Btn.Primary"
+                android:layout_height="wrap_content"
+        android:minHeight="48dp"
+                android:drawableStart="@drawable/ic_swap_horiz"
+                android:drawablePadding="10dp"
+                android:text="Chọn lần kiểm tra khác" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

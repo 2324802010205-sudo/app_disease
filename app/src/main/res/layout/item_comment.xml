@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Một bình luận trong khung bình luận chung: không có nền riêng, các dòng cách nhau bằng đường kẻ mảnh. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/bg_divider_line"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/avatar"
+            style="@style/Circle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/author"
+                    style="@style/T"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/ink_deep"
+                    android:textSize="@dimen/text_16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/badge"
+                    style="@style/T.Pill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="@dimen/text_13" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/btn_menu"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="Tùy chọn"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_more_vert"
+                    app:tint="@color/ink" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/time"
+                style="@style/T.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_13" />
+
+            <TextView
+                android:id="@+id/text"
+                style="@style/T"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:lineSpacingExtra="2dp"
+                android:textSize="@dimen/text_16" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/likes"
+                    style="@style/T"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_thumb_up"
+                    android:drawablePadding="6dp"
+                    android:drawableTint="@color/primary"
+                    android:minHeight="36dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/ink_deep"
+                    android:textSize="@dimen/text_15"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/reply"
+                    style="@style/T"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:drawableStart="@drawable/ic_reply"
+                    android:drawablePadding="6dp"
+                    android:drawableTint="@color/ink_deep"
+                    android:gravity="center_vertical"
+                    android:minHeight="36dp"
+                    android:text="Trả lời"
+                    android:textSize="@dimen/text_15" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/replies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

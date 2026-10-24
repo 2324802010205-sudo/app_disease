@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Chỉ bản debug: Android 17 yêu cầu quyền này để app kết nối tới backend chạy trong mạng nội bộ (10.0.2.2, IP LAN).
+         Cấp bằng: adb shell pm grant com.example.project_final android.permission.ACCESS_LOCAL_NETWORK -->
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+
+    <!-- Chỉ bản debug: cho phép mở thẳng từng màn hình bằng `adb shell am start -n ...` khi kiểm thử. -->
+    <application>
+        <activity android:name=".SplashActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".OnboardingActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".LoginActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".RegisterActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".ForgotPasswordActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".HomeActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".WeatherActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".ScanActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".ReviewPhotoActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".AnalyzingActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".ResultActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".FeedbackActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".HistoryActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".ResultDetailActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".LibraryActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".DiseaseDetailActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".SavedActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".FieldsActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".AddFieldActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".FieldDetailActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".DiaryActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".AddDiaryActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".CompareActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".CommunityActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".PostDetailActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".CreatePostActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".MyPostsActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".RiskMapActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".AreaInfoActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".NotificationsActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".ProfileActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".EditProfileActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".StatsActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".SettingsActivity" android:exported="true" tools:replace="android:exported" />
+        <activity android:name=".PhotoViewActivity" android:exported="true" tools:replace="android:exported" />
+    </application>
+</manifest>

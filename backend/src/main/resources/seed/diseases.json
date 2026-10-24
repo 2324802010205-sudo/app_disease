@@ -1,0 +1,231 @@
+[
+  {
+    "id": "dao-on-la",
+    "version": 1,
+    "name": "Đạo ôn lá",
+    "scientificName": "Pyricularia oryzae",
+    "description": "Xuất hiện vết bệnh hình thoi, màu nâu xám, viền nâu đậm, có thể lan rộng nhanh.",
+    "part": "LEAF",
+    "cause": "FUNGUS",
+    "common": true,
+    "symptoms": [
+      "Vết bệnh hình thoi hoặc mắt én, tâm xám trắng, viền nâu đậm.",
+      "Nhiều vết liên kết thành mảng làm lá cháy khô.",
+      "Lá có dấu hiệu vàng quanh vết bệnh."
+    ],
+    "conditions": [
+      "Ẩm độ cao, sương mù nhiều, trời âm u kéo dài.",
+      "Nhiệt độ 20–28°C, ngày nắng đêm lạnh.",
+      "Bón thừa đạm, cấy sạ quá dày."
+    ],
+    "prevention": [
+      "Dùng giống kháng bệnh, xử lý hạt giống trước khi gieo.",
+      "Bón phân cân đối N-P-K, không bón thừa đạm, tăng cường kali.",
+      "Kiểm tra đồng ruộng thường xuyên, nhất là giai đoạn đẻ nhánh và trước trổ."
+    ],
+    "treatment": [
+      "Phun thuốc đặc trị nấm đạo ôn có hoạt chất Tricyclazole hoặc Isoprothiolane ngay khi bệnh mới xuất hiện.",
+      "Phun ướt đều tán lá, lặp lại sau 5–7 ngày nếu thời tiết còn thuận lợi cho bệnh.",
+      "Giữ nước ruộng ổn định 3–5 cm, tạm ngưng bón đạm khi đang có bệnh."
+    ]
+  },
+  {
+    "id": "bac-la",
+    "version": 1,
+    "name": "Bạc lá (cháy bìa lá)",
+    "scientificName": "Xanthomonas oryzae pv. oryzae",
+    "description": "Lá bị bạc màu, khô nhanh, thường do vi khuẩn gây hại, có thể gây cháy lá hàng loạt.",
+    "part": "LEAF",
+    "cause": "BACTERIA",
+    "common": false,
+    "symptoms": [
+      "Vết úa vàng lượn sóng bắt đầu từ mép hoặc chóp lá.",
+      "Vết bệnh lan dần xuống gốc lá, chuyển trắng xám và khô.",
+      "Sáng sớm có thể thấy giọt dịch vàng đục ở mép vết bệnh."
+    ],
+    "conditions": [
+      "Sau mưa bão, gió lớn làm lá xây xát.",
+      "Ruộng bón thừa đạm, ngập nước sâu kéo dài.",
+      "Nhiệt độ 25–30°C, ẩm độ cao."
+    ],
+    "prevention": [
+      "Chọn giống kháng bạc lá, xử lý hạt giống.",
+      "Bón đạm vừa phải, chia nhiều đợt, bón nhiều kali.",
+      "Vệ sinh đồng ruộng, tiêu thoát nước tốt sau mưa bão."
+    ],
+    "treatment": [
+      "Ngừng bón đạm, rút bớt nước ruộng khi phát hiện bệnh.",
+      "Phun thuốc gốc đồng hoặc thuốc trừ vi khuẩn được phép sử dụng theo hướng dẫn trên nhãn.",
+      "Phun sớm sau mưa bão để hạn chế vi khuẩn xâm nhập qua vết thương."
+    ]
+  },
+  {
+    "id": "dom-nau",
+    "version": 1,
+    "name": "Đốm nâu",
+    "scientificName": "Bipolaris oryzae",
+    "description": "Xuất hiện các chấm đốm tròn hoặc bầu dục màu nâu, tâm xám, làm giảm quang hợp.",
+    "part": "LEAF",
+    "cause": "FUNGUS",
+    "common": false,
+    "symptoms": [
+      "Đốm tròn hoặc bầu dục màu nâu, có viền vàng nhạt.",
+      "Nhiều đốm nhỏ rải rác làm lá chóng già, giảm quang hợp.",
+      "Hạt có thể bị đốm nâu, lem lép khi bệnh nặng."
+    ],
+    "conditions": [
+      "Đất nghèo dinh dưỡng, thiếu kali và silic.",
+      "Ruộng khô hạn xen kẽ ngập, cây yếu.",
+      "Ẩm độ cao, nhiệt độ 25–30°C."
+    ],
+    "prevention": [
+      "Bón phân cân đối, bổ sung kali, vôi, silic cho đất trũng phèn.",
+      "Dùng hạt giống sạch bệnh, xử lý hạt trước khi gieo.",
+      "Giữ nước ruộng đều, tránh để ruộng khô hạn kéo dài."
+    ],
+    "treatment": [
+      "Phun thuốc trừ nấm có hoạt chất Propiconazole hoặc Azoxystrobin khi bệnh mới xuất hiện.",
+      "Kết hợp bón bổ sung kali để cây phục hồi.",
+      "Theo dõi lại sau 5–7 ngày."
+    ]
+  },
+  {
+    "id": "kho-van",
+    "version": 1,
+    "name": "Khô vằn",
+    "scientificName": "Rhizoctonia solani",
+    "description": "Xuất hiện vết bệnh màu nâu nhạt, hình bầu dục, thường ở bẹ lá và thân lúa.",
+    "part": "STEM",
+    "cause": "FUNGUS",
+    "common": true,
+    "symptoms": [
+      "Vết loang lổ hình bầu dục như da hổ trên bẹ lá sát mặt nước.",
+      "Vết bệnh lan lên các bẹ lá phía trên, bẹ lá khô vàng.",
+      "Có thể thấy hạch nấm màu nâu bám trên vết bệnh."
+    ],
+    "conditions": [
+      "Ruộng cấy sạ dày, ẩm độ cao, kín gió.",
+      "Bón nhiều đạm, ruộng ngập nước thường xuyên.",
+      "Nhiệt độ 28–32°C."
+    ],
+    "prevention": [
+      "Sạ cấy thưa vừa phải, đảm bảo thông thoáng.",
+      "Dọn sạch cỏ, tàn dư lúa vụ trước, vớt hạch nấm nổi trên mặt nước.",
+      "Bón cân đối đạm, lân, kali."
+    ],
+    "treatment": [
+      "Phun thuốc có hoạt chất Validamycin, Hexaconazole hoặc Difenoconazole vào gốc lúa.",
+      "Rút nước, phơi ruộng ngắn ngày để giảm ẩm độ gốc.",
+      "Lặp lại sau 7–10 ngày nếu bệnh còn lan."
+    ]
+  },
+  {
+    "id": "ri-sat",
+    "version": 1,
+    "name": "Rỉ sắt",
+    "scientificName": null,
+    "description": "Xuất hiện các u nhỏ màu vàng cam đến nâu đỏ trên lá.",
+    "part": "LEAF",
+    "cause": "FUNGUS",
+    "common": false,
+    "symptoms": [
+      "Các u nhỏ màu vàng cam đến nâu đỏ nổi trên mặt lá.",
+      "Chạm vào có bột màu rỉ sắt dính tay.",
+      "Lá vàng và khô dần khi nhiễm nặng."
+    ],
+    "conditions": [
+      "Ẩm độ cao, thiếu dinh dưỡng, cây yếu.",
+      "Trời mát, sương nhiều."
+    ],
+    "prevention": [
+      "Bón phân cân đối, tăng kali.",
+      "Vệ sinh đồng ruộng, loại bỏ cỏ dại ký chủ."
+    ],
+    "treatment": [
+      "Bệnh ít gặp trên lúa, nên nhờ cán bộ bảo vệ thực vật xác nhận trước khi dùng thuốc.",
+      "Có thể dùng thuốc trừ nấm nhóm triazole (Propiconazole, Tebuconazole) theo hướng dẫn trên nhãn."
+    ]
+  },
+  {
+    "id": "lun-xoan-la",
+    "version": 1,
+    "name": "Lùn xoắn lá",
+    "scientificName": "Rice ragged stunt virus",
+    "description": "Lá lúa bị xoắn, ngắn lại, màu xanh vàng loang lổ.",
+    "part": "LEAF",
+    "cause": "VIRUS",
+    "common": false,
+    "symptoms": [
+      "Cây lùn, lá ngắn, đầu lá xoắn lại.",
+      "Mép lá có răng cưa, gân lá nổi u sần.",
+      "Lúa đẻ nhánh nhiều, trổ không thoát, hạt lép."
+    ],
+    "conditions": [
+      "Rầy nâu mật số cao truyền bệnh.",
+      "Gieo sạ không tập trung, mạ non gặp rầy."
+    ],
+    "prevention": [
+      "Gieo sạ tập trung, né rầy; không gieo sạ rải rác kéo dài.",
+      "Theo dõi và phòng trừ rầy nâu ngay từ giai đoạn mạ.",
+      "Nhổ bỏ và chôn vùi cây bệnh sớm."
+    ],
+    "treatment": [
+      "Bệnh do virus, không có thuốc chữa; tập trung diệt rầy nâu để hạn chế lây lan.",
+      "Nhổ bỏ cây bệnh, dặm lại bằng cây khỏe khi còn sớm.",
+      "Báo cho cán bộ bảo vệ thực vật địa phương để xử lý đồng loạt."
+    ]
+  },
+  {
+    "id": "dao-on-co-bong",
+    "version": 1,
+    "name": "Đạo ôn cổ bông",
+    "scientificName": "Pyricularia oryzae",
+    "description": "Cổ bông bị thâm nâu, gãy gục, hạt lép lửng; gây thiệt hại năng suất nặng.",
+    "part": "GRAIN",
+    "cause": "FUNGUS",
+    "common": true,
+    "symptoms": [
+      "Cổ bông, gié bông có vết nâu đến đen, teo thắt.",
+      "Bông dễ gãy gục, hạt lép lửng hoặc lép hoàn toàn.",
+      "Thường xuất hiện sau khi lúa trổ gặp thời tiết ẩm lạnh."
+    ],
+    "conditions": [
+      "Trổ bông gặp mưa phùn, sương mù, ẩm độ cao.",
+      "Ruộng đã nhiễm đạo ôn lá trước đó."
+    ],
+    "prevention": [
+      "Phun phòng khi lúa trổ lác đác (khoảng 5%) nếu thời tiết bất lợi.",
+      "Kiểm soát đạo ôn lá từ giai đoạn đẻ nhánh – làm đòng."
+    ],
+    "treatment": [
+      "Phun thuốc đặc trị có hoạt chất Tricyclazole, Isoprothiolane hoặc hỗn hợp Azoxystrobin + Difenoconazole.",
+      "Phun lần 2 sau 5–7 ngày khi lúa trổ đều."
+    ]
+  },
+  {
+    "id": "lem-lep-hat",
+    "version": 1,
+    "name": "Lem lép hạt",
+    "scientificName": null,
+    "description": "Hạt lúa bị đốm nâu, đen trên vỏ trấu, lép lửng hoặc lép hoàn toàn do nhiều loại nấm, vi khuẩn.",
+    "part": "GRAIN",
+    "cause": "FUNGUS",
+    "common": false,
+    "symptoms": [
+      "Vỏ trấu có đốm nâu, đen hoặc biến màu.",
+      "Hạt lép lửng, gạo bị đục, dễ gãy khi xay xát."
+    ],
+    "conditions": [
+      "Mưa nhiều và ẩm độ cao đúng lúc lúa trổ – chín sữa.",
+      "Bón thừa đạm, ruộng rậm rạp."
+    ],
+    "prevention": [
+      "Bón phân cân đối, tránh thừa đạm giai đoạn cuối.",
+      "Phun phòng khi lúa trổ nếu dự báo có mưa nhiều."
+    ],
+    "treatment": [
+      "Phun thuốc trừ nấm phổ rộng (Propiconazole + Trifloxystrobin hoặc tương đương) khi lúa trổ đều.",
+      "Giữ nước ruộng hợp lý, thu hoạch đúng độ chín."
+    ]
+  }
+]

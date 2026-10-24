@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Thang cỡ chữ cho màn hình hẹp (< 360dp): nhỏ hơn 1sp để không vỡ bố cục. -->
+    <dimen name="text_12">12sp</dimen>
+    <dimen name="text_13">13sp</dimen>
+    <dimen name="text_14">13sp</dimen>
+    <dimen name="text_15">14sp</dimen>
+    <dimen name="text_16">15sp</dimen>
+    <dimen name="text_17">16sp</dimen>
+    <dimen name="text_18">17sp</dimen>
+    <dimen name="text_19">18sp</dimen>
+    <dimen name="text_20">19sp</dimen>
+    <dimen name="text_21">20sp</dimen>
+    <dimen name="text_22">21sp</dimen>
+    <dimen name="text_23">22sp</dimen>
+    <dimen name="text_24">23sp</dimen>
+    <dimen name="text_25">24sp</dimen>
+    <dimen name="text_27">26sp</dimen>
+    <dimen name="text_28">27sp</dimen>
+    <dimen name="text_29">28sp</dimen>
+    <dimen name="text_30">29sp</dimen>
+    <dimen name="text_31">30sp</dimen>
+    <dimen name="text_34">33sp</dimen>
+    <dimen name="text_64">63sp</dimen>
+
+    <!-- Thanh điều hướng nổi: chiều cao viên thuốc và vùng chừa cho nội dung cuộn bên dưới. -->
+    <dimen name="nav_height">68dp</dimen>
+    <dimen name="nav_clearance">100dp</dimen>
+</resources>

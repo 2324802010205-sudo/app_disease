@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:tag="deco"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:layout_gravity="end"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_deco_panicle" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="14dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/btn_back"
+                        style="@style/Back"
+                        android:layout_marginStart="-8dp" />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="42dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/img_logo" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:text="Thống kê cá nhân"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_22"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="1dp"
+                            android:text="Theo dõi hoạt động và kết quả sử dụng RiceGuard AI"
+                            android:textSize="@dimen/text_13" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+        android:minHeight="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_tab_pill"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tab_7"
+                        style="@style/T"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="7 ngày"
+                        android:textSize="@dimen/text_17" />
+
+                    <TextView
+                        android:id="@+id/tab_30"
+                        style="@style/T"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_tab_selected"
+                        android:gravity="center"
+                        android:text="30 ngày"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_17"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card_tint"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <FrameLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_circle_tint">
+
+                            <ImageView
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_crop_free"
+                                app:tint="@color/primary" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="6dp"
+                            android:text="Lượt quét"
+                            android:textColor="@color/ink"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/stat_scans"
+                            style="@style/T"
+                            tools:text="28"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_23"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card_tint"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <FrameLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_circle_tint">
+
+                            <ImageView
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_sprout"
+                                app:tint="@color/primary" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="6dp"
+                            android:text="Ruộng lúa"
+                            android:textColor="@color/ink"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/stat_fields"
+                            style="@style/T"
+                            tools:text="4"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_23"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card_orange"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <FrameLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_circle_orange">
+
+                            <ImageView
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_warning"
+                                app:tint="@color/orange" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="6dp"
+                            android:text="Cảnh báo"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/stat_alerts"
+                            style="@style/T"
+                            tools:text="3"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/text_23"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_card_blue"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <FrameLayout
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/bg_circle_blue">
+
+                            <ImageView
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:layout_gravity="center"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_description"
+                                app:tint="@color/blue" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="6dp"
+                            android:text="Bài viết"
+                            android:textColor="@color/blue"
+                            android:textSize="@dimen/text_14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/stat_posts"
+                            style="@style/T"
+                            tools:text="6"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_23"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T.H3"
+                        android:drawableStart="@drawable/ic_bar_chart"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/primary"
+                        android:text="Lượt quét theo ngày" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T.Small"
+                        android:layout_marginTop="3dp"
+                        android:id="@+id/chart_subtitle"
+                        tools:text="Số lần quét cây lúa bằng RiceGuard AI trong 7 ngày gần nhất"
+                        android:textSize="@dimen/text_14" />
+
+                    <com.example.project_final.BarChartView
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_height="wrap_content"
+                            style="@style/T.H3"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/ic_schedule"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="@color/primary"
+                            android:text="Hoạt động gần đây" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/link_history"
+                            style="@style/T.Link"
+                            android:drawableEnd="@drawable/ic_chevron_right"
+                            android:drawableTint="@color/primary"
+                            android:text="Xem tất cả"
+                            android:textSize="@dimen/text_15" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/list_activity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/T.H3"
+                        android:drawableStart="@drawable/ic_eco"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/primary"
+                        android:text="Phân bố kết quả" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dist_subtitle"
+                        style="@style/T.Small"
+                        android:layout_marginTop="3dp"
+                        android:text="Tổng quan kết quả từ các lượt quét trong 30 ngày qua"
+                        android:textSize="@dimen/text_14" />
+
+                    <LinearLayout
+                        android:id="@+id/list_dist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+</LinearLayout>

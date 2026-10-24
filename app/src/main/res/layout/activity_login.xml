@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <ImageView
+        android:tag="deco"
+        android:layout_width="115dp"
+        android:layout_height="140dp"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_deco_tl" />
+
+    <ImageView
+        android:tag="deco"
+        android:layout_width="90dp"
+        android:layout_height="110dp"
+        android:layout_gravity="end"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_deco_tr" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="22dp"
+            android:paddingTop="30dp"
+            android:paddingEnd="22dp"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="66dp"
+                android:layout_gravity="center_horizontal"
+                android:importantForAccessibility="no"
+                android:src="@drawable/img_logo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T"
+                    android:text="RiceGuard "
+                    android:textColor="@color/ink_deep"
+                    android:textSize="@dimen/text_22"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T"
+                    android:text="AI"
+                    android:textColor="@color/green_ok"
+                    android:textSize="@dimen/text_22"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/T.Title"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="34dp"
+                android:text="Chào mừng trở lại"
+                android:textSize="@dimen/text_29" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/T.Sub"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="Đăng nhập để tiếp tục chăm sóc và bảo vệ mùa màng của bạn" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        android:minHeight="52dp"
+                android:id="@+id/input_email"
+                style="@style/Input"
+                android:layout_marginTop="24dp"
+                android:drawableStart="@drawable/ic_mail"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+        android:minHeight="52dp"
+                    android:id="@+id/input_password"
+                    style="@style/Input"
+                    android:drawableStart="@drawable/ic_lock_outline"
+                    android:hint="Mật khẩu"
+                    android:inputType="textPassword"
+                    android:paddingEnd="48dp" />
+
+                <ImageView
+                    android:id="@+id/btn_toggle_password"
+                    android:layout_width="44dp"
+                    android:layout_height="52dp"
+                    android:layout_gravity="end"
+                    android:contentDescription="Hiện mật khẩu"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_visibility_off"
+                    app:tint="@color/ink"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_forgot"
+                style="@style/T.Link"
+                android:layout_gravity="end"
+                android:layout_marginTop="12dp"
+                android:padding="4dp"
+                android:text="Quên mật khẩu?" />
+
+            <com.example.project_final.view.IconTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        android:minHeight="52dp"
+                android:id="@+id/btn_login"
+                style="@style/Btn.Primary"
+                android:layout_marginTop="12dp"
+                android:drawableEnd="@drawable/ic_arrow_forward"
+                android:text="Đăng nhập" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="#DADFD3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Small"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:text="Hoặc" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="#DADFD3" />
+            </LinearLayout>
+
+            <com.example.project_final.view.IconTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        android:minHeight="52dp"
+                android:id="@+id/btn_google"
+                style="@style/Btn.Outline"
+                android:layout_marginTop="14dp"
+                android:drawableStart="@drawable/ic_google"
+                android:drawableTint="@null"
+                android:text="Tiếp tục với Google"
+                android:textColor="@color/ink_deep" />
+
+            <com.example.project_final.view.IconTextView
+                android:layout_width="match_parent"
+                android:id="@+id/btn_guest"
+                style="@style/Btn.Soft"
+                android:layout_height="wrap_content"
+        android:minHeight="48dp"
+                android:layout_marginTop="12dp"
+                android:drawableStart="@drawable/ic_person_outline"
+                android:text="Tiếp tục với khách" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Body"
+                    android:text="Chưa có tài khoản? "
+                    android:textColor="@color/ink"
+                    android:textSize="@dimen/text_17" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_register"
+                    style="@style/T.Link"
+                    android:text="Đăng ký"
+                    android:textSize="@dimen/text_17" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

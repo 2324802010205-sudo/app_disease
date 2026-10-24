@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ảnh đại diện mặc định khi người dùng chưa tải ảnh -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:fillColor="#DDE6DF"
+        android:pathData="M48,48m-48,0a48,48 0,1 1,96 0a48,48 0,1 1,-96 0" />
+    <path
+        android:fillColor="#8AA295"
+        android:pathData="M48,24a12.5,12.5 0,1 1,0 25a12.5,12.5 0,1 1,0 -25z" />
+    <path
+        android:fillColor="#8AA295"
+        android:pathData="M48,54c-12,0 -22,6 -24,14.5a40,40 0 0,0 48,0c-2,-8.5 -12,-14.5 -24,-14.5z" />
+</vector>

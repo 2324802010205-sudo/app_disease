@@ -1,0 +1,162 @@
+<resources>
+    <!-- Typography -->
+    <style name="T">
+        <item name="android:textColor">@color/ink</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="T.Title" parent="T">
+        <item name="android:textSize">@dimen/text_28</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ink_deep</item>
+    </style>
+    <style name="T.Sub" parent="T">
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textColor">@color/muted</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+    </style>
+    <style name="T.H2" parent="T">
+        <item name="android:textSize">@dimen/text_20</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ink_deep</item>
+    </style>
+    <style name="T.H3" parent="T">
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ink_deep</item>
+    </style>
+    <style name="T.Body" parent="T">
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:textColor">@color/muted</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+    </style>
+    <style name="T.Small" parent="T">
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:textColor">@color/muted</item>
+    </style>
+    <style name="T.Link" parent="T">
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+    <style name="T.Pill" parent="T">
+        <item name="android:textSize">@dimen/text_15</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <!-- Buttons (TextView based so icons and gradient render exactly) -->
+    <style name="Btn" parent="T">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+    <style name="Btn.Primary">
+        <item name="android:background">@drawable/bg_btn_primary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:drawableTint">@color/white</item>
+    </style>
+    <style name="Btn.Outline">
+        <item name="android:background">@drawable/bg_btn_outline</item>
+        <item name="android:textColor">@color/ink_deep</item>
+        <item name="android:drawableTint">@color/ink_deep</item>
+    </style>
+    <style name="Btn.Soft">
+        <item name="android:background">@drawable/bg_btn_soft</item>
+        <item name="android:textColor">@color/ink_deep</item>
+        <item name="android:drawableTint">@color/ink_deep</item>
+    </style>
+    <style name="Btn.Danger">
+        <item name="android:background">@drawable/bg_btn_danger</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:drawableTint">@color/red</item>
+    </style>
+
+    <!-- Inputs -->
+    <style name="Input" parent="T">
+        <item name="android:background">@drawable/bg_input</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textColor">@color/ink_deep</item>
+        <item name="android:textColorHint">@color/hint</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:drawableTint">@color/muted</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <!-- Misc -->
+    <style name="Card">
+        <item name="android:background">@drawable/bg_card</item>
+    </style>
+    <style name="Back">
+        <item name="android:padding">8dp</item>
+        <item name="android:src">@drawable/ic_arrow_back</item>
+        <item name="android:tint">@color/ink_deep</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:contentDescription">Quay lại</item>
+    </style>
+    <style name="Circle">
+        <item name="shapeAppearanceOverlay">@style/CircleShape</item>
+    </style>
+    <style name="CircleShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="Round12">
+        <item name="shapeAppearanceOverlay">@style/Round12Shape</item>
+    </style>
+    <style name="Round12Shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="Round16">
+        <item name="shapeAppearanceOverlay">@style/Round16Shape</item>
+    </style>
+    <style name="Round16Shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="Round10">
+        <item name="shapeAppearanceOverlay">@style/Round10Shape</item>
+    </style>
+    <style name="Round10Shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+    <!-- Thanh điều hướng nổi -->
+    <style name="NavItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clipChildren">false</item>
+    </style>
+    <style name="NavBlob">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginStart">2dp</item>
+        <item name="android:layout_marginEnd">2dp</item>
+        <item name="android:background">@drawable/bg_nav_item_on</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+    <style name="NavIcon">
+        <item name="android:layout_width">27dp</item>
+        <item name="android:layout_height">27dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:importantForAccessibility">no</item>
+    </style>
+</resources>

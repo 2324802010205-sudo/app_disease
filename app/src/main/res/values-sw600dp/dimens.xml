@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Máy tính bảng. -->
+    <dimen name="text_12">12sp</dimen>
+    <dimen name="text_13">13sp</dimen>
+    <dimen name="text_14">16sp</dimen>
+    <dimen name="text_15">17sp</dimen>
+    <dimen name="text_16">18sp</dimen>
+    <dimen name="text_17">19sp</dimen>
+    <dimen name="text_18">20sp</dimen>
+    <dimen name="text_19">21sp</dimen>
+    <dimen name="text_20">22sp</dimen>
+    <dimen name="text_21">23sp</dimen>
+    <dimen name="text_22">24sp</dimen>
+    <dimen name="text_23">25sp</dimen>
+    <dimen name="text_24">26sp</dimen>
+    <dimen name="text_25">27sp</dimen>
+    <dimen name="text_27">29sp</dimen>
+    <dimen name="text_28">30sp</dimen>
+    <dimen name="text_29">31sp</dimen>
+    <dimen name="text_30">32sp</dimen>
+    <dimen name="text_31">33sp</dimen>
+    <dimen name="text_34">36sp</dimen>
+    <dimen name="text_64">66sp</dimen>
+</resources>

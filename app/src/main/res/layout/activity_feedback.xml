@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <ImageView
+        android:tag="deco"
+        android:layout_width="128dp"
+        android:layout_height="100dp"
+        android:layout_gravity="end"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_deco_panicle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_header_logo" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Title"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Phản hồi kết quả AI"
+                    android:textSize="@dimen/text_23" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_card_tint"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        style="@style/Round12"
+                        android:layout_width="96dp"
+                        android:layout_height="88dp"
+                        android:scaleType="centerCrop"
+                        android:id="@+id/scan_thumb" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:text="Kết quả phân tích"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T"
+                            android:layout_marginTop="2dp"
+                            android:id="@+id/scan_title"
+                            tools:text="Đạo ôn lá"
+                            android:textColor="@color/ink_deep"
+                            android:textSize="@dimen/text_22"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Pill"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/bg_pill_orange"
+                            android:drawableStart="@drawable/ic_error"
+                            android:drawableTint="@color/orange"
+                            android:id="@+id/scan_pill"
+                            tools:text="Cần theo dõi"
+                            android:textColor="@color/orange" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="6dp"
+                            android:id="@+id/scan_time"
+                            tools:text="Phân tích lúc 09:41, 24/04/2025"
+                            android:textSize="@dimen/text_14" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.H3"
+                    android:layout_marginTop="16dp"
+                    android:text="Vì sao bạn muốn phản hồi?"
+                    android:textSize="@dimen/text_19" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Small"
+                    android:layout_marginTop="3dp"
+                    android:text="Chọn lý do phù hợp nhất để chúng tôi cải thiện kết quả."
+                    android:textSize="@dimen/text_15" />
+
+                <LinearLayout
+                    android:id="@+id/grid_reasons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.H3"
+                    android:layout_marginTop="14dp"
+                    android:text="Đề xuất bệnh đúng (tùy chọn)"
+                    android:textSize="@dimen/text_17" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/dd_disease"
+                    style="@style/Input"
+                    android:layout_height="wrap_content"
+        android:minHeight="46dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableEnd="@drawable/ic_expand_more"
+                    android:gravity="center_vertical"
+                    android:text="Chọn bệnh phù hợp"
+                    android:textColor="@color/hint" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.H3"
+                    android:layout_marginTop="14dp"
+                    android:text="Mô tả thêm"
+                    android:textSize="@dimen/text_17" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/input_desc"
+                        style="@style/Input"
+                        android:layout_height="wrap_content"
+        android:minHeight="82dp"
+                        android:gravity="top|start"
+                        android:hint="Ví dụ: Tôi nghĩ đây là bệnh khác, lá bị cháy do phân bón, hoặc cần thêm hướng dẫn..."
+                        android:inputType="textMultiLine"
+                        android:maxLength="500"
+                        android:maxLines="4"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="22dp"
+                        android:textSize="@dimen/text_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/counter"
+                        style="@style/T.Small"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="0/500"
+                        android:textSize="@dimen/text_14" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.H3"
+                    android:layout_marginTop="14dp"
+                    android:text="Đính kèm ảnh chụp màn hình (tùy chọn)"
+                    android:textSize="@dimen/text_17" />
+
+                <LinearLayout
+                    android:id="@+id/btn_attach"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_dashed_box"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_icon_tint">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_add_a_photo"
+                            app:tint="@color/primary" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.H3"
+                            android:id="@+id/attach_title"
+                            tools:text="Thêm ảnh"
+                            android:textSize="@dimen/text_17" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/T.Small"
+                            android:layout_marginTop="2dp"
+                            android:id="@+id/attach_desc"
+                            tools:text="Bạn có thể đính kèm ảnh chụp màn hình, ảnh thực tế hoặc tài liệu liên quan (tối đa 5 ảnh)."
+                            android:textSize="@dimen/text_14" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_card_tint"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <FrameLayout
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/bg_circle_tint">
+
+                        <ImageView
+                            android:layout_width="17dp"
+                            android:layout_height="17dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_eco"
+                            app:tint="@color/primary" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        style="@style/T.Body"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:text="Phản hồi của bạn giúp RiceGuard AI ngày càng thông minh hơn, đem lại kết quả chính xác và hữu ích hơn cho bà con nông dân."
+                        android:textColor="@color/ink"
+                        android:textSize="@dimen/text_14" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bar_bottom"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/btn_cancel"
+                style="@style/Btn.Outline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+        android:minHeight="48dp"
+                android:layout_weight="1"
+                android:text="Hủy" />
+
+            <com.example.project_final.view.IconTextView
+                android:id="@+id/btn_send"
+                style="@style/Btn.Primary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+        android:minHeight="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1.7"
+                android:drawableStart="@drawable/ic_send"
+                android:text="Gửi phản hồi" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

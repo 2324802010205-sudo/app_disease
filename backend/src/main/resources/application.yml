@@ -1,0 +1,97 @@
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+  forward-headers-strategy: framework
+  tomcat:
+    max-swallow-size: 50MB
+
+spring:
+  application:
+    name: riceguard-api
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-unknown-properties: false
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=5000,expireAfterWrite=2m
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+logging:
+  pattern:
+    # [mã yêu cầu] giúp lần theo một thao tác của app trong log máy chủ
+    level: "%5p [%X{requestId:-}]"
+  level:
+    root: INFO
+    riceguard.request: INFO
+    com.riceguard.api: ${LOG_LEVEL:INFO}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    enabled: ${OPENAPI_ENABLED:true}
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    enabled: ${OPENAPI_ENABLED:true}
+
+riceguard:
+  env: ${APP_ENV:dev}
+  public-base-url: ${PUBLIC_BASE_URL:http://localhost:8080}
+  time-zone: Asia/Ho_Chi_Minh
+  firebase:
+    project-id: ${FIREBASE_PROJECT_ID:}
+    # JSON thô hoặc JSON đã mã hóa base64 của service account
+    credentials: ${FIREBASE_CREDENTIALS:}
+    credentials-file: ${FIREBASE_CREDENTIALS_FILE:}
+    web-api-key: ${FIREBASE_WEB_API_KEY:}
+    identity-toolkit-url: ${FIREBASE_IDENTITY_TOOLKIT_URL:https://identitytoolkit.googleapis.com/v1}
+    secure-token-url: ${FIREBASE_SECURE_TOKEN_URL:https://securetoken.googleapis.com/v1}
+    check-revoked: ${FIREBASE_CHECK_REVOKED:false}
+    emulator: ${FIREBASE_EMULATOR:false}
+  security:
+    admin-emails: ${ADMIN_EMAILS:}
+    cors-allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
+    rate-limit-per-minute: ${RATE_LIMIT_PER_MINUTE:120}
+    auth-rate-limit-per-minute: ${AUTH_RATE_LIMIT_PER_MINUTE:20}
+  media:
+    provider: ${MEDIA_PROVIDER:cloudinary}   # cloudinary | local
+    cloudinary-url: ${CLOUDINARY_URL:}
+    folder-prefix: riceguard/${APP_ENV:dev}
+    max-bytes: 10485760
+    local-dir: ${MEDIA_LOCAL_DIR:uploads}
+  diagnosis:
+    provider: ${DIAGNOSIS_PROVIDER:none}     # claude | http | none
+    min-confidence: 0.5
+    timeout-seconds: 60
+    claude-model: ${DIAGNOSIS_CLAUDE_MODEL:claude-opus-5-5}
+    http-url: ${DIAGNOSIS_HTTP_URL:}
+    http-token: ${DIAGNOSIS_HTTP_TOKEN:}
+  weather:
+    base-url: https://api.open-meteo.com/v1
+    cache-minutes: 10
+  risk:
+    medium-from: 6
+    high-from: 12
+    very-high-from: 20
+  reminders:
+    enabled: ${REMINDERS_ENABLED:true}
+    cron: "0 0 7 * * *"

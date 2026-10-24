@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Mọi truy cập đều đi qua backend Spring Boot (Firebase Admin SDK bỏ qua rules).
+// Chặn hoàn toàn truy cập trực tiếp từ app/trình duyệt để không ai đọc/ghi thẳng vào database.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

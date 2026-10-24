@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_card"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img"
+        style="@style/Round12"
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
+        android:minHeight="124dp"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                style="@style/T"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/ink_deep"
+                android:textSize="@dimen/text_19"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="4dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_chevron_right"
+                app:tint="@color/ink" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/status"
+            style="@style/T.Pill"
+            android:layout_marginTop="4dp"
+            android:textSize="@dimen/text_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/place"
+            style="@style/T.Small"
+            android:layout_marginTop="3dp"
+            android:drawableStart="@drawable/ic_location_on"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/primary"
+            android:textSize="@dimen/text_15" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.85"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Small"
+                    android:drawableStart="@drawable/ic_crop_free"
+                    android:drawablePadding="3dp"
+                    android:drawableTint="@color/primary"
+                    android:text="Diện tích"
+                    android:textSize="@dimen/text_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/area"
+                    style="@style/T"
+                    android:layout_marginTop="2dp"
+                    android:textSize="@dimen/text_15"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Small"
+                    android:drawableStart="@drawable/ic_eco"
+                    android:drawablePadding="3dp"
+                    android:drawableTint="@color/primary"
+                    android:text="Giống lúa"
+                    android:textSize="@dimen/text_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/variety"
+                    style="@style/T"
+                    android:layout_marginTop="2dp"
+                    android:textSize="@dimen/text_15"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/T.Small"
+                    android:drawableStart="@drawable/ic_sprout"
+                    android:drawablePadding="3dp"
+                    android:drawableTint="@color/primary"
+                    android:text="Giai đoạn"
+                    android:textSize="@dimen/text_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/stage"
+                    style="@style/T"
+                    android:layout_marginTop="2dp"
+                    android:textSize="@dimen/text_15"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#EEEDE5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:id="@+id/next_check_label"
+                style="@style/T.Small"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/ic_calendar"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/ink"
+                android:text="Kiểm tra tiếp theo"
+                android:textSize="@dimen/text_14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/next_check"
+                style="@style/T"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginStart="2dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_chevron_right"
+                app:tint="@color/ink" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

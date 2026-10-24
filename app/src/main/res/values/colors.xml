@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="bg">#FDFBF7</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="primary">#1F5E3E</color>
+    <color name="primary_dark">#15472F</color>
+    <color name="primary_light">#2E7D50</color>
+    <color name="ink">#0F3B2B</color>
+    <color name="ink_deep">#08261E</color>
+    <color name="muted">#526259</color>
+    <color name="hint">#727B76</color>
+    <color name="line">#ECEBE3</color>
+    <color name="tint_green">#E8F2E4</color>
+    <color name="tint_green_soft">#F1F6EC</color>
+    <color name="input_bg">#F7F6F0</color>
+
+    <color name="red">#D93C3C</color>
+    <color name="red_bg">#FDE6E4</color>
+    <color name="orange">#E8751A</color>
+    <color name="orange_bg">#FEEBD6</color>
+    <color name="amber">#B9801B</color>
+    <color name="amber_bg">#FBF3E1</color>
+    <color name="blue">#2D7FD6</color>
+    <color name="blue_bg">#E3F0FD</color>
+    <color name="purple">#7A5BC7</color>
+    <color name="purple_bg">#EDE6FA</color>
+    <color name="green_ok">#2E8B57</color>
+    <color name="green_ok_bg">#E4F3E6</color>
+    <color name="map_low">#3C9A4B</color>
+    <color name="map_mid">#F5C73B</color>
+    <color name="map_high">#F08A24</color>
+    <color name="map_very_high">#E5483D</color>
+
+    <color name="gray">#5F6B66</color>
+    <color name="gray_bg">#ECEEEC</color>
+
+    <!-- Thanh điều hướng nổi: trắng xám -->
+    <color name="nav_bg">#F4F5F6</color>
+    <color name="nav_stroke">#E0E3E5</color>
+    <color name="nav_item_on_bg">#E2E6E8</color>
+    <color name="nav_icon">#5E6770</color>
+    <color name="nav_icon_on">#143A29</color>
+    <color name="scrim">#66000000</color>
+</resources>
