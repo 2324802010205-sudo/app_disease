@@ -1,8 +1,10 @@
 package com.example.project_final;
 
 import android.content.Intent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.project_final.api.ApiCallback;
 import com.example.project_final.api.ApiError;
@@ -18,6 +20,7 @@ public class LoginActivity extends BaseActivity {
 
     private EditText email;
     private EditText password;
+    private TextView loginError;
 
     @Override
     protected int layout() {
@@ -33,6 +36,7 @@ public class LoginActivity extends BaseActivity {
     protected void onReady() {
         email = findViewById(R.id.input_email);
         password = findViewById(R.id.input_password);
+        loginError = findViewById(R.id.login_error);
         PasswordToggle.attach(password, (ImageView) findViewById(R.id.btn_toggle_password));
         go(R.id.btn_forgot, ForgotPasswordActivity.class);
         go(R.id.btn_register, RegisterActivity.class);
@@ -48,6 +52,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void submit() {
+        loginError.setVisibility(View.GONE);
         String mail = Forms.text(email);
         String pass = password.getText().toString();
         if (!Forms.require(email, "Nhập email")) return;
@@ -75,7 +80,10 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(ApiError e) {
                 busy(false);
-                if (!Forms.showFieldErrors(e, Map.of("email", email, "password", password))) showError(e);
+                if (!Forms.showFieldErrors(e, Map.of("email", email, "password", password))) {
+                    loginError.setText(e.message);
+                    loginError.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

@@ -13,60 +13,72 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
         style="@style/Round12"
-        android:layout_width="120dp"
-        android:layout_height="104dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/name"
-                style="@style/T"
-                android:textColor="@color/ink_deep"
-                android:textSize="@dimen/text_19"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/common"
-                style="@style/T.Pill"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bg_pill_orange"
-                android:drawableStart="@drawable/ic_star"
-                android:drawableTint="@color/orange"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:text="Thường gặp"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/text_14" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/bookmark"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:contentDescription="Lưu bệnh"
+                android:padding="2dp"
                 android:src="@drawable/ic_bookmark_border"
                 app:tint="@color/ink_deep" />
-        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/bookmark"
+                android:layout_marginEnd="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/name"
+                    style="@style/T"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/ink_deep"
+                    android:textSize="@dimen/text_17"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/common"
+                    style="@style/T.Pill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/bg_pill_orange"
+                    android:drawableStart="@drawable/ic_star_badge"
+                    android:drawableTint="@color/orange"
+                    android:drawablePadding="3dp"
+                    android:maxLines="1"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:singleLine="true"
+                    android:text="Thường gặp"
+                    android:textColor="@color/orange"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,7 +87,7 @@
             style="@style/T.Body"
             android:layout_marginTop="5dp"
             android:ellipsize="end"
-            android:maxLines="3"
+            android:maxLines="2"
             android:textSize="@dimen/text_15" />
 
         <TextView
@@ -83,9 +95,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/category"
             style="@style/T.Pill"
-            android:layout_marginTop="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:textSize="@dimen/text_14" />
+            android:layout_marginTop="6dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:textSize="@dimen/text_13" />
     </LinearLayout>
 </LinearLayout>

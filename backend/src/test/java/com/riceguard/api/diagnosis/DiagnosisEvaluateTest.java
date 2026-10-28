@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DiagnosisEvaluateTest {
     private static final List<Disease> CATALOG = List.of(
-            new Disease("dao-on-la", 1, "Đạo ôn lá", null, "mô tả", "LEAF", "FUNGUS", true, List.of(), List.of(), List.of(), List.of(), null, null));
+            new Disease("dao-on-la", 1, "Đạo ôn lá", null, "mô tả", "LEAF", "FUNGUS", true, List.of(), List.of(), List.of(), List.of(), null, null, false, false));
 
     private static DiagnosisResult result(boolean rice, String code, double conf, String severity) {
         return new DiagnosisResult(rice, code, conf, severity, List.of(), "tóm tắt", List.of(), "");

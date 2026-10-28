@@ -34,6 +34,22 @@ dependencies {
 tasks.withType<Test> { useJUnitPlatform() }
 tasks.withType<JavaCompile> { options.compilerArgs.add("-parameters") }
 
+// Nạp cấu hình cục bộ cho lệnh bootRun; biến môi trường đã có được ưu tiên.
+tasks.named<org.springframework.boot.gradle.tasks.run.BootRun>("bootRun") {
+    val envFile = layout.projectDirectory.file(".env").asFile
+    if (envFile.isFile) {
+        envFile.forEachLine(Charsets.UTF_8) { line ->
+            val equals = line.indexOf('=')
+            if (equals > 0) {
+                val name = line.substring(0, equals).trim()
+                if (name.matches(Regex("[A-Z][A-Z0-9_]*")) && System.getenv(name).isNullOrBlank()) {
+                    environment(name, line.substring(equals + 1).trim())
+                }
+            }
+        }
+    }
+}
+
 // Chạy cục bộ không cần khóa Firebase/Cloudinary thật: dùng Firebase Emulator (auth + firestore) và lưu ảnh vào thư mục uploads/.
 //   1) firebase emulators:start --only auth,firestore --project demo-riceguard
 //   2) ./gradlew bootRunLocal

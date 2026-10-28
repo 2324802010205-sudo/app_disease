@@ -1,0 +1,36 @@
+{
+  "users": [
+    { "key": "farmer1", "email": "demo.farmer1@riceguard.local", "fullName": "Nguyễn Văn An", "province": "Cần Thơ", "district": "Phong Điền", "role": "FARMER", "daysAgo": 24 },
+    { "key": "farmer2", "email": "demo.farmer2@riceguard.local", "fullName": "Trần Thị Bình", "province": "An Giang", "district": "Thoại Sơn", "role": "FARMER", "daysAgo": 16 },
+    { "key": "expert1", "email": "demo.expert1@riceguard.local", "fullName": "Lê Minh Châu", "province": "Đồng Tháp", "district": "Cao Lãnh", "role": "EXPERT", "verifiedExpert": true, "daysAgo": 12 }
+  ],
+  "posts": [
+    { "id": "demo-post-1", "author": "farmer1", "province": "Cần Thơ", "topic": "PEST", "title": "Lá lúa xuất hiện vết hình thoi", "content": "Ruộng ở Phong Điền xuất hiện nhiều vết nâu trên lá. Mọi người có kinh nghiệm xử lý bệnh đạo ôn không?", "likeCount": 8, "commentCount": 1, "daysAgo": 1, "hidden": false },
+    { "id": "demo-post-2", "author": "farmer2", "province": "An Giang", "topic": "EXPERIENCE", "title": "Chia sẻ cách theo dõi ruộng sau mưa", "content": "Sau mưa nên kiểm tra lá và mực nước sớm để phát hiện dấu hiệu bệnh.", "likeCount": 5, "commentCount": 0, "daysAgo": 2, "hidden": false },
+    { "id": "demo-post-3", "author": "farmer1", "province": "Cần Thơ", "topic": "WATER", "title": "Bài viết mẫu đang được xem xét", "content": "Đây là nội dung mẫu để trình diễn thao tác quản trị bài viết.", "likeCount": 0, "commentCount": 0, "daysAgo": 3, "hidden": true }
+  ],
+  "reports": [
+    { "id": "demo-report-1", "type": "POST", "postId": "demo-post-1", "targetId": "demo-post-1", "reporter": "farmer2", "reason": "MISLEADING", "detail": "Cần kiểm tra thông tin về cách xử lý bệnh.", "status": "NEW", "daysAgo": 0 },
+    { "id": "demo-report-2", "type": "POST", "postId": "demo-post-3", "targetId": "demo-post-3", "reporter": "expert1", "reason": "OTHER", "detail": "Bài viết cần được rà soát.", "status": "NEW", "daysAgo": 1 }
+  ],
+  "scans": [
+    { "id": "demo-scan-1", "user": "farmer1", "fieldName": "Ruộng Phong Điền", "province": "Cần Thơ", "district": "Phong Điền", "diseaseCode": "dao-on-la", "diseaseName": "Đạo ôn lá", "confidence": 0.91, "riskLevel": "HIGH", "daysAgo": 0 },
+    { "id": "demo-scan-2", "user": "farmer1", "fieldName": "Ruộng Phong Điền", "province": "Cần Thơ", "district": "Phong Điền", "diseaseCode": "bac-la", "diseaseName": "Bạc lá", "confidence": 0.82, "riskLevel": "WATCH", "daysAgo": 2 },
+    { "id": "demo-scan-3", "user": "farmer2", "fieldName": "Ruộng Thoại Sơn", "province": "An Giang", "district": "Thoại Sơn", "diseaseCode": "dao-on-la", "diseaseName": "Đạo ôn lá", "confidence": 0.87, "riskLevel": "HIGH", "daysAgo": 4 },
+    { "id": "demo-scan-4", "user": "farmer2", "fieldName": "Ruộng Thoại Sơn", "province": "An Giang", "district": "Thoại Sơn", "diseaseCode": "dao-on-la", "diseaseName": "Đạo ôn lá", "confidence": 0.76, "riskLevel": "WATCH", "daysAgo": 6 }
+  ],
+  "feedbacks": [
+    { "id": "demo-feedback-1", "user": "farmer1", "scanId": "demo-scan-1", "scanDiseaseCode": "dao-on-la", "scanConfidence": 0.91, "reason": "WRONG_RESULT", "suggestedDiseaseCode": "bac-la", "description": "Xin kiểm tra lại kết quả quét lá lúa này.", "status": "NEW", "daysAgo": 0 },
+    { "id": "demo-feedback-2", "user": "farmer2", "scanId": "demo-scan-3", "scanDiseaseCode": "dao-on-la", "scanConfidence": 0.87, "reason": "NEED_ADVICE", "description": "Cần thêm lời khuyên sau khi phát hiện bệnh.", "status": "REVIEWING", "resolution": "Đang đối chiếu triệu chứng.", "daysAgo": 2 }
+  ],
+  "areas": [
+    { "id": "demo-area-1", "province": "Cần Thơ", "district": "Phong Điền", "total": 7, "byDisease": { "dao-on-la": 5, "bac-la": 2 }, "byStage": { "TILLERING": 7 }, "daysAgo": 0 },
+    { "id": "demo-area-2", "province": "An Giang", "district": "Thoại Sơn", "total": 4, "byDisease": { "dao-on-la": 4 }, "byStage": { "HEADING": 4 }, "daysAgo": 1 }
+  ],
+  "campaigns": [
+    { "id": "demo-campaign-1", "title": "Nhắc kiểm tra ruộng sau mưa", "body": "Đề nghị kiểm tra lá lúa và ghi nhận dấu hiệu bệnh trong tuần này.", "audience": "ALL", "status": "DRAFT", "daysAgo": 1 }
+  ],
+  "audit": [
+    { "id": "demo-audit-1", "actorId": "demo-admin", "action": "DEMO_DATA_LOADED", "targetType": "SYSTEM", "targetId": "dashboard", "detail": "Dữ liệu mẫu dành riêng cho Firebase Emulator", "daysAgo": 0 }
+  ]
+}

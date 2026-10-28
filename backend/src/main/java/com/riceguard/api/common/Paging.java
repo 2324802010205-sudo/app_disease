@@ -15,7 +15,6 @@ import java.util.function.Predicate;
  */
 @Component
 public class Paging {
-    private static final int MAX_ROUNDS = 8;
 
     private final Fs fs;
 
@@ -30,7 +29,7 @@ public class Paging {
         List<T> out = new ArrayList<>();
         Cursor last = null;
         boolean exhausted = false;
-        for (int round = 0; round < MAX_ROUNDS && !exhausted; round++) {
+        while (!exhausted) {
             Query q = c == null ? ordered : ordered.startAfter(c.createdAt(), c.id());
             List<? extends DocumentSnapshot> docs = Fs.await(q.limit(batch).get()).getDocuments();
             exhausted = docs.size() < batch;

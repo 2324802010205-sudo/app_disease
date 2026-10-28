@@ -31,12 +31,12 @@ public class DiagnosisService {
     }
 
     public DiagnosisResult run(String imageUrl, String stage, String variety, String weatherSummary) {
-        return engine.diagnose(new DiagnosisRequest(imageUrl, stage, variety, weatherSummary, diseases.all()));
+        return engine.diagnose(new DiagnosisRequest(imageUrl, stage, variety, weatherSummary, diseases.visible()));
     }
 
     /** Quy đổi kết quả thô của AI thành trạng thái và mức rủi ro lưu trong lượt quét. */
     public Outcome evaluate(DiagnosisResult r) {
-        return evaluate(r, props.diagnosis().minConfidence(), diseases.all());
+        return evaluate(r, props.diagnosis().minConfidence(), diseases.visible());
     }
 
     static Outcome evaluate(DiagnosisResult r, double minConfidence, List<Disease> catalog) {

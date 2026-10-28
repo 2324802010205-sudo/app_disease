@@ -101,7 +101,11 @@ public class SplashActivity extends BaseActivity {
         Runnable go = () -> {
             Intent it = new Intent(this, target);
             it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(it);
+            if (target == HomeActivity.class && getIntent().hasExtra("notificationId")) {
+                startActivities(new Intent[]{it, new Intent(this, NotificationsActivity.class)});
+            } else {
+                startActivity(it);
+            }
             finish();
         };
         if (timeUp) go.run();

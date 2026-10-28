@@ -15,4 +15,5 @@ public record Post(
         long likeCount,
         long commentCount,
         long createdAt,
-        long updatedAt) {}
+        long updatedAt,
+        boolean hidden) {}

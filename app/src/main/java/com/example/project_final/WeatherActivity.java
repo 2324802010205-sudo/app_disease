@@ -1,8 +1,18 @@
 package com.example.project_final;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
+import androidx.core.location.LocationManagerCompat;
+import androidx.core.os.CancellationSignal;
 
 import com.example.project_final.api.ApiCallback;
 import com.example.project_final.api.ApiError;
@@ -17,9 +27,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/** Thời tiết theo tỉnh: hiện tại, theo giờ, 7 ngày và lời khuyên canh tác. */
+/** Thời tiết theo tọa độ hiện tại hoặc tỉnh đã chọn. */
 public class WeatherActivity extends BaseActivity {
-    private String province;
+    private Session.WeatherLocation selected;
+    private CancellationSignal locationRequest;
+    private final ActivityResultLauncher<String[]> locationPermission = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                if (hasLocationPermission()) locate();
+                else toast("Cần quyền vị trí để xem thời tiết nơi bạn đang ở. Bạn vẫn có thể chọn tỉnh/thành.");
+            });
 
     @Override
     protected int layout() {
@@ -33,38 +49,112 @@ public class WeatherActivity extends BaseActivity {
 
     @Override
     protected void onReady() {
-        province = Session.province();
-        findViewById(R.id.location_name).setOnClickListener(v -> chooseProvince());
-        findViewById(R.id.btn_refresh).setOnClickListener(v -> load());
-        if (province == null || province.isEmpty()) chooseProvince();
+        selected = Session.weatherLocation();
+        findViewById(R.id.location_name).setOnClickListener(v -> chooseLocation());
+        findViewById(R.id.btn_refresh).setOnClickListener(v -> {
+            if (selected != null && selected.lat != null && hasLocationPermission()) locate();
+            else load();
+        });
+        if (selected == null) chooseLocation();
+        else if (selected.lat != null && hasLocationPermission()) locate();
         else load();
+    }
+
+    private void chooseLocation() {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Chọn vị trí thời tiết")
+                .setItems(new String[]{"Vị trí hiện tại", "Chọn tỉnh/thành"}, (dialog, which) -> {
+                    if (which == 0) {
+                        if (hasLocationPermission()) locate();
+                        else locationPermission.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION});
+                    } else chooseProvince();
+                }).show();
+    }
+
+    private boolean hasLocationPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void locate() {
+        if (!hasLocationPermission()) return;
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean precise = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        String provider = precise && manager.isProviderEnabled(LocationManager.GPS_PROVIDER) ? LocationManager.GPS_PROVIDER
+                : manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ? LocationManager.NETWORK_PROVIDER : null;
+        if (provider == null) {
+            toast("Hãy bật dịch vụ vị trí hoặc chọn tỉnh/thành.");
+            if (selected != null) load();
+            return;
+        }
+        if (locationRequest != null) locationRequest.cancel();
+        locationRequest = new CancellationSignal();
+        busy(true);
+        try {
+            LocationManagerCompat.getCurrentLocation(manager, provider, locationRequest,
+                    ContextCompat.getMainExecutor(this), location -> {
+                        locationRequest = null;
+                        busy(false);
+                        if (location == null) {
+                            toast("Không xác định được vị trí. Hãy thử lại hoặc chọn tỉnh/thành.");
+                            if (selected != null) load();
+                            return;
+                        }
+                        selected = new Session.WeatherLocation("Vị trí hiện tại", location.getLatitude(), location.getLongitude());
+                        Session.setWeatherLocation(selected.label, selected.lat, selected.lng);
+                        load();
+                    });
+        } catch (SecurityException | IllegalArgumentException e) {
+            locationRequest = null;
+            busy(false);
+            toast("Không lấy được vị trí. Hãy chọn tỉnh/thành.");
+            if (selected != null) load();
+        }
     }
 
     private void chooseProvince() {
         withMeta(o -> Ui.chooser(this, "Chọn tỉnh/thành", o.provinces, (i, label) -> {
-            province = label;
-            if (isGuest()) Session.setGuestProvince(label);
+            selected = new Session.WeatherLocation(label, null, null);
+            Session.setWeatherLocation(label, null, null);
             load();
         }));
     }
 
     private void load() {
-        if (province == null) return;
-        setText(R.id.location_name, province);
+        if (selected == null) return;
+        Session.WeatherLocation requested = selected;
+        setText(R.id.location_name, requested.label);
         busy(true);
-        call(api().weather(province, null, null), new ApiCallback<Weather>() {
+        call(api().weather(requested.label, requested.lat, requested.lng), new ApiCallback<Weather>() {
             @Override
             public void onSuccess(Weather w) {
                 busy(false);
-                bind(w);
+                if (requested == selected) bind(w);
             }
 
             @Override
             public void onError(ApiError e) {
                 busy(false);
-                showError(e);
+                if (requested == selected) {
+                    setText(R.id.weather_sub, "Không tải được dữ liệu thời tiết cho " + requested.label);
+                    setText(R.id.updated_at, "");
+                    setText(R.id.temp_n, "--");
+                    setText(R.id.cond_title, "Chưa có dữ liệu");
+                    setText(R.id.cond_desc, e.message);
+                    ((LinearLayout) findViewById(R.id.list_hourly)).removeAllViews();
+                    ((LinearLayout) findViewById(R.id.list_daily)).removeAllViews();
+                    ((LinearLayout) findViewById(R.id.list_details)).removeAllViews();
+                    showError(e);
+                }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (locationRequest != null) locationRequest.cancel();
+        super.onDestroy();
     }
 
     private void bind(Weather w) {
@@ -120,7 +210,8 @@ public class WeatherActivity extends BaseActivity {
     private void bindDetails(Weather.Current c) {
         String[] label = {"Gió", "Chỉ số UV", "Tầm nhìn"};
         String[] value = {Math.round(c.windKmh) + " km/h", String.valueOf(Math.round(c.uvIndex)), Math.round(c.visibilityKm) + " km"};
-        String[] note = {c.windDirection, c.uvLabel, c.visibilityLabel};
+        String windDir = c.windDirection != null ? c.windDirection.replace("Hướng ", "") : "";
+        String[] note = {windDir, c.uvLabel, c.visibilityLabel};
         int[] ic = {R.drawable.ic_air, R.drawable.ic_w_sun, R.drawable.ic_visibility};
         int[] tint = {R.color.blue, 0, R.color.primary};
         LinearLayout box = findViewById(R.id.list_details);

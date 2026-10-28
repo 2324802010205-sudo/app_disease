@@ -17,7 +17,12 @@ public record UserProfile(
         Settings settings,
         List<String> fcmTokens,
         long createdAt,
-        long updatedAt) {
+        long updatedAt,
+        boolean locked,
+        String verifiedBy,
+        Long verifiedAt,
+        String lockedBy,
+        Long lockedAt) {
 
     public record Settings(String theme, String language, boolean notifyAlert, boolean notifyReminder, boolean notifyCommunity) {
         public static Settings defaults() {

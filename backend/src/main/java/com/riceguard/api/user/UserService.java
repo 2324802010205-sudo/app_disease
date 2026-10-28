@@ -53,7 +53,7 @@ public class UserService {
         long now = times.now();
         String name = u.name() != null && !u.name().isBlank() ? u.name() : defaultName(u.email());
         UserProfile created = new UserProfile(u.uid(), u.email(), name, null, null, null, "FARMER", null, null, null,
-                false, UserProfile.Settings.defaults(), new ArrayList<>(), now, now);
+                false, UserProfile.Settings.defaults(), new ArrayList<>(), now, now, false, null, null, null, null);
         fs.set(ref, created);
         return created;
     }
@@ -72,7 +72,8 @@ public class UserService {
     public UserProfile create(String uid, String email, String fullName, String phone, String province, String role) {
         long now = times.now();
         UserProfile p = new UserProfile(uid, email, fullName, phone, province, null,
-                role == null ? "FARMER" : role, null, null, null, false, UserProfile.Settings.defaults(), new ArrayList<>(), now, now);
+                role == null ? "FARMER" : role, null, null, null, false, UserProfile.Settings.defaults(), new ArrayList<>(), now, now,
+                false, null, null, null, null);
         fs.set(refs.user(uid), p);
         return p;
     }
@@ -100,7 +101,14 @@ public class UserService {
         m.put("phone", blankToNull(r.phone()));
         m.put("province", blankToNull(r.province()));
         m.put("district", blankToNull(r.district()));
-        if (r.role() != null && !r.role().isBlank()) m.put("role", r.role());
+        if (r.role() != null && !r.role().isBlank()) {
+            m.put("role", r.role());
+            if (!"EXPERT".equals(r.role())) {
+                m.put("verifiedExpert", false);
+                m.put("verifiedBy", null);
+                m.put("verifiedAt", null);
+            }
+        }
         m.put("bio", blankToNull(r.bio()));
         m.put("updatedAt", times.now());
         Fs.await(refs.user(u.uid()).update(m));
@@ -158,8 +166,15 @@ public class UserService {
     }
 
     public void setVerifiedExpert(String uid, boolean verified) {
-        require(uid);
-        Fs.await(refs.user(uid).update("verifiedExpert", verified, "updatedAt", times.now()));
+        setVerifiedExpert(uid, verified, null);
+    }
+
+    public void setVerifiedExpert(String uid, boolean verified, String actorId) {
+        UserProfile profile = require(uid);
+        if (verified && !"EXPERT".equals(profile.role()))
+            throw ApiException.badRequest("Chỉ xác minh tài khoản có vai trò chuyên gia");
+        Fs.await(refs.user(uid).update("verifiedExpert", verified, "verifiedBy", actorId,
+                "verifiedAt", times.now(), "updatedAt", times.now()));
         directory.invalidate(uid);
     }
 

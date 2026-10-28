@@ -73,7 +73,9 @@ public final class ApiClient {
         return chain -> {
             okhttp3.RequestBody body = chain.request().body();
             boolean multipart = body != null && body.contentType() != null && "multipart".equals(body.contentType().type());
-            return (multipart ? basic : full).intercept(chain);
+            String path = chain.request().url().encodedPath();
+            boolean credentials = path.contains("/auth/") || path.endsWith("/users/me/devices");
+            return (multipart || credentials ? basic : full).intercept(chain);
         };
     }
 

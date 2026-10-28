@@ -39,7 +39,7 @@ public class DiseaseController {
 
     @GetMapping("/diseases/{id}")
     public DiseaseDetail detail(@AuthenticationPrincipal AuthUser u, @PathVariable String id) {
-        Disease d = service.require(id);
+        Disease d = service.requireVisible(id);
         boolean saved = u != null && service.savedIds(u.uid()).contains(id);
         return new DiseaseDetail(d, saved, service.related(d, 4));
     }

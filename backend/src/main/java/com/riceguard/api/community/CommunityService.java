@@ -66,13 +66,14 @@ public class CommunityService {
         UserProfile profile = users.require(u.uid());
         DocumentReference ref = refs.posts().document();
         Post p = new Post(ref.getId(), u.uid(), profile.province(), r.topic(), r.title().trim(), r.content().trim(),
-                r.images() == null ? List.of() : r.images(), 0, 0, now, now);
+                r.images() == null ? List.of() : r.images(), 0, 0, now, now, false);
         fs.set(ref, p);
         return views(u.uid(), List.of(p)).get(0);
     }
 
     public PostView get(String viewerUid, String id) {
         Post p = fs.require(refs.posts().document(id), Post.class, "Không tìm thấy bài viết");
+        if (p.hidden() && !p.authorId().equals(viewerUid)) throw ApiException.notFound("Không tìm thấy bài viết");
         return views(viewerUid, List.of(p)).get(0);
     }
 
@@ -81,7 +82,7 @@ public class CommunityService {
         if (topic != null && !topic.isBlank()) base = base.whereEqualTo("topic", topic);
         String needle = Slug.fold(q).trim();
         PageResult<Post> page = paging.page(base, cursor, limit, Post.class,
-                needle.isEmpty() ? null : p -> Slug.fold(p.title() + " " + p.content()).contains(needle));
+                p -> !p.hidden() && (needle.isEmpty() || Slug.fold(p.title() + " " + p.content()).contains(needle)));
         return PageResult.of(views(viewerUid, page.items()), page.nextCursor());
     }
 
@@ -209,7 +210,16 @@ public class CommunityService {
 
     /** sort: newest | helpful. Trả cây bình luận 2 cấp. */
     public List<CommentView> comments(String viewerUid, String postId, String sort) {
+        return commentsInternal(viewerUid, postId, sort, false);
+    }
+
+    public List<CommentView> adminComments(String viewerUid, String postId) {
+        return commentsInternal(viewerUid, postId, "newest", true);
+    }
+
+    private List<CommentView> commentsInternal(String viewerUid, String postId, String sort, boolean admin) {
         Post post = fs.require(refs.posts().document(postId), Post.class, "Không tìm thấy bài viết");
+        if (post.hidden() && !admin && !post.authorId().equals(viewerUid)) throw ApiException.notFound("Không tìm thấy bài viết");
         List<Comment> all = fs.query(refs.comments(postId).orderBy("createdAt", Query.Direction.ASCENDING).limit(MAX_COMMENTS), Comment.class);
         Set<String> ids = all.stream().map(Comment::authorId).collect(Collectors.toSet());
         Map<String, PublicUser> authors = users.lookup(ids);

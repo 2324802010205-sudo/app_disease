@@ -38,6 +38,8 @@ public class ReminderService {
         if (!props.reminders().enabled()) return;
         try {
             int sent = runFor(times.today(), true);
+            Fs.await(fs.db().collection("adminJobLogs").document().set(Map.of(
+                    "kind", "REMINDERS_SCHEDULED", "count", sent, "createdAt", times.now())));
             log.info("Nhắc lịch kiểm tra ruộng: đã gửi {} thông báo", sent);
         } catch (RuntimeException e) {
             log.error("Job nhắc lịch thất bại", e);
@@ -46,9 +48,15 @@ public class ReminderService {
 
     /** Trả về số thông báo đã gửi; với useLock=true, nếu instance khác đã chạy job ngày này thì trả 0. */
     public int runFor(LocalDate date, boolean useLock) {
+        return runFor(date, useLock, Integer.MAX_VALUE);
+    }
+
+    public int runFor(LocalDate date, boolean useLock, int maxRecipients) {
+        if (maxRecipients < 1) throw new IllegalArgumentException("maxRecipients must be positive");
         if (useLock && !acquire("reminders_" + date)) return 0;
         int sent = 0;
         for (DocumentSnapshot d : Fs.await(fs.db().collectionGroup("fields").whereEqualTo("nextCheckDate", date.toString()).get()).getDocuments()) {
+            if (sent >= maxRecipients) break;
             String uid = d.getReference().getParent().getParent().getId();
             String name = d.getString("name");
             notifications.create(uid, "REMINDER", "Nhắc lịch kiểm tra ruộng",

@@ -16,4 +16,6 @@ public record Disease(
         List<String> prevention,
         List<String> treatment,
         String imageUrl,
-        String imagePublicId) {}
+        String imagePublicId,
+        boolean hidden,
+        boolean adminEdited) {}

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.project_final.api.ApiCallback;
 import com.example.project_final.api.ApiError;
 import com.example.project_final.api.Session;
+import com.example.project_final.push.PushRegistration;
 import com.example.project_final.model.User;
 import com.example.project_final.util.Img;
 import com.example.project_final.util.Look;
@@ -92,6 +93,10 @@ public class ProfileActivity extends BaseActivity {
     /** Thu hồi phiên trên máy chủ (best-effort) rồi xóa phiên cục bộ. */
     private void logout() {
         busy(true);
+        PushRegistration.unregister(this, this::logoutOnServer);
+    }
+
+    private void logoutOnServer() {
         call(api().logout(), new ApiCallback<Void>() {
             @Override
             public void onSuccess(Void body) {

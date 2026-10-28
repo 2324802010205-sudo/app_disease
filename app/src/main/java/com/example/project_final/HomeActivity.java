@@ -39,6 +39,11 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onReady() {
+        if (Session.isLoggedIn() && android.os.Build.VERSION.SDK_INT >= 33
+                && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 3401);
+        }
         setupBottomNav(NavBar.HOME);
         refresh = findViewById(R.id.refresh);
         refresh.setColorSchemeResources(R.color.primary);
@@ -112,8 +117,8 @@ public class HomeActivity extends BaseActivity {
     // ---- thời tiết
 
     private void loadWeather(User u) {
-        String province = Session.province();
-        if (province == null || province.isEmpty()) {
+        Session.WeatherLocation location = Session.weatherLocation();
+        if (location == null) {
             setText(R.id.weather_place, "Chọn tỉnh/thành để xem thời tiết");
             setText(R.id.weather_temp, "--°");
             setText(R.id.weather_title, "Chưa có vị trí");
@@ -122,7 +127,7 @@ public class HomeActivity extends BaseActivity {
             done();
             return;
         }
-        call(api().weather(province, null, null), new ApiCallback<Weather>() {
+        call(api().weather(location.label, location.lat, location.lng), new ApiCallback<Weather>() {
             @Override
             public void onSuccess(Weather w) {
                 done();
@@ -140,10 +145,13 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onError(ApiError e) {
                 done();
-                setText(R.id.weather_place, province);
+                setText(R.id.weather_place, location.label);
                 setText(R.id.weather_temp, "--°C");
                 setText(R.id.weather_title, "Chưa có dữ liệu");
                 setText(R.id.weather_hint, e.message);
+                setText(R.id.weather_humidity, "--");
+                setText(R.id.weather_rain, "--");
+                setText(R.id.weather_wind, "--");
             }
         });
     }
@@ -157,7 +165,7 @@ public class HomeActivity extends BaseActivity {
                 done();
                 setText(R.id.stat_scans_n, String.valueOf(s.scans));
                 setText(R.id.stat_alerts_n, String.valueOf(s.alerts));
-                setText(R.id.stat_alerts_sub, s.alerts > 0 ? "Cần chú ý" : "Chưa có cảnh báo");
+                setText(R.id.stat_alerts_sub, s.alerts > 0 ? "Cần chú ý" : "An toàn");
             }
 
             @Override
@@ -179,7 +187,7 @@ public class HomeActivity extends BaseActivity {
                 double area = 0;
                 for (RiceField f : list) area += f.areaHa;
                 setText(R.id.stat_fields_n, String.valueOf(list.size()));
-                setText(R.id.stat_fields_sub, list.isEmpty() ? "Chưa có ruộng" : "Tổng diện tích " + Fmt.area(area));
+                setText(R.id.stat_fields_sub, list.isEmpty() ? "Chưa có ruộng" : "Tổng " + Fmt.area(area));
                 bindFields(list);
             }
 

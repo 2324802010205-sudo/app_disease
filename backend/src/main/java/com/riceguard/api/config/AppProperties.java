@@ -25,7 +25,8 @@ public record AppProperties(
                            String identityToolkitUrl, String secureTokenUrl, boolean checkRevoked,
                            boolean emulator) {}
 
-    public record Security(String adminEmails, String corsAllowedOrigins, int rateLimitPerMinute,
+    public record Security(String adminEmails, String adminBootstrapEmail, String adminBootstrapPassword,
+                           String corsAllowedOrigins, int rateLimitPerMinute,
                            int authRateLimitPerMinute) {}
 
     public record Media(String provider, String cloudinaryUrl, String folderPrefix, long maxBytes, String localDir) {}

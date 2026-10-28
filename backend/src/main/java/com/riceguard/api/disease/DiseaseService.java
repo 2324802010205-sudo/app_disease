@@ -53,16 +53,18 @@ public class DiseaseService implements ApplicationRunner {
             seed = mapper.readValue(in, new TypeReference<>() {});
         }
         Map<String, Long> existing = new HashMap<>();
+        Set<String> edited = new java.util.HashSet<>();
         for (DocumentSnapshot d : Fs.await(refs.diseases().get()).getDocuments()) {
             Long v = d.getLong("version");
             existing.put(d.getId(), v == null ? 0L : v);
+            if (Boolean.TRUE.equals(d.getBoolean("adminEdited"))) edited.add(d.getId());
         }
         WriteBatch batch = fs.db().batch();
         int n = 0;
         for (Map<String, Object> d : seed) {
             String id = (String) d.get("id");
             long version = ((Number) d.get("version")).longValue();
-            if (existing.getOrDefault(id, -1L) >= version) continue;
+            if (edited.contains(id) || existing.getOrDefault(id, -1L) >= version) continue;
             Map<String, Object> data = new HashMap<>(d);
             data.remove("id");
             data.values().removeIf(java.util.Objects::isNull);
@@ -83,9 +85,14 @@ public class DiseaseService implements ApplicationRunner {
                 .toList();
     }
 
+    public List<Disease> visible() {
+        return all().stream().filter(d -> !d.hidden()).toList();
+    }
+
     public List<Disease> search(String part, String cause, Boolean common, String q) {
         String needle = Slug.fold(q);
         return all().stream()
+                .filter(d -> !d.hidden())
                 .filter(d -> part == null || part.isBlank() || d.part().equalsIgnoreCase(part))
                 .filter(d -> cause == null || cause.isBlank() || d.cause().equalsIgnoreCase(cause))
                 .filter(d -> common == null || d.common() == common)
@@ -98,12 +105,18 @@ public class DiseaseService implements ApplicationRunner {
                 .orElseThrow(() -> ApiException.notFound("Không tìm thấy bệnh này"));
     }
 
+    public Disease requireVisible(String id) {
+        Disease disease = require(id);
+        if (disease.hidden()) throw ApiException.notFound("Không tìm thấy bệnh này");
+        return disease;
+    }
+
     public Disease find(String id) {
         return all().stream().filter(d -> d.id().equals(id)).findFirst().orElse(null);
     }
 
     public List<Disease> related(Disease d, int limit) {
-        return all().stream().filter(o -> !o.id().equals(d.id()) && (o.part().equals(d.part()) || o.cause().equals(d.cause())))
+        return all().stream().filter(o -> !o.hidden() && !o.id().equals(d.id()) && (o.part().equals(d.part()) || o.cause().equals(d.cause())))
                 .limit(limit).toList();
     }
 
@@ -121,7 +134,7 @@ public class DiseaseService implements ApplicationRunner {
     }
 
     public void save(String uid, String id, long now) {
-        require(id);
+        requireVisible(id);
         Fs.await(refs.savedDiseases(uid).document(id).set(Map.of("savedAt", now)));
     }
 
@@ -131,6 +144,6 @@ public class DiseaseService implements ApplicationRunner {
 
     public List<Disease> saved(String uid) {
         Set<String> ids = savedIds(uid);
-        return all().stream().filter(d -> ids.contains(d.id())).toList();
+        return all().stream().filter(d -> !d.hidden() && ids.contains(d.id())).toList();
     }
 }

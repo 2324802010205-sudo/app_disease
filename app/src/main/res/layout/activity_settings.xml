@@ -58,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/T"
-                            android:text="Cài đặt"
+                            android:text="@string/settings_title"
                             android:textColor="@color/ink_deep"
                             android:textSize="@dimen/text_23"
                             android:textStyle="bold" />
@@ -68,14 +68,14 @@
                             android:layout_height="wrap_content"
                             style="@style/T.Small"
                             android:layout_marginTop="1dp"
-                            android:text="Tùy chỉnh ứng dụng theo nhu cầu của bạn"
+                            android:text="@string/settings_subtitle"
                             android:textSize="@dimen/text_15" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <!-- theme -->
                 <LinearLayout
-                    android:visibility="gone"
+                    android:id="@+id/theme_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -106,13 +106,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.H3"
-                                android:text="Giao diện" />
+                                android:text="@string/theme_title" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.Small"
-                                android:text="Chọn giao diện hiển thị của ứng dụng"
+                                android:text="@string/theme_description"
                                 android:textSize="@dimen/text_14" />
                         </LinearLayout>
                     </LinearLayout>
@@ -127,7 +127,7 @@
 
                 <!-- language -->
                 <LinearLayout
-                    android:visibility="gone"
+                    android:id="@+id/language_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -154,13 +154,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/T.H3"
-                            android:text="Ngôn ngữ" />
+                            android:text="@string/language_title" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/T.Small"
-                            android:text="Chọn ngôn ngữ hiển thị"
+                            android:text="@string/language_description"
                             android:textSize="@dimen/text_14" />
                     </LinearLayout>
 
@@ -177,7 +177,7 @@
                         android:gravity="center"
                         android:paddingStart="14dp"
                         android:paddingEnd="10dp"
-                        android:text="Tiếng Việt"
+                        android:text="@string/language_vietnamese"
                         android:textSize="@dimen/text_16" />
                 </LinearLayout>
 
@@ -213,13 +213,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.H3"
-                                android:text="Thông báo" />
+                                android:text="@string/notifications_title" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.Small"
-                                android:text="Chọn loại thông báo bạn muốn nhận"
+                                android:text="@string/notifications_description"
                                 android:textSize="@dimen/text_14" />
                         </LinearLayout>
                     </LinearLayout>
@@ -264,13 +264,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.H3"
-                                android:text="Ứng dụng" />
+                                android:text="@string/app_section_title" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.Small"
-                                android:text="Thông tin và hỗ trợ"
+                                android:text="@string/app_section_description"
                                 android:textSize="@dimen/text_14" />
                         </LinearLayout>
                     </LinearLayout>
@@ -315,14 +315,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.H3"
-                                android:text="Tài khoản"
+                                android:text="@string/account_section_title"
                                 android:textColor="@color/red" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/T.Small"
-                                android:text="Bảo mật và dữ liệu cá nhân"
+                                android:text="@string/account_section_description"
                                 android:textSize="@dimen/text_14" />
                         </LinearLayout>
                     </LinearLayout>
@@ -336,7 +336,7 @@
                         android:drawableStart="@drawable/ic_lock_outline"
                         android:gravity="center_vertical"
                         android:minHeight="48dp"
-                        android:text="Đổi mật khẩu" />
+                        android:text="@string/change_password" />
 
                     <LinearLayout
                         android:id="@+id/btn_reset"
@@ -365,7 +365,7 @@
                             android:layout_width="0dp"
                             android:layout_marginStart="10dp"
                             android:layout_weight="1"
-                            android:text="Xóa tài khoản"
+                            android:text="@string/delete_account"
                             android:textColor="@color/red"
                             android:textSize="@dimen/text_17"
                             android:textStyle="bold" />

@@ -40,7 +40,7 @@ public class FeedbackService {
 
     public String submit(String uid, Scan scan, FeedbackRequest r) {
         media.assertOwned(uid, r.attachments());
-        if (r.suggestedDiseaseCode() != null && !r.suggestedDiseaseCode().isBlank()) diseases.require(r.suggestedDiseaseCode());
+        if (r.suggestedDiseaseCode() != null && !r.suggestedDiseaseCode().isBlank()) diseases.requireVisible(r.suggestedDiseaseCode());
         DocumentReference ref = refs.feedbacks().document();
         Map<String, Object> data = new HashMap<>();
         data.put("userId", uid);

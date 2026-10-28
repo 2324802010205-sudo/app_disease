@@ -259,7 +259,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Session.
 
     /** Decorative corner images (tag "deco") bleed under the status bar. */
     private void liftDecorations(View view, float dy) {
-        if ("deco".equals(view.getTag())) view.setTranslationY(dy);
+        if ("deco".equals(view.getTag())) {
+            boolean night = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                    == Configuration.UI_MODE_NIGHT_YES;
+            view.setVisibility(night ? View.GONE : View.VISIBLE);
+            if (!night) view.setTranslationY(dy);
+        }
         if (view instanceof ViewGroup) {
             ViewGroup g = (ViewGroup) view;
             for (int i = 0; i < g.getChildCount(); i++) liftDecorations(g.getChildAt(i), dy);

@@ -481,12 +481,15 @@
                 <LinearLayout
                     android:id="@+id/stat_scans"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="0dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_tint"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -513,7 +516,7 @@
                             style="@style/T"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="6dp"
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textColor="@color/ink_deep"
@@ -527,6 +530,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:singleLine="true"
                         android:text="Lần quét"
                         android:textColor="@color/ink"
                         android:textSize="@dimen/text_15"
@@ -538,19 +542,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:textSize="@dimen/text_13"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="@dimen/text_12"
                         tools:text="Trong 30 ngày" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/stat_fields"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_tint"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -577,7 +587,7 @@
                             style="@style/T"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="6dp"
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textColor="@color/ink_deep"
@@ -591,6 +601,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:singleLine="true"
                         android:text="Ruộng lúa"
                         android:textColor="@color/ink"
                         android:textSize="@dimen/text_15"
@@ -602,19 +613,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:textSize="@dimen/text_13"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="@dimen/text_12"
                         tools:text="Tổng 2,4 ha" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/stat_alerts"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_red"
                     android:orientation="vertical"
-                    android:padding="12dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -641,7 +658,7 @@
                             style="@style/T"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
+                            android:layout_marginStart="6dp"
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textColor="@color/ink_deep"
@@ -655,6 +672,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:singleLine="true"
                         android:text="Cảnh báo"
                         android:textColor="@color/red"
                         android:textSize="@dimen/text_15"
@@ -666,7 +684,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:textSize="@dimen/text_13"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="@dimen/text_12"
                         tools:text="Cần chú ý" />
                 </LinearLayout>
             </LinearLayout>

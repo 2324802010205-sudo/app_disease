@@ -15,11 +15,13 @@ import com.example.project_final.api.Requests;
 import com.example.project_final.api.Session;
 import com.example.project_final.model.User;
 import com.example.project_final.util.Forms;
+import com.example.project_final.util.Appearance;
 import com.google.android.material.materialswitch.MaterialSwitch;
 
 public class SettingsActivity extends BaseActivity {
     private MaterialSwitch[] switches = new MaterialSwitch[3];
     private boolean binding;
+    private TextView languageView;
 
     @Override
     protected int layout() {
@@ -28,8 +30,23 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onReady() {
-        String[] title = {"Cảnh báo bệnh", "Nhắc lịch kiểm tra", "Cập nhật cộng đồng"};
-        String[] desc = {"Nhận thông báo khi phát hiện dấu hiệu sâu bệnh hoặc thời tiết bất thường", "Nhận nhắc nhở định kỳ kiểm tra đồng ruộng", "Nhận thông báo về bài viết và hoạt động cộng đồng"};
+        Ui.fill(findViewById(R.id.list_theme), R.layout.item_theme_option, 3, (item, i) -> {
+            TextView option = (TextView) item;
+            String[] values = {"SYSTEM", "LIGHT", "DARK"};
+            int[] labels = {R.string.theme_system, R.string.theme_light, R.string.theme_dark};
+            option.setText(labels[i]);
+            option.setSelected(values[i].equals(Appearance.theme(this)));
+            option.setOnClickListener(v -> saveAppearance(values[i], null));
+        });
+        languageView = findViewById(R.id.dd_language);
+        languageView.setText("en".equals(Appearance.language(this)) ? R.string.language_english : R.string.language_vietnamese);
+        languageView.setOnClickListener(v -> new AlertDialog.Builder(this)
+                .setTitle(R.string.language_title)
+                .setItems(new String[]{getString(R.string.language_vietnamese), getString(R.string.language_english)},
+                        (d, which) -> saveAppearance(null, which == 0 ? "vi" : "en"))
+                .show());
+        String[] title = {getString(R.string.notify_alert), getString(R.string.notify_reminder), getString(R.string.notify_community)};
+        String[] desc = {getString(R.string.notify_alert_desc), getString(R.string.notify_reminder_desc), getString(R.string.notify_community_desc)};
         int[] icon = {R.drawable.ic_eco, R.drawable.ic_calendar, R.drawable.ic_group};
         Ui.fill(findViewById(R.id.list_switches), R.layout.item_switch_row, 3, (item, i) -> {
             ((ImageView) item.findViewById(R.id.icon)).setImageResource(icon[i]);
@@ -43,12 +60,9 @@ public class SettingsActivity extends BaseActivity {
         });
         bindSettings(Session.user());
 
-        String[] appLabels = {"Phiên bản", "Giới thiệu ứng dụng", "Trợ giúp & câu hỏi thường gặp", "Quyền riêng tư"};
+        String[] appLabels = {getString(R.string.version), getString(R.string.about_app), getString(R.string.help_faq), getString(R.string.privacy)};
         int[] appIcons = {R.drawable.ic_info, R.drawable.ic_description, R.drawable.ic_help, R.drawable.ic_shield_check};
-        String[] infoText = {null,
-                "RiceGuard AI giúp nông dân phát hiện sớm bệnh trên lá lúa bằng ảnh chụp, đưa ra khuyến nghị, theo dõi ruộng và chia sẻ kinh nghiệm với cộng đồng. Kết quả chỉ mang tính tham khảo; hãy đọc kỹ nhãn thuốc và hỏi cán bộ bảo vệ thực vật trước khi xử lý.",
-                "• Ảnh bị báo “cần chụp lại”: chụp cận một lá, đủ sáng, giữ chắc tay.\n• Không có kết quả: kiểm tra kết nối mạng rồi bấm thử lại ở màn kết quả.\n• Kết quả chưa đúng: dùng nút Gửi phản hồi để giúp cải thiện độ chính xác.",
-                "Ảnh và dữ liệu của bạn chỉ dùng để chẩn đoán và cải thiện dịch vụ, lưu riêng theo tài khoản. Bạn có thể xóa tài khoản cùng toàn bộ dữ liệu ngay trong mục này."};
+        String[] infoText = {null, getString(R.string.about_app_body), getString(R.string.help_faq_body), getString(R.string.privacy_body)};
         Ui.fill(findViewById(R.id.list_app), R.layout.item_menu_row, 4, (item, i) -> {
             Ui.text(item, R.id.label, appLabels[i]);
             ((ImageView) item.findViewById(R.id.icon)).setImageResource(appIcons[i]);
@@ -59,16 +73,16 @@ public class SettingsActivity extends BaseActivity {
                 value.setText(BuildConfig.VERSION_NAME);
             } else {
                 item.findViewById(R.id.row).setOnClickListener(v -> new AlertDialog.Builder(this)
-                        .setTitle(appLabels[i]).setMessage(infoText[i]).setPositiveButton("Đã hiểu", null).show());
+                        .setTitle(appLabels[i]).setMessage(infoText[i]).setPositiveButton(R.string.understood, null).show());
             }
         });
 
         findViewById(R.id.btn_password).setOnClickListener(v -> changePassword());
         findViewById(R.id.btn_reset).setOnClickListener(v -> new AlertDialog.Builder(this)
-                .setTitle("Xóa tài khoản?")
-                .setMessage("Toàn bộ ruộng, lịch sử quét, nhật ký và ảnh của bạn sẽ bị xóa vĩnh viễn. Không thể hoàn tác.")
-                .setNegativeButton("Hủy", null)
-                .setPositiveButton("Xóa vĩnh viễn", (d, w) -> deleteAccount())
+                .setTitle(R.string.delete_account_question)
+                .setMessage(R.string.delete_account_warning)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.delete_permanently, (d, w) -> deleteAccount())
                 .show());
     }
 
@@ -97,6 +111,8 @@ public class SettingsActivity extends BaseActivity {
         switches[1].setChecked(s.notifyReminder);
         switches[2].setChecked(s.notifyCommunity);
         binding = false;
+        if (s.theme != null && !s.theme.equals(Appearance.theme(this))) Appearance.applyTheme(this, s.theme);
+        if (s.language != null && !s.language.equals(Appearance.language(this))) Appearance.applyLanguage(this, s.language);
     }
 
     private void saveSwitches() {
@@ -118,24 +134,38 @@ public class SettingsActivity extends BaseActivity {
         });
     }
 
+    private void saveAppearance(String theme, String language) {
+        Requests.Settings body = new Requests.Settings();
+        body.theme = theme;
+        body.language = language;
+        call(api().updateSettings(body), new ApiCallback<User>() {
+            @Override public void onSuccess(User u) {
+                Session.setUser(u);
+                if (theme != null) Appearance.applyTheme(SettingsActivity.this, theme);
+                if (language != null) Appearance.applyLanguage(SettingsActivity.this, language);
+            }
+            @Override public void onError(ApiError error) { showError(error); }
+        });
+    }
+
     private void changePassword() {
         LinearLayout box = new LinearLayout(this);
         box.setOrientation(LinearLayout.VERTICAL);
         int pad = (int) Ui.dp(this, 20);
         box.setPadding(pad, pad / 2, pad, 0);
-        EditText current = passwordField("Mật khẩu hiện tại");
-        EditText next = passwordField("Mật khẩu mới (ít nhất 8 ký tự)");
+        EditText current = passwordField(getString(R.string.current_password));
+        EditText next = passwordField(getString(R.string.new_password_hint));
         box.addView(current);
         box.addView(next);
         new AlertDialog.Builder(this)
-                .setTitle("Đổi mật khẩu")
+                .setTitle(R.string.change_password)
                 .setView(box)
-                .setNegativeButton("Hủy", null)
-                .setPositiveButton("Đổi mật khẩu", (d, w) -> {
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.change_password, (d, w) -> {
                     String cur = current.getText().toString();
                     String nw = next.getText().toString();
                     if (cur.isEmpty() || nw.length() < 8) {
-                        toast("Nhập mật khẩu hiện tại và mật khẩu mới từ 8 ký tự");
+                        toast(getString(R.string.password_validation));
                         return;
                     }
                     busy(true);
@@ -143,7 +173,7 @@ public class SettingsActivity extends BaseActivity {
                         @Override
                         public void onSuccess(Void body) {
                             busy(false);
-                            toast("Đã đổi mật khẩu. Vui lòng đăng nhập lại");
+                            toast(getString(R.string.password_changed));
                             Session.clear();
                             toLogin();
                         }
@@ -172,7 +202,7 @@ public class SettingsActivity extends BaseActivity {
             public void onSuccess(Void body) {
                 busy(false);
                 Session.clear();
-                toast("Đã xóa tài khoản");
+                toast(getString(R.string.account_deleted));
                 toLogin();
             }
 

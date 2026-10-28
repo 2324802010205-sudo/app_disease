@@ -35,7 +35,7 @@
             android:paddingStart="22dp"
             android:paddingTop="30dp"
             android:paddingEnd="22dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="24dp">
 
             <ImageView
                 android:layout_width="64dp"
@@ -76,7 +76,7 @@
                 style="@style/T.Title"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="34dp"
-                android:text="Chào mừng trở lại"
+                android:text="@string/login_welcome"
                 android:textSize="@dimen/text_29" />
 
             <TextView
@@ -86,7 +86,18 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Đăng nhập để tiếp tục chăm sóc và bảo vệ mùa màng của bạn" />
+                android:text="@string/login_subtitle" />
+
+            <TextView
+                android:id="@+id/login_error"
+                style="@style/T.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/red_bg"
+                android:padding="12dp"
+                android:textColor="@color/red"
+                android:visibility="gone" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -111,7 +122,7 @@
                     android:id="@+id/input_password"
                     style="@style/Input"
                     android:drawableStart="@drawable/ic_lock_outline"
-                    android:hint="Mật khẩu"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:paddingEnd="48dp" />
 
@@ -135,7 +146,7 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="12dp"
                 android:padding="4dp"
-                android:text="Quên mật khẩu?" />
+                android:text="@string/forgot_password" />
 
             <com.example.project_final.view.IconTextView
                 android:layout_width="match_parent"
@@ -145,7 +156,7 @@
                 style="@style/Btn.Primary"
                 android:layout_marginTop="12dp"
                 android:drawableEnd="@drawable/ic_arrow_forward"
-                android:text="Đăng nhập" />
+                android:text="@string/sign_in" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,7 +182,7 @@
                     style="@style/T.Small"
                     android:layout_marginStart="14dp"
                     android:layout_marginEnd="14dp"
-                    android:text="Hoặc" />
+                    android:text="@string/or" />
 
                 <View
                     android:layout_width="0dp"
@@ -189,7 +200,7 @@
                 android:layout_marginTop="14dp"
                 android:drawableStart="@drawable/ic_google"
                 android:drawableTint="@null"
-                android:text="Tiếp tục với Google"
+                android:text="@string/continue_google"
                 android:textColor="@color/ink_deep" />
 
             <com.example.project_final.view.IconTextView
@@ -200,7 +211,7 @@
         android:minHeight="48dp"
                 android:layout_marginTop="12dp"
                 android:drawableStart="@drawable/ic_person_outline"
-                android:text="Tiếp tục với khách" />
+                android:text="@string/continue_guest" />
             </LinearLayout>
 
             <Space
@@ -219,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/T.Body"
-                    android:text="Chưa có tài khoản? "
+                    android:text="@string/no_account"
                     android:textColor="@color/ink"
                     android:textSize="@dimen/text_17" />
 
@@ -228,7 +239,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_register"
                     style="@style/T.Link"
-                    android:text="Đăng ký"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/sign_up"
                     android:textSize="@dimen/text_17" />
             </LinearLayout>
         </LinearLayout>

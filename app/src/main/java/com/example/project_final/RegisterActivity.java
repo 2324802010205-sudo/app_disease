@@ -48,6 +48,23 @@ public class RegisterActivity extends BaseActivity {
             if (!termsAccepted()) return;
             GoogleAuth.start(this, true);
         });
+        View layoutTerms = findViewById(R.id.layout_terms);
+        if (layoutTerms != null) {
+            layoutTerms.setOnClickListener(v -> {
+                CheckBox cb = findViewById(R.id.check_terms);
+                if (cb != null) cb.setChecked(!cb.isChecked());
+            });
+        }
+        View txtTerms = findViewById(R.id.txt_terms_of_use);
+        if (txtTerms != null) {
+            txtTerms.setOnClickListener(v -> {
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.terms_of_use)
+                        .setMessage(R.string.terms_content)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            });
+        }
 
         googleToken = getIntent().getStringExtra(EXTRA_GOOGLE_TOKEN);
         if (googleToken != null) enterGoogleMode();

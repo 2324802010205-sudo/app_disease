@@ -31,7 +31,8 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http, FirebaseAuth firebaseAuth, AppProperties props, ObjectMapper mapper) throws Exception {
-        FirebaseAuthFilter authFilter = new FirebaseAuthFilter(firebaseAuth, props.firebase().checkRevoked());
+        // Account locking must invalidate already issued ID tokens on every request.
+        FirebaseAuthFilter authFilter = new FirebaseAuthFilter(firebaseAuth, true);
         RateLimitFilter rateLimit = new RateLimitFilter(mapper, props.security().rateLimitPerMinute(), props.security().authRateLimitPerMinute());
 
         http.csrf(AbstractHttpConfigurer::disable)

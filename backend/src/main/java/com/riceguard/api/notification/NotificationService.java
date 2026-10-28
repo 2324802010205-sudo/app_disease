@@ -35,12 +35,29 @@ public class NotificationService {
     /** Tạo thông báo (nếu người dùng chưa tắt loại này) và đẩy FCM không đồng bộ. */
     public Notification create(String uid, String kind, String title, String body, String refType, String refId) {
         UserProfile p = fs.get(refs.user(uid), UserProfile.class);
-        if (p == null || !enabled(p.settingsOrDefault(), kind)) return null;
+        if (p == null || p.locked() || !enabled(p.settingsOrDefault(), kind)) return null;
         DocumentReference ref = refs.notifications(uid).document();
         Notification n = new Notification(ref.getId(), kind, title, body, refType, refId, false, times.now());
         fs.set(ref, n);
         push.send(p.fcmTokens(), uid, n);
         return n;
+    }
+
+    /** One inbox notification per campaign and recipient, safe to retry after a partial run. */
+    public boolean createCampaign(String uid, String campaignId, String title, String body) {
+        UserProfile p = fs.get(refs.user(uid), UserProfile.class);
+        if (p == null || p.locked()) return false;
+        DocumentReference ref = refs.notifications(uid).document("campaign_" + campaignId);
+        if (fs.exists(ref)) return true;
+        Notification n = new Notification(ref.getId(), "UPDATE", title, body, "campaign", campaignId, false, times.now());
+        try {
+            Fs.await(ref.create(fs.toMap(n)));
+        } catch (RuntimeException error) {
+            if (fs.exists(ref)) return true;
+            throw error;
+        }
+        push.send(p.fcmTokens(), uid, n);
+        return true;
     }
 
     static boolean enabled(UserProfile.Settings s, String kind) {

@@ -14,10 +14,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
+            android:layout_height="match_parent"
             android:importantForAccessibility="no"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/img_onboard_hero" />
 
         <View
