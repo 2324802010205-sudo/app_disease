@@ -5,7 +5,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 
 import com.example.project_final.R;
-import com.example.project_final.Ui;
+import com.example.project_final.ui.common.Ui;
 import com.example.project_final.model.RiceField;
 import com.example.project_final.model.Scan;
 

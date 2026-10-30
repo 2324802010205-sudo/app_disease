@@ -10,13 +10,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.project_final.FieldsActivity;
-import com.example.project_final.HomeActivity;
-import com.example.project_final.LibraryActivity;
-import com.example.project_final.NotificationsActivity;
-import com.example.project_final.ProfileActivity;
+import com.example.project_final.ui.field.FieldsActivity;
+import com.example.project_final.ui.home.HomeActivity;
+import com.example.project_final.ui.library.LibraryActivity;
+import com.example.project_final.ui.profile.NotificationsActivity;
+import com.example.project_final.ui.profile.ProfileActivity;
 import com.example.project_final.R;
-import com.example.project_final.ScanActivity;
+import com.example.project_final.ui.scan.ScanActivity;
 import com.example.project_final.api.Session;
 import com.example.project_final.model.User;
 import com.example.project_final.util.Img;
@@ -89,8 +89,8 @@ public class NavBar extends FrameLayout {
         if (index == selected) return;
         Context ctx = getContext();
         // Khách chỉ xem: các mục cần tài khoản hiện lời mời đăng nhập/đăng ký.
-        if (GUEST_ACTIONS[index] != null && ctx instanceof com.example.project_final.BaseActivity
-                && !((com.example.project_final.BaseActivity) ctx).requireAccount(GUEST_ACTIONS[index])) return;
+        if (GUEST_ACTIONS[index] != null && ctx instanceof com.example.project_final.ui.common.BaseActivity
+                && !((com.example.project_final.ui.common.BaseActivity) ctx).requireAccount(GUEST_ACTIONS[index])) return;
         Intent it = new Intent(ctx, TARGETS[index]);
         if (index == SCAN) {
             ctx.startActivity(it);

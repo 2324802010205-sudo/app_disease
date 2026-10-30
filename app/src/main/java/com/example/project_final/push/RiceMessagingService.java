@@ -8,7 +8,7 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.project_final.NotificationsActivity;
+import com.example.project_final.ui.profile.NotificationsActivity;
 import com.example.project_final.R;
 import com.example.project_final.api.Session;
 import com.google.firebase.messaging.FirebaseMessagingService;

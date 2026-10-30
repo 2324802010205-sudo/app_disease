@@ -1,5 +1,20 @@
 package com.example.project_final.api;
 
+import com.example.project_final.model.AuthResponse;
+import com.example.project_final.model.Comment;
+import com.example.project_final.model.DiaryEntry;
+import com.example.project_final.model.Disease;
+import com.example.project_final.model.ImageRef;
+import com.example.project_final.model.MetaOptions;
+import com.example.project_final.model.Notification;
+import com.example.project_final.model.Page;
+import com.example.project_final.model.Post;
+import com.example.project_final.model.RiceField;
+import com.example.project_final.model.Risk;
+import com.example.project_final.model.Scan;
+import com.example.project_final.model.Stats;
+import com.example.project_final.model.User;
+import com.example.project_final.model.Weather;
 import com.example.project_final.model.*;
 
 import java.util.List;

@@ -322,7 +322,7 @@
                         tools:text="Số lần quét cây lúa bằng RiceGuard AI trong 7 ngày gần nhất"
                         android:textSize="@dimen/text_14" />
 
-                    <com.example.project_final.BarChartView
+                    <com.example.project_final.view.BarChartView
                         android:id="@+id/chart"
                         android:layout_width="match_parent"
                         android:layout_height="170dp"

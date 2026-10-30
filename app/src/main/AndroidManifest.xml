@@ -43,7 +43,7 @@
         </provider>
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.auth.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Project_final.Splash">
             <intent-filter>
@@ -53,139 +53,139 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OnboardingActivity"
+            android:name=".ui.auth.OnboardingActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.auth.RegisterActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".ui.auth.ForgotPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".WeatherActivity"
+            android:name=".ui.field.WeatherActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ScanActivity"
+            android:name=".ui.scan.ScanActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ReviewPhotoActivity"
+            android:name=".ui.scan.ReviewPhotoActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".AnalyzingActivity"
+            android:name=".ui.scan.AnalyzingActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ResultActivity"
+            android:name=".ui.scan.ResultActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".FeedbackActivity"
+            android:name=".ui.scan.FeedbackActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".HistoryActivity"
+            android:name=".ui.scan.HistoryActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ResultDetailActivity"
+            android:name=".ui.scan.ResultDetailActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".LibraryActivity"
+            android:name=".ui.library.LibraryActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DiseaseDetailActivity"
+            android:name=".ui.library.DiseaseDetailActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SavedActivity"
+            android:name=".ui.scan.SavedActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".FieldsActivity"
+            android:name=".ui.field.FieldsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".AddFieldActivity"
+            android:name=".ui.field.AddFieldActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".FieldDetailActivity"
+            android:name=".ui.field.FieldDetailActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DiaryActivity"
+            android:name=".ui.diary.DiaryActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".AddDiaryActivity"
+            android:name=".ui.diary.AddDiaryActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CompareActivity"
+            android:name=".ui.scan.CompareActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CommunityActivity"
+            android:name=".ui.community.CommunityActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".PostDetailActivity"
+            android:name=".ui.community.PostDetailActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CreatePostActivity"
+            android:name=".ui.community.CreatePostActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".MyPostsActivity"
+            android:name=".ui.community.MyPostsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".RiskMapActivity"
+            android:name=".ui.field.RiskMapActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".AreaInfoActivity"
+            android:name=".ui.field.AreaInfoActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".NotificationsActivity"
+            android:name=".ui.profile.NotificationsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ui.profile.ProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".ui.profile.EditProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".StatsActivity"
+            android:name=".ui.profile.StatsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.profile.SettingsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".PhotoViewActivity"
+            android:name=".ui.common.PhotoViewActivity"
             android:exported="false" />
     </application>
 
