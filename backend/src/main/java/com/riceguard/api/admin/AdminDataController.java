@@ -81,22 +81,31 @@ public class AdminDataController {
         return result;
     }
 
+    /** Lượt quét là "ca bệnh" khi đã chẩn đoán ra một bệnh cụ thể: không tính lá khỏe, chưa xác định hay đang chờ. */
+    static boolean isCase(Scan s) {
+        String code = s.diseaseCode();
+        return "DIAGNOSED".equals(s.status()) && code != null && !code.isBlank()
+                && !"healthy".equals(code) && !"unknown".equals(code);
+    }
+
     @GetMapping("/overview")
     public Map<String, Object> overview() {
         Map<String, Object> stats = stats();
         List<Scan> scans = fs.query(fs.db().collectionGroup("scans"), Scan.class);
         long today = times.startOfDay(times.today());
-        Map<String, Long> mix = scans.stream().filter(s -> s.diseaseCode() != null && !s.diseaseCode().isBlank())
-                .collect(Collectors.groupingBy(Scan::diseaseCode, Collectors.counting()));
+        Map<String, Long> mix = scans.stream().filter(AdminDataController::isCase)
+                .collect(Collectors.groupingBy(s -> s.diseaseName() == null || s.diseaseName().isBlank() ? s.diseaseCode() : s.diseaseName(), Collectors.counting()));
         List<Map<String, Object>> trend = new ArrayList<>();
         for (int offset = 6; offset >= 0; offset--) {
             var date = times.today().minusDays(offset);
             long start = times.startOfDay(date), end = times.startOfDay(date.plusDays(1));
             trend.add(Map.of("day", date.toString(), "scans", scans.stream().filter(s -> s.createdAt() >= start && s.createdAt() < end).count(),
-                    "cases", scans.stream().filter(s -> s.createdAt() >= start && s.createdAt() < end && s.diseaseCode() != null && !s.diseaseCode().isBlank()).count()));
+                    "cases", scans.stream().filter(s -> s.createdAt() >= start && s.createdAt() < end && isCase(s)).count()));
         }
-        return Map.of("scans", scans.size(), "todayCases", scans.stream().filter(s -> s.createdAt() >= today && s.diseaseCode() != null && !s.diseaseCode().isBlank()).count(),
-                "reports", stats.get("reports"), "feedbacks", stats.get("feedbacks"), "posts", stats.get("posts"),
+        Map<String, Object> users = Map.of("total", fs.count(refs.users()),
+                "newToday", fs.count(refs.users().whereGreaterThanOrEqualTo("createdAt", today)));
+        return Map.of("scans", scans.size(), "todayCases", scans.stream().filter(s -> s.createdAt() >= today && isCase(s)).count(),
+                "users", users, "reports", stats.get("reports"), "feedbacks", stats.get("feedbacks"), "posts", stats.get("posts"),
                 "trend", trend, "diseaseMix", mix.entrySet().stream().map(e -> Map.of("name", e.getKey(), "value", e.getValue())).toList());
     }
 }

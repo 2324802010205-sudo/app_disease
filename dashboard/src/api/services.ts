@@ -73,7 +73,7 @@ export const riskService = {
 export const operationService = {
   runReminders: (test = false) => unwrap(api.post<{ sent: number }>('/admin/jobs/reminders', null, { params: { test } })),
   previewReminders: () => unwrap(api.get<{ count: number; recipients: { userId: string; fieldId: string; fieldName: string; province?: string; district?: string }[] }>('/admin/jobs/reminders/preview')),
-  status: () => unwrap(api.get<{ backend: string; firestore: string; diseases: number; riskAreas: number; reports: number; jobs: { id: string; kind: string; count: number; createdAt: number }[] }>('/admin/operations')),
+  status: () => unwrap(api.get<{ backend: string; firestore: string; diagnosis: { engine: string; available: boolean }; diseases: number; riskAreas: number; reports: number; jobs: { id: string; kind: string; count: number; createdAt: number }[] }>('/admin/operations')),
   refreshRisk: () => unwrap(api.post<{ count: number }>('/admin/jobs/risk-refresh')),
   syncDiseases: () => unwrap(api.post<{ count: number }>('/admin/jobs/disease-sync')),
 }

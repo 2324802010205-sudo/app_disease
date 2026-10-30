@@ -76,7 +76,7 @@ Firebase Console → Authentication → Sign-in method → bật **Google**. Bac
 |---|---|
 | `none` (mặc định) | Lưu ảnh và trả `status=PENDING`; chạy `POST /scans/{id}/diagnose` khi đã có AI. |
 | `claude` | Gửi ảnh (đã thu nhỏ) cho Claude, nhận JSON có cấu trúc (mã bệnh, độ tin cậy, triệu chứng, khuyến nghị). Cần `ANTHROPIC_API_KEY`; model mặc định `claude-opus-5-5` (đổi bằng `DIAGNOSIS_CLAUDE_MODEL`). Mỗi lượt quét tính phí theo bảng giá API. |
-| `http` | `POST DIAGNOSIS_HTTP_URL` với `{imageUrl, stage, variety, weather}`, trả JSON dạng `DiagnosisResult` (xem `diagnosis/DiagnosisResult.java`). Dùng khi nhóm tự huấn luyện mô hình. |
+| `http` | `POST DIAGNOSIS_HTTP_URL` với `{imageUrl, stage, variety, weather}`, trả JSON dạng `DiagnosisResult` (xem `diagnosis/DiagnosisResult.java`). Dùng khi nhóm tự huấn luyện mô hình; dịch vụ cho `best.pt` nằm ở `../model/`. Triệu chứng/khuyến nghị nếu dịch vụ không gửi sẽ được điền từ thư viện bệnh. |
 
 Quy tắc kết quả: ảnh không phải lúa hoặc độ tin cậy < 0.5 → `NEEDS_RETAKE` (kèm hướng dẫn chụp lại), mã bệnh không có trong danh mục bị từ chối. Mức rủi ro: `NORMAL` (khỏe), `WATCH` (nhẹ), `HIGH` (vừa/nặng).
 

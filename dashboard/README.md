@@ -13,7 +13,8 @@ Dashboard React/TypeScript dùng API Spring Boot tại `../backend`. Mọi số 
 
 ## API quản trị
 
-- `GET /admin/overview`, `/admin/stats`: thống kê toàn hệ thống, xu hướng bảy ngày và phân bố bệnh.
+- `GET /admin/overview`, `/admin/stats`: thống kê toàn hệ thống (người dùng, lượt quét, báo cáo, phản hồi, bài viết), xu hướng bảy ngày và phân bố bệnh. "Ca bệnh" chỉ tính lượt quét đã chẩn đoán ra một bệnh cụ thể; lá khỏe, chưa xác định và đang chờ không tính.
+- `GET /admin/operations` còn trả trạng thái dịch vụ chẩn đoán AI (`diagnosis.engine`, `diagnosis.available`).
 - `GET /admin/reports`: lọc và phân trang; `PUT /admin/reports/{id}` duyệt; `POST /admin/reports/{id}/remove-content` xóa nội dung và xử lý các báo cáo liên quan.
 - `GET /admin/posts`, `/admin/posts/{id}`, `/admin/posts/{id}/comments`: danh sách và chi tiết quản trị; `PUT /admin/posts/{id}/visibility` ẩn hoặc bỏ ẩn.
 - `GET /admin/feedbacks`: lọc và phân trang; `PUT /admin/feedbacks/{id}` lưu trạng thái và kết luận, gồm ảnh đính kèm trong DTO.

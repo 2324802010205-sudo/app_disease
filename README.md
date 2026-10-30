@@ -4,12 +4,19 @@
 
 ```
 project_final/
-├─ app/        Ứng dụng Android (Java, XML, API 24+; build bằng Android Studio)
-└─ backend/    REST API Spring Boot 3.5 / Java 17  →  Firestore, Firebase Auth, Cloudinary, FCM, Open-Meteo, Claude (AI)
+├─ app/         Ứng dụng Android (Java, XML, API 24+; build bằng Android Studio). Gradle gốc ở thư mục này (settings.gradle.kts)
+├─ backend/     REST API Spring Boot 3.5 / Java 17  →  Firestore, Firebase Auth, Cloudinary, FCM, Open-Meteo, mô hình AI
+├─ dashboard/   Dashboard quản trị React + TypeScript (Vite), gọi API của backend
+├─ model/       Mô hình nhận dạng bệnh lá lúa: weights/best.pt (YOLOv9c) + dịch vụ suy luận FastAPI. Xem model/README.md
+├─ scripts/     Công cụ chạy/cấu hình: RunDemo.cmd (chạy demo Windows), demo/ (dữ liệu giả lập), fetch-firebase-config.cjs
+└─ docs/        Tài liệu: BuildDashboard.md (yêu cầu dashboard), AnhGiaoDien.docx (ảnh giao diện), reference/
 ```
+
+**Tìm lỗi ở đâu:** đăng nhập/Google → `app/.../GoogleAuth.java`, `util/GoogleSignIn.java` và `backend/.../auth/`; chẩn đoán AI → `model/service/` (mô hình) và `backend/.../diagnosis/` (cổng gọi + quy đổi kết quả); số liệu dashboard → `backend/.../admin/` và `dashboard/src/pages/`; cấu hình Firebase → `app/google-services.json` (không commit).
 
 ## Chạy thử nhanh (không cần khóa thật)
 
+0. **Windows, một cú nhấp**: chạy `scripts\RunDemo.cmd` (dựng emulator, backend, dữ liệu mẫu và dashboard). Hoặc làm tay theo các bước dưới.
 1. **Backend + dữ liệu giả lập** (xem chi tiết ở `backend/README.md`):
    ```bash
    firebase emulators:start --only auth,firestore --project demo-riceguard   # cửa sổ 1
@@ -18,12 +25,13 @@ project_final/
 2. **App**: mở thư mục gốc bằng Android Studio, chạy trên máy ảo. Mặc định app gọi `http://10.0.2.2:8080` (máy tính chủ nhìn từ máy ảo).
    Điện thoại thật: đặt IP máy tính vào `gradle.properties` (`riceguard.apiBaseUrl=http://192.168.1.10:8080`), máy tính và điện thoại cùng Wi-Fi.
 3. Đăng ký tài khoản trong app rồi dùng bình thường. Chưa có AI thì ảnh vẫn được lưu và kết quả hiện “Đang chờ phân tích” (xem `DIAGNOSIS_PROVIDER` trong `backend/README.md`).
+4. **Bật chẩn đoán bằng `best.pt`**: chạy dịch vụ trong `model/` rồi đặt `DIAGNOSIS_PROVIDER=http` cho backend (các bước trong `model/README.md`).
 
 > **Android 17**: kết nối tới địa chỉ mạng nội bộ (10.0.2.2, IP LAN) cần quyền `ACCESS_LOCAL_NETWORK`. Bản debug tự xin quyền khi mở app;
 > nếu lỡ từ chối, cấp lại bằng `adb shell pm grant com.example.project_final android.permission.ACCESS_LOCAL_NETWORK`.
 
 ## Đăng nhập Google và chế độ khách
-* **Google**: dùng Web client ID trong `riceguard.googleWebClientId` và Android app cùng Firebase project với backend. SHA-1/SHA-256 của debug keystore hiện đã đăng ký. Với bản release, đăng ký thêm SHA của khóa ký phát hành trong Firebase trước khi phân phối.
+* **Google**: dùng Web client ID trong `riceguard.googleWebClientId` và Android app cùng Firebase project với backend. SHA-1 của keystore dùng để ký bản đang chạy phải có trong Firebase Console > Project settings > Your apps (lấy bằng `keytool -list -v -keystore %USERPROFILE%\.android\debug.keystore -alias androiddebugkey -storepass android`); sai SHA thì đăng nhập Google báo lỗi ngay trên máy. Với bản release, đăng ký thêm SHA của khóa ký phát hành trong Firebase trước khi phân phối.
   Đăng nhập bằng Google mà tài khoản chưa có → app chuyển sang màn **Hoàn tất đăng ký** (điền sẵn tên, email).
 * **Khách**: “Tiếp tục với khách” chỉ cho xem (thời tiết, thư viện bệnh, bản đồ nguy cơ, đọc cộng đồng). Quét, bình luận, thích, lưu, ruộng, thông báo, hồ sơ
   đều hiện lời mời đăng nhập/đăng ký (`BaseActivity.requireAccount`). Màn hình mới cho khách vào thì khai báo `allowsGuest()`.
@@ -34,7 +42,7 @@ Chỉ cần điền biến môi trường cho backend (không sửa code, không
 
 ## Firebase trên Android và thông báo đẩy
 
-* `app/google-services.json` đã được tải từ Android app của Firebase project hiện tại và được `.gitignore` bỏ qua. Khi dựng workspace mới có cùng service account cục bộ, chạy `node fetch-firebase-config.cjs` để tải lại cấu hình và kiểm tra SHA debug. Không đưa service account hoặc `google-services.json` vào Git.
+* `app/google-services.json` (đúng vị trí này, nếu để ở thư mục gốc thì plugin google-services không được áp dụng và FCM không khởi tạo) tải từ Android app của Firebase project hiện tại và được `.gitignore` bỏ qua. Khi dựng workspace mới có cùng service account cục bộ, chạy `node scripts/fetch-firebase-config.cjs` để tải lại cấu hình và kiểm tra SHA debug. Không đưa service account hoặc `google-services.json` vào Git.
 * Sau khi đăng nhập, app lấy FCM token và gọi `POST /users/me/devices`. Khi token đổi, `RiceMessagingService` đăng ký lại. Khi đăng xuất, app gọi `DELETE /users/me/devices`. Android 13+ xin quyền thông báo sau đăng nhập; thông báo ở foreground mở hộp thư khi chạm.
 * Kiểm thử đầu cuối cần backend đang chạy, thiết bị có Google Play services, tài khoản Google, và thông báo thật được gửi từ backend. Bản release cần HTTPS và SHA của khóa ký phát hành.
 

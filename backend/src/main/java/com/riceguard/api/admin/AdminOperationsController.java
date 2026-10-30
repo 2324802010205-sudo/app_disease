@@ -5,6 +5,7 @@ import com.riceguard.api.common.Fs;
 import com.riceguard.api.common.Refs;
 import com.riceguard.api.common.Slug;
 import com.riceguard.api.common.Times;
+import com.riceguard.api.diagnosis.DiagnosisService;
 import com.riceguard.api.disease.DiseaseService;
 import com.riceguard.api.scan.Scan;
 import com.riceguard.api.security.AuthUser;
@@ -23,9 +24,10 @@ public class AdminOperationsController {
     private final Times times;
     private final DiseaseService diseases;
     private final AdminAuditService audit;
+    private final DiagnosisService diagnosis;
 
-    public AdminOperationsController(Fs fs, Refs refs, Times times, DiseaseService diseases, AdminAuditService audit) {
-        this.fs = fs; this.refs = refs; this.times = times; this.diseases = diseases; this.audit = audit;
+    public AdminOperationsController(Fs fs, Refs refs, Times times, DiseaseService diseases, AdminAuditService audit, DiagnosisService diagnosis) {
+        this.fs = fs; this.refs = refs; this.times = times; this.diseases = diseases; this.audit = audit; this.diagnosis = diagnosis;
     }
 
     public record Recipient(String userId, String fieldId, String fieldName, String province, String district) {}
@@ -50,6 +52,7 @@ public class AdminOperationsController {
             row.put("id", doc.getId()); logs.add(row);
         }
         return Map.of("backend", "ONLINE", "firestore", "ONLINE", "jobs", logs,
+                "diagnosis", Map.of("engine", diagnosis.engineName(), "available", diagnosis.available()),
                 "diseases", fs.count(refs.diseases()), "riskAreas", fs.count(refs.areaStats()), "reports", fs.count(refs.reports()));
     }
 

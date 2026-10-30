@@ -1,0 +1,5 @@
+__pycache__/
+.venv/
+.pytest_cache/
+# best.pt nặng ~150 MB, vượt giới hạn 100 MB của GitHub: chia sẻ qua Drive/Git LFS, không commit thường
+weights/*.pt

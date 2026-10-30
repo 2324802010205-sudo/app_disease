@@ -1,6 +1,7 @@
 package com.riceguard.api.diagnosis;
 
 import com.riceguard.api.config.AppProperties;
+import com.riceguard.api.disease.Disease;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
@@ -10,6 +11,8 @@ import org.springframework.web.client.RestClientException;
 
 import java.net.http.HttpClient;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,9 +47,37 @@ public class HttpDiagnosisEngine implements DiagnosisEngine {
             DiagnosisResult res = spec.body(Map.of("imageUrl", r.imageUrl(), "stage", String.valueOf(r.stage()),
                     "variety", String.valueOf(r.variety()), "weather", String.valueOf(r.weatherSummary()))).retrieve().body(DiagnosisResult.class);
             if (res == null) throw new DiagnosisException("Dịch vụ AI trả về rỗng");
-            return res;
+            return enrich(res, r.catalog());
         } catch (RestClientException e) {
             throw new DiagnosisException("Không gọi được dịch vụ AI: " + e.getMessage(), e);
         }
+    }
+
+    private static final int MAX_PER_KIND = 2;
+
+    /**
+     * Mô hình chỉ nhận dạng bệnh. Triệu chứng và khuyến nghị lấy từ thư viện bệnh (nguồn duy nhất, admin sửa được)
+     * khi dịch vụ AI không tự trả về.
+     */
+    static DiagnosisResult enrich(DiagnosisResult res, List<Disease> catalog) {
+        if (res.diseaseCode() == null || catalog == null) return res;
+        boolean needSymptoms = res.symptoms() == null || res.symptoms().isEmpty();
+        boolean needRecos = res.recommendations() == null || res.recommendations().isEmpty();
+        if (!needSymptoms && !needRecos) return res;
+        Disease d = catalog.stream().filter(x -> x.id().equals(res.diseaseCode())).findFirst().orElse(null);
+        if (d == null) return res;
+        List<String> symptoms = needSymptoms ? orEmpty(d.symptoms()) : res.symptoms();
+        List<DiagnosisResult.Recommendation> recos = res.recommendations();
+        if (needRecos) {
+            recos = new ArrayList<>();
+            for (String t : orEmpty(d.treatment()).stream().limit(MAX_PER_KIND).toList()) recos.add(new DiagnosisResult.Recommendation("Xử lý", t, "LEAF"));
+            for (String t : orEmpty(d.prevention()).stream().limit(MAX_PER_KIND).toList()) recos.add(new DiagnosisResult.Recommendation("Phòng ngừa", t, "SHIELD"));
+        }
+        return new DiagnosisResult(res.riceLeaf(), res.diseaseCode(), res.confidence(), res.severity(), symptoms,
+                res.summary(), recos, res.retakeAdvice());
+    }
+
+    private static List<String> orEmpty(List<String> list) {
+        return list == null ? List.of() : list;
     }
 }
