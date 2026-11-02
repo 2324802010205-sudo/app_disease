@@ -11,6 +11,7 @@ import com.riceguard.api.common.ApiException;
 import com.riceguard.api.common.Fs;
 import com.riceguard.api.common.Refs;
 import com.riceguard.api.common.Times;
+import com.riceguard.api.dataset.DatasetService;
 import com.riceguard.api.media.ImageRef;
 import com.riceguard.api.media.MediaService;
 import com.riceguard.api.security.AuthUser;
@@ -35,14 +36,16 @@ public class UserService {
     private final Times times;
     private final MediaService media;
     private final FirebaseAuth auth;
+    private final DatasetService dataset;
     private final Cache<String, PublicUser> directory = Caffeine.newBuilder().expireAfterWrite(Duration.ofMinutes(5)).maximumSize(50_000).build();
 
-    public UserService(Fs fs, Refs refs, Times times, MediaService media, FirebaseAuth auth) {
+    public UserService(Fs fs, Refs refs, Times times, MediaService media, FirebaseAuth auth, DatasetService dataset) {
         this.fs = fs;
         this.refs = refs;
         this.times = times;
         this.media = media;
         this.auth = auth;
+        this.dataset = dataset;
     }
 
     /** Lấy hồ sơ; nếu người dùng mới đăng nhập lần đầu (ví dụ qua Firebase SDK) thì tạo hồ sơ mặc định. */
@@ -156,6 +159,11 @@ public class UserService {
     /** Xóa tài khoản: dữ liệu Firestore, ảnh Cloudinary và tài khoản Firebase Authentication. */
     public void deleteAccount(AuthUser u) {
         media.deleteUserFolder(u.uid());
+        // Ảnh quét đã xếp vào thư mục dữ liệu theo nhãn AI (ngoài thư mục của người dùng) cũng phải xóa theo tài khoản.
+        for (DocumentSnapshot d : Fs.await(refs.scans(u.uid()).get()).getDocuments()) {
+            media.deleteByPublicId(d.getString("imagePublicId"));
+            dataset.remove(d.getId());
+        }
         fs.deleteRecursive(refs.user(u.uid()));
         directory.invalidate(u.uid());
         try {

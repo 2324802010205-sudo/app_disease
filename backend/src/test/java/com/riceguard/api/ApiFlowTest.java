@@ -57,6 +57,7 @@ class ApiFlowTest {
             return new DiagnosisEngine() {
                 public String name() { return "fake"; }
                 public DiagnosisResult diagnose(DiagnosisRequest r) {
+                    if ("Ảnh mờ".equals(r.stage())) return new DiagnosisResult(true, "bac-la", 0.3, "MEDIUM", List.of("Vết cháy mép lá"), "Nghi bạc lá", List.of(), "");
                     if ("Gieo mạ".equals(r.stage())) return new DiagnosisResult(true, "healthy", 0.95, "NONE", List.of(), "Cây khỏe", List.of(), "");
                     return new DiagnosisResult(true, "dao-on-la", 0.87, "MEDIUM", List.of("Vết hình thoi"), "Đạo ôn lá",
                             List.of(new DiagnosisResult.Recommendation("Phun thuốc", "Tricyclazole", "SHIELD")), "");
@@ -88,6 +89,7 @@ class ApiFlowTest {
     }
 
     @Autowired TestRestTemplate http;
+    @Autowired com.google.firebase.auth.FirebaseAuth firebaseAuth;
 
     private static final String SUFFIX = Long.toString(System.nanoTime());
     /** Mỗi lần chạy dùng một huyện riêng để không lẫn với dữ liệu emulator của lần chạy trước. */
@@ -302,5 +304,107 @@ class ApiFlowTest {
         assertEquals(HttpStatus.OK, call(HttpMethod.GET, "/api/v1/users/me", (String) again.getBody().get("idToken"), null).getStatusCode());
 
         assertEquals(HttpStatus.BAD_REQUEST, call(HttpMethod.POST, "/api/v1/auth/google", null, Map.of("idToken", "rac", "mode", "LOGIN")).getStatusCode());
+    }
+
+    private long folderTotal(Map<String, Object> summary, String label) {
+        @SuppressWarnings("unchecked") var folders = (List<Map<String, Object>>) summary.get("folders");
+        return folders.stream().filter(f -> label.equals(f.get("label"))).mapToLong(f -> ((Number) f.get("total")).longValue()).sum();
+    }
+
+    @Test @Order(13)
+    void uploadedImagesAreFiledByAiLabelAndCanBeReviewed() throws Exception {
+        String email = "kho.anh" + SUFFIX + "@test.vn";
+        var reg = call(HttpMethod.POST, "/api/v1/auth/register", null, Map.of("fullName", "Quan Tri Kho", "email", email, "password", "matkhau123"));
+        @SuppressWarnings("unchecked") String uid = (String) ((Map<String, Object>) reg.getBody().get("user")).get("id");
+        firebaseAuth.setCustomUserClaims(uid, Map.of("admin", true));
+        String admin = (String) call(HttpMethod.POST, "/api/v1/auth/login", null, Map.of("email", email, "password", "matkhau123")).getBody().get("idToken");
+
+        assertEquals(HttpStatus.FORBIDDEN, call(HttpMethod.GET, "/api/v1/admin/dataset/summary", tokenA, null).getStatusCode());
+        var before = call(HttpMethod.GET, "/api/v1/admin/dataset/summary", admin, null).getBody();
+
+        // Ảnh tải lên vào đúng thư mục AI dự đoán, kể cả ảnh không xác định.
+        String blast = (String) scan(tokenA, Map.of("province", "An Giang", "district", DISTRICT)).getBody().get("id");
+        String healthy = (String) scan(tokenA, Map.of("stage", "Gieo mạ")).getBody().get("id");
+        var blurry = scan(tokenA, Map.of("stage", "Ảnh mờ")).getBody();
+        String unknown = (String) blurry.get("id");
+        assertEquals("NEEDS_RETAKE", blurry.get("status"));
+        assertTrue(((List<?>) blurry.get("symptoms")).isEmpty(), "ảnh chưa kết luận không được hiện triệu chứng của bệnh nghi ngờ");
+
+        var after = call(HttpMethod.GET, "/api/v1/admin/dataset/summary", admin, null).getBody();
+        assertEquals(((Number) before.get("total")).longValue() + 3, ((Number) after.get("total")).longValue());
+        assertEquals(folderTotal(before, "dao-on-la") + 1, folderTotal(after, "dao-on-la"));
+        assertEquals(folderTotal(before, "healthy") + 1, folderTotal(after, "healthy"));
+        assertEquals(folderTotal(before, "unknown") + 1, folderTotal(after, "unknown"));
+
+        var image = call(HttpMethod.GET, "/api/v1/admin/dataset/" + blast, admin, null).getBody();
+        assertEquals("dao-on-la", image.get("label"));
+        assertEquals("PENDING", image.get("reviewStatus"));
+        assertTrue(((String) image.get("imagePublicId")).contains("/dataset/dao-on-la/"), String.valueOf(image.get("imagePublicId")));
+        assertTrue(((String) call(HttpMethod.GET, "/api/v1/admin/dataset/" + unknown, admin, null).getBody().get("imagePublicId")).contains("/dataset/khong-xac-dinh/"));
+        // Ảnh của người dùng vẫn mở được bằng URL mới sau khi chuyển thư mục.
+        assertEquals(image.get("imageUrl"), call(HttpMethod.GET, "/api/v1/scans/" + blast, tokenA, null).getBody().get("imageUrl"));
+
+        @SuppressWarnings("unchecked") var inFolder = (List<Map<String, Object>>) call(HttpMethod.GET, "/api/v1/admin/dataset?label=healthy&limit=60", admin, null).getBody().get("items");
+        assertTrue(inFolder.stream().anyMatch(i -> healthy.equals(i.get("id"))));
+
+        // Người dùng báo sai: ảnh được đánh dấu để ưu tiên xem.
+        assertEquals(HttpStatus.CREATED, call(HttpMethod.POST, "/api/v1/scans/" + blast + "/feedback", tokenA,
+                Map.of("reason", "WRONG_RESULT", "suggestedDiseaseCode", "dom-nau")).getStatusCode());
+        image = call(HttpMethod.GET, "/api/v1/admin/dataset/" + blast, admin, null).getBody();
+        assertEquals(true, image.get("reportedWrong"));
+        assertEquals("dom-nau", image.get("suggestedLabel"));
+
+        // Duyệt: AI đúng, sửa nhãn, duyệt lại; bộ đếm phải khớp.
+        long confirmed = ((Number) after.get("confirmed")).longValue(), corrected = ((Number) after.get("corrected")).longValue();
+        assertEquals("CONFIRMED", call(HttpMethod.PUT, "/api/v1/admin/dataset/" + healthy + "/review", admin, Map.of("action", "CONFIRM")).getBody().get("reviewStatus"));
+        assertEquals(HttpStatus.BAD_REQUEST, call(HttpMethod.PUT, "/api/v1/admin/dataset/" + blast + "/review", admin, Map.of("action", "CORRECT", "trueLabel", "khong-co")).getStatusCode());
+        var fixed = call(HttpMethod.PUT, "/api/v1/admin/dataset/" + blast + "/review", admin, Map.of("action", "CORRECT", "trueLabel", "dom-nau", "note", "đốm tròn")).getBody();
+        assertEquals("CORRECTED", fixed.get("reviewStatus"));
+        assertEquals("dom-nau", fixed.get("trueLabel"));
+        var reviewed = call(HttpMethod.GET, "/api/v1/admin/dataset/summary", admin, null).getBody();
+        assertEquals(confirmed + 1, ((Number) reviewed.get("confirmed")).longValue());
+        assertEquals(corrected + 1, ((Number) reviewed.get("corrected")).longValue());
+        assertTrue(((List<?>) reviewed.get("confusion")).stream().anyMatch(c -> "dao-on-la".equals(((Map<?, ?>) c).get("ai")) && "dom-nau".equals(((Map<?, ?>) c).get("actual"))));
+
+        call(HttpMethod.PUT, "/api/v1/admin/dataset/" + healthy + "/review", admin, Map.of("action", "RESET"));
+        assertEquals(confirmed, ((Number) call(HttpMethod.GET, "/api/v1/admin/dataset/summary", admin, null).getBody().get("confirmed")).longValue());
+
+        // Sửa nhãn nhiều lần chỉ được đếm một lần.
+        call(HttpMethod.PUT, "/api/v1/admin/dataset/" + blast + "/review", admin, Map.of("action", "CORRECT", "trueLabel", "dom-nau"));
+        assertEquals(corrected + 1, ((Number) call(HttpMethod.GET, "/api/v1/admin/dataset/summary", admin, null).getBody().get("corrected")).longValue());
+
+        // Chỉ ảnh đã duyệt mới lọc ra được để huấn luyện lại.
+        @SuppressWarnings("unchecked") var usable = (List<Map<String, Object>>) call(HttpMethod.GET, "/api/v1/admin/dataset?review=CORRECTED&limit=60", admin, null).getBody().get("items");
+        assertTrue(usable.stream().anyMatch(i -> blast.equals(i.get("id"))));
+
+        // Chẩn đoán lại ảnh không xác định giữ nguyên thư mục khi AI vẫn không nhận ra.
+        assertEquals("unknown", call(HttpMethod.POST, "/api/v1/admin/dataset/" + unknown + "/rediagnose", admin, null).getBody().get("label"));
+
+        // Người dùng xóa lượt quét: ảnh rời kho, bộ đếm trừ theo.
+        assertEquals(HttpStatus.NO_CONTENT, call(HttpMethod.DELETE, "/api/v1/scans/" + blast, tokenA, null).getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, call(HttpMethod.GET, "/api/v1/admin/dataset/" + blast, admin, null).getStatusCode());
+        var gone = call(HttpMethod.GET, "/api/v1/admin/dataset/summary", admin, null).getBody();
+        assertEquals(((Number) after.get("total")).longValue() - 1, ((Number) gone.get("total")).longValue());
+        assertEquals(corrected, ((Number) gone.get("corrected")).longValue());
+
+        assertEquals(0, ((Number) call(HttpMethod.POST, "/api/v1/admin/dataset/backfill", admin, null).getBody().get("count")).intValue());
+
+        // Các bảng quản trị hiện tên thay vì UID và có số liệu cho biểu đồ.
+        @SuppressWarnings("unchecked") var posts = (List<Map<String, Object>>) call(HttpMethod.GET, "/api/v1/admin/posts?limit=5", admin, null).getBody().get("items");
+        assertFalse(posts.isEmpty());
+        assertNotNull(posts.get(0).get("title"), "bài viết phải được trải phẳng trong JSON");
+        assertNotNull(posts.get(0).get("authorName"));
+        assertNotNull(posts.get(0).get("pendingReports"));
+        assertNotNull(call(HttpMethod.GET, "/api/v1/admin/posts/" + posts.get(0).get("id"), admin, null).getBody().get("authorName"));
+        var stats = call(HttpMethod.GET, "/api/v1/admin/stats", admin, null).getBody();
+        @SuppressWarnings("unchecked") var postStats = (Map<String, Object>) stats.get("posts");
+        @SuppressWarnings("unchecked") var reportStats = (Map<String, Object>) stats.get("reports");
+        @SuppressWarnings("unchecked") var feedbackStats = (Map<String, Object>) stats.get("feedbacks");
+        assertNotNull(postStats.get("reported"));
+        assertNotNull(reportStats.get("byReason"));
+        assertNotNull(((Map<?, ?>) feedbackStats.get("byReason")).get("WRONG_RESULT"));
+        assertEquals(HttpStatus.OK, call(HttpMethod.GET, "/api/v1/admin/reports?status=ALL", admin, null).getStatusCode());
+        var info = call(HttpMethod.GET, "/api/v1/risk/areas/info?province=Thái Bình&district=" + DISTRICT + "&days=7", tokenA, null).getBody();
+        assertEquals(7, ((List<?>) info.get("daily")).size());
     }
 }

@@ -57,6 +57,7 @@ riceguard:
   env: ${APP_ENV:dev}
   public-base-url: ${PUBLIC_BASE_URL:http://localhost:8080}
   time-zone: Asia/Ho_Chi_Minh
+  seed-demo-community: ${SEED_DEMO_COMMUNITY:false}   # true: tạo vài bài viết + bình luận mẫu (một lần) để xem giao diện
   firebase:
     project-id: ${FIREBASE_PROJECT_ID:}
     # JSON thô hoặc JSON đã mã hóa base64 của service account

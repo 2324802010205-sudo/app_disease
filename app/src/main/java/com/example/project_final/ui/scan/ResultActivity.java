@@ -112,9 +112,21 @@ public class ResultActivity extends BaseActivity {
     private void bindAdvice(Scan s) {
         LinearLayout box = findViewById(R.id.list_advice);
         box.removeAllViews();
-        if (s.recommendations == null || s.recommendations.isEmpty()) return;
-        Ui.fill(box, R.layout.item_advice, s.recommendations.size(), (item, i) -> {
+        boolean has = s.recommendations != null && !s.recommendations.isEmpty();
+        findViewById(R.id.card_advice).setVisibility(has ? View.VISIBLE : View.GONE);
+        if (!has) return;
+        // Lưới 2 cột: hai thẻ cùng hàng luôn cao bằng nhau (thẻ match_parent trong hàng wrap_content), chữ cùng cỡ.
+        android.view.LayoutInflater inflater = android.view.LayoutInflater.from(this);
+        List<View> cards = new java.util.ArrayList<>();
+        LinearLayout row = null;
+        for (int i = 0; i < s.recommendations.size(); i++) {
+            if (i % 2 == 0) {
+                row = new LinearLayout(this);
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                box.addView(row, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            }
             Scan.Recommendation r = s.recommendations.get(i);
+            View item = inflater.inflate(R.layout.item_advice, row, false);
             boolean water = "WATER".equals(r.icon);
             item.findViewById(R.id.icon_bg).setBackgroundResource(water ? R.drawable.bg_icon_blue : R.drawable.bg_icon_tint);
             ImageView img = item.findViewById(R.id.icon);
@@ -122,6 +134,19 @@ public class ResultActivity extends BaseActivity {
             img.setColorFilter(getColor(water ? R.color.blue : R.color.primary));
             Ui.text(item, R.id.title, r.title);
             Ui.text(item, R.id.desc, r.description);
+            row.addView(item);
+            cards.add(item);
+        }
+        if (s.recommendations.size() % 2 == 1) {   // hàng lẻ: chừa ô trống để thẻ cuối không giãn hết hàng
+            View spacer = new View(this);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, 0, 1f);
+            row.addView(spacer, lp);
+        }
+        // Mọi thẻ (kể cả khác hàng) cao bằng thẻ cao nhất để lưới đều khung.
+        box.post(() -> {
+            int tallest = 0;
+            for (View c : cards) tallest = Math.max(tallest, c.getHeight());
+            for (View c : cards) c.setMinimumHeight(tallest);
         });
     }
 

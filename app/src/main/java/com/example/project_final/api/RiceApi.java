@@ -95,6 +95,7 @@ public interface RiceApi {
     @DELETE("posts/{id}/save") Call<Void> unsavePost(@Path("id") String id);
     @POST("posts/{id}/report") Call<Void> reportPost(@Path("id") String id, @Body Requests.Report body);
     @GET("posts/{id}/comments") Call<List<Comment>> comments(@Path("id") String id, @Query("sort") String sort);
+    @GET("posts/{id}/comments/live") Call<com.example.project_final.model.CommentLive> commentsLive(@Path("id") String id, @Query("after") long after, @Query("wait") int wait);
     @POST("posts/{id}/comments") Call<Comment> addComment(@Path("id") String id, @Body Requests.CommentBody body);
     @DELETE("posts/{id}/comments/{cid}") Call<Void> deleteComment(@Path("id") String id, @Path("cid") String commentId);
     @PUT("posts/{id}/comments/{cid}/like") Call<Void> likeComment(@Path("id") String id, @Path("cid") String commentId);

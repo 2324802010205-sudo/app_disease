@@ -103,6 +103,19 @@ firebase emulators:start --only auth,firestore --project demo-riceguard   # cử
 để máy ảo Android mở được ảnh. Muốn thử chẩn đoán AI cục bộ, đặt thêm `DIAGNOSIS_PROVIDER=http` + `DIAGNOSIS_HTTP_URL` (hoặc `claude` + `ANTHROPIC_API_KEY`) trước khi chạy.
 Dữ liệu emulator mất khi tắt emulator; đó là điều mong muốn khi phát triển.
 
+### Kho ảnh AI
+`datasetImages/{scanId}` ghi nhãn AI, độ tin cậy, ảnh và kết quả duyệt; `meta/dataset` là bộ đếm sẵn theo thư mục (trang quản trị chỉ tốn 1 lượt đọc). API: `/admin/dataset` (danh sách, lọc theo `label`, `review`, `confidence`, `reported`), `/admin/dataset/summary`, `PUT /admin/dataset/{id}/review` (`CONFIRM`, `CORRECT`, `REJECT`, `RESET`), `POST /admin/dataset/{id}/rediagnose`, `POST /admin/dataset/backfill`.
+Thư mục trên Cloudinary: `dataset/{mã bệnh}`, `dataset/la-khoe`, `dataset/khong-xac-dinh`, `dataset/cho-phan-tich`.
+Duyệt ảnh chỉ đổi thư mục hiển thị trên Cloudinary sang `verified/{nhãn đúng}` (hoặc `verified/rejected`), URL giữ nguyên nên ảnh trong app không hỏng. Kết quả duyệt không thay đổi kết quả người dùng đã thấy.
+
+### Cộng đồng: lưu trữ và thời gian thực
+Firestore: `posts/{id}` (đếm sẵn `likeCount`, `commentCount` nên không phải đếm lại), `posts/{id}/comments/{id}` (cây 2 cấp qua `parentId`), `posts/{id}/likes/{uid}`, `users/{uid}/savedPosts`.
+Ảnh bài viết nằm trên Cloudinary (`riceguard/{env}/users/{uid}/post`), Firestore chỉ giữ URL + publicId.
+Bình luận thời gian thực không dùng listener Firestore: mọi bình luận đi qua backend nên `CommentLive` giữ trong bộ nhớ các sự kiện gần nhất của từng bài và app giữ một yêu cầu chờ
+(`GET /posts/{id}/comments/live?after=<mốc>&wait=20`). Một bình luận = 1 lần ghi Firestore, **0 lần đọc** cho việc chờ/đẩy tới mọi người xem. Gửi bình luận không tải lại danh sách.
+Giới hạn: bộ nhớ nằm trong một tiến trình; chạy nhiều bản backend cần Redis pub/sub. Thích/lượt đếm cập nhật khi mở lại hoặc kéo làm mới.
+Dữ liệu mẫu: `SEED_DEMO_COMMUNITY=true` tạo 3 bài viết + 16 bình luận (một lần).
+
 ### Gỡ lỗi
 * **Mã yêu cầu**: mọi phản hồi có header `X-Request-Id`; app Android tự gửi mã này (tag logcat `RiceApi`). Mã hiện trong mọi dòng log máy chủ dạng `INFO [3f2a9c1d]`,
   nên chỉ cần tìm mã đó là thấy toàn bộ vòng đời một thao tác.

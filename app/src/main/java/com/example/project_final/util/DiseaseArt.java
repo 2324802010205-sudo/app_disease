@@ -10,7 +10,7 @@ public final class DiseaseArt {
 
     @DrawableRes
     public static int of(String diseaseId) {
-        if (diseaseId == null) return R.drawable.bg_image_placeholder;
+        if (diseaseId == null) return R.drawable.ph_field;
         switch (diseaseId) {
             case "dao-on-la":
                 return R.drawable.img_lib_1;
@@ -25,7 +25,7 @@ public final class DiseaseArt {
             case "lun-xoan-la":
                 return R.drawable.img_saved_6;
             default:
-                return R.drawable.bg_image_placeholder;
+                return R.drawable.ph_field;
         }
     }
 

@@ -99,6 +99,12 @@ public final class Session {
         edit.apply();
     }
 
+    /** Người dùng đã tự chọn một tỉnh/thành (không dùng vị trí GPS) để xem thời tiết: không tự ghi đè bằng GPS. */
+    public static synchronized boolean hasChosenProvince() {
+        return weatherOwner().equals(prefs.getString(K_WEATHER_OWNER, null))
+                && prefs.getString(K_WEATHER_LABEL, null) != null && !prefs.contains(K_WEATHER_LAT);
+    }
+
     private static String weatherOwner() {
         User u = user();
         return isLoggedIn() && u != null && u.id != null ? u.id : "guest";

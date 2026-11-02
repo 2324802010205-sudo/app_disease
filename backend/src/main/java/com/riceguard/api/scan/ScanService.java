@@ -7,6 +7,7 @@ import com.riceguard.api.common.PageResult;
 import com.riceguard.api.common.Paging;
 import com.riceguard.api.common.Refs;
 import com.riceguard.api.common.Times;
+import com.riceguard.api.dataset.DatasetService;
 import com.riceguard.api.diagnosis.DiagnosisException;
 import com.riceguard.api.diagnosis.DiagnosisResult;
 import com.riceguard.api.diagnosis.DiagnosisService;
@@ -48,10 +49,11 @@ public class ScanService {
     private final AreaStatService areaStats;
     private final DiaryService diary;
     private final NotificationService notifications;
+    private final DatasetService dataset;
 
     public ScanService(Fs fs, Refs refs, Paging paging, Times times, MediaService media, FieldService fields,
                        DiagnosisService diagnosis, WeatherService weather, AreaStatService areaStats,
-                       DiaryService diary, NotificationService notifications) {
+                       DiaryService diary, NotificationService notifications, DatasetService dataset) {
         this.fs = fs;
         this.refs = refs;
         this.paging = paging;
@@ -63,6 +65,7 @@ public class ScanService {
         this.areaStats = areaStats;
         this.diary = diary;
         this.notifications = notifications;
+        this.dataset = dataset;
     }
 
     public Scan create(String uid, ScanInput in) {
@@ -87,8 +90,9 @@ public class ScanService {
         long now = times.now();
         DocumentReference ref = refs.scans(uid).document();
         Scan scan = base(ref.getId(), field, province, district, image, stage, variety, blank(in.note()), now, snap);
-        scan = diagnoseInto(scan);
+        scan = fileByLabel(uid, diagnoseInto(scan));
         fs.set(ref, scan);
+        toDataset(uid, scan);
         afterSave(uid, field, scan);
         return scan;
     }
@@ -97,8 +101,9 @@ public class ScanService {
     public Scan rediagnose(String uid, String id) {
         Scan old = get(uid, id);
         if ("DIAGNOSED".equals(old.status())) return old;
-        Scan updated = diagnoseInto(old);
+        Scan updated = fileByLabel(uid, diagnoseInto(old));
         fs.set(refs.scans(uid).document(id), updated);
+        toDataset(uid, updated);
         Field field = fields.find(uid, old.fieldId());
         afterSave(uid, field, updated);
         return updated;
@@ -118,19 +123,60 @@ public class ScanService {
         try {
             String weatherText = s.weather() == null ? null
                     : s.weather().condition() + ", " + Math.round(s.weather().tempC()) + "°C, độ ẩm " + s.weather().humidity() + "%";
-            DiagnosisResult r = diagnosis.run(media.variant(s.imageUrl(), 1568), s.stage(), s.variety(), weatherText);
+            DiagnosisResult r = diagnosis.run(media.forDiagnosis(s.imageUrl(), 1568), s.stage(), s.variety(), weatherText);
             DiagnosisService.Outcome o = diagnosis.evaluate(r);
             double conf = Math.max(0, Math.min(1, r.confidence()));
             if ("NEEDS_RETAKE".equals(o.status())) {
                 String advice = r.retakeAdvice() != null && !r.retakeAdvice().isBlank() ? r.retakeAdvice()
                         : "Ảnh chưa đủ rõ để kết luận. Hãy chụp lại cận lá bệnh, đủ sáng, không rung tay.";
-                return with(s, o.status(), o.riskLevel(), null, null, conf, null, list(r.symptoms()), r.summary(), List.of(), advice, diagnosis.engineName());
+                // Chưa kết luận thì không giữ triệu chứng/tóm tắt của bệnh AI nghi ngờ, tránh người dùng hiểu là lúa có bệnh.
+                return with(s, o.status(), o.riskLevel(), null, null, conf, null, List.of(), null, List.of(), advice, diagnosis.engineName());
             }
             return with(s, o.status(), o.riskLevel(), o.diseaseCode(), o.diseaseName(), conf, o.severity(), list(r.symptoms()),
                     r.summary(), r.recommendations() == null ? List.of() : r.recommendations(), null, diagnosis.engineName());
         } catch (DiagnosisException e) {
             log.warn("Chẩn đoán thất bại: {}", e.getMessage());
             return with(s, "PENDING", "UNKNOWN", null, null, 0, null, List.of(), "Chưa chẩn đoán được, vui lòng thử lại sau ít phút.", List.of(), null, diagnosis.engineName());
+        }
+    }
+
+    /**
+     * Xếp ảnh vào thư mục dữ liệu theo nhãn AI (dataset/{mã bệnh}, la-khoe, khong-xac-dinh khi không xác định/chụp lại,
+     * cho-phan-tich khi AI chưa chạy được) để sau này đối chiếu và huấn luyện lại best.pt.
+     * Lỗi xếp ảnh không làm mất lượt quét: giữ ảnh ở vị trí cũ.
+     */
+    private Scan fileByLabel(String uid, Scan s) {
+        if (s.imagePublicId() == null) return s;
+        String label = DatasetService.labelOf(s);
+        try {
+            Map<String, String> ctx = new java.util.LinkedHashMap<>();
+            ctx.put("scan_id", s.id());
+            ctx.put("uid", uid);
+            ctx.put("ai_label", label);
+            ctx.put("status", s.status());
+            ctx.put("confidence", String.format(java.util.Locale.ROOT, "%.2f", s.confidence()));
+            ctx.put("engine", String.valueOf(s.engine()));
+            if (media.inDataset(s.imagePublicId())) {   // chẩn đoán lại: ảnh đã ở kho, chỉ đổi thư mục hiển thị
+                media.refile(s.imagePublicId(), media.datasetFolder(label), ctx);
+                return s;
+            }
+            ImageRef moved = media.moveToDataset(s.imagePublicId(), label, ctx);
+            return new Scan(s.id(), s.fieldId(), s.fieldName(), s.province(), s.district(), moved.url(), moved.publicId(),
+                    media.variant(moved.url(), 480), s.status(), s.riskLevel(), s.diseaseCode(), s.diseaseName(), s.confidence(),
+                    s.severity(), s.symptoms(), s.summary(), s.recommendations(), s.retakeAdvice(), s.weather(), s.stage(),
+                    s.variety(), s.note(), s.engine(), s.countedInArea(), s.createdAt());
+        } catch (RuntimeException e) {
+            log.warn("Không xếp được ảnh quét {} vào thư mục dữ liệu: {}", s.id(), e.getMessage());
+            return s;
+        }
+    }
+
+    /** Lỗi ghi kho ảnh quản trị không được làm hỏng lượt quét của người dùng. */
+    private void toDataset(String uid, Scan s) {
+        try {
+            dataset.record(uid, s);
+        } catch (RuntimeException e) {
+            log.error("Không ghi được ảnh vào kho quản trị (scan={}): {}", s.id(), e.getMessage(), e);
         }
     }
 
@@ -196,6 +242,7 @@ public class ScanService {
         Scan s = get(uid, id);
         Fs.await(refs.scans(uid).document(id).delete());
         media.deleteByPublicId(s.imagePublicId());
+        dataset.remove(id);
         diary.deleteByScan(uid, id);
         if (s.countedInArea() && s.diseaseCode() != null) {
             areaStats.record(s.province(), s.district(), s.diseaseCode(), s.stage(), s.createdAt(), -1);

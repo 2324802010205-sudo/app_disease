@@ -18,7 +18,6 @@ import com.example.project_final.model.Disease;
 import com.example.project_final.util.DiseaseArt;
 import com.example.project_final.util.Img;
 import com.example.project_final.util.Look;
-import com.example.project_final.view.NavBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,6 @@ public class LibraryActivity extends BaseActivity {
 
     @Override
     protected void onReady() {
-        setupBottomNav(NavBar.LIBRARY);
         LinearLayout chips = findViewById(R.id.chips);
         Ui.fill(chips, R.layout.item_chip, FILTERS.length, (item, i) -> {
             TextView tv = (TextView) item;

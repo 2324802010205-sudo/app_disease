@@ -71,7 +71,7 @@ public class DiseaseDetailActivity extends BaseActivity {
         Img.load(findViewById(R.id.hero), d.imageUrl, DiseaseArt.hero(d.id));
         setText(R.id.disease_name, d.name);
         TextView cause = findViewById(R.id.disease_cause);
-        cause.setText("Bệnh do " + Look.cause(d.cause).toLowerCase());
+        cause.setText("Bệnh do " + Look.cause(d.cause).toLowerCase() + (d.aiDetectable ? "  •  AI RiceGuard nhận diện được" : ""));
         setText(R.id.disease_desc, d.description);
 
         StringBuilder overview = new StringBuilder();

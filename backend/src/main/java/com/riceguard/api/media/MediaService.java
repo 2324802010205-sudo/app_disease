@@ -23,7 +23,45 @@ public class MediaService {
 
     public String folderFor(String uid, String kind) {
         if (!KINDS.contains(kind)) throw ApiException.badRequest("Loại ảnh không hợp lệ: " + kind);
+        // Ảnh thư viện bệnh là nội dung dùng chung của hệ thống, không thuộc về quản trị viên nào: riceguard/{env}/library/diseases.
+        if ("disease".equals(kind)) return props.media().folderPrefix() + "/library/diseases";
         return props.media().folderPrefix() + "/users/" + uid + "/" + kind;
+    }
+
+    /** Thư mục dữ liệu huấn luyện theo nhãn AI: riceguard/{env}/dataset/{mã bệnh | la-khoe | khong-xac-dinh | cho-phan-tich}. */
+    public String datasetFolder(String label) {
+        return props.media().folderPrefix() + "/dataset/" + folderName(label);
+    }
+
+    /** Nhãn lạ không được tạo thư mục tùy ý: xếp vào không xác định. */
+    private static String folderName(String label) {
+        String safe = label != null && label.matches("[a-z0-9-]{1,40}") ? label : "unknown";
+        return switch (safe) {
+            case "unknown" -> "khong-xac-dinh";
+            case "healthy" -> "la-khoe";
+            case "pending" -> "cho-phan-tich";
+            default -> safe;
+        };
+    }
+
+    /** Chuyển ảnh quét vào thư mục theo nhãn AI; lỗi thì ném ApiException để nơi gọi giữ ảnh ở chỗ cũ. */
+    public ImageRef moveToDataset(String publicId, String label, java.util.Map<String, String> context) {
+        String folder = datasetFolder(label);
+        return storage.move(publicId, folder, context, List.of("dataset", "ai-" + folder.substring(folder.lastIndexOf('/') + 1)));
+    }
+
+    /** Thư mục ảnh đã được người duyệt xác nhận nhãn: nguồn huấn luyện lại. rejected = ảnh không dùng được. */
+    public String verifiedFolder(String label) {
+        return props.media().folderPrefix() + "/verified/" + folderName(label);
+    }
+
+    /** Đổi thư mục hiển thị, giữ nguyên URL (ảnh đang được app người dùng tham chiếu). */
+    public void refile(String publicId, String folder, java.util.Map<String, String> context) {
+        if (publicId != null) storage.setFolder(publicId, folder, context, List.of("ai-" + folder.substring(folder.lastIndexOf('/') + 1)));
+    }
+
+    public boolean inDataset(String publicId) {
+        return publicId != null && publicId.contains("/dataset/");
     }
 
     public String userRoot(String uid) {
@@ -55,6 +93,11 @@ public class MediaService {
 
     public String variant(String url, int maxSide) {
         return storage.variant(url, maxSide);
+    }
+
+    /** URL ảnh đưa cho mô hình AI (ít nén nhất có thể). */
+    public String forDiagnosis(String url, int maxSide) {
+        return storage.forDiagnosis(url, maxSide);
     }
 
     public void delete(ImageRef ref) {

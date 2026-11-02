@@ -18,9 +18,11 @@ import java.util.Map;
 @Tag(name = "Cộng đồng", description = "Bài viết, bình luận, lưu bài, bản nháp, báo cáo")
 public class CommunityController {
     private final CommunityService service;
+    private final CommentLive live;
 
-    public CommunityController(CommunityService service) {
+    public CommunityController(CommunityService service, CommentLive live) {
         this.service = service;
+        this.live = live;
     }
 
     /** topic: PEST | EXPERIENCE | VARIETY | WEATHER | WATER (bỏ trống = tất cả). */
@@ -95,6 +97,18 @@ public class CommunityController {
     public List<CommentView> comments(@AuthenticationPrincipal AuthUser u, @PathVariable String id,
                                       @RequestParam(defaultValue = "newest") String sort) {
         return service.comments(uid(u), id, sort);
+    }
+
+    /**
+     * Bình luận thời gian thực (long-poll). after=0 lần đầu để lấy mốc; sau đó gửi lại `latest` đã nhận.
+     * Có bình luận mới/xóa thì trả ngay, không thì chờ tối đa `wait` giây rồi trả rỗng.
+     */
+    @GetMapping("/posts/{id}/comments/live")
+    public org.springframework.web.context.request.async.DeferredResult<CommentLive.Batch> live(
+            @AuthenticationPrincipal AuthUser u, @PathVariable String id,
+            @RequestParam(defaultValue = "0") long after, @RequestParam(defaultValue = "20") int wait) {
+        service.requireReadable(uid(u), id);
+        return live.poll(uid(u), id, after, wait);
     }
 
     @PostMapping("/posts/{id}/comments")

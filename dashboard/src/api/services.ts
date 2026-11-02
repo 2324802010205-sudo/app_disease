@@ -1,5 +1,5 @@
 import { api } from './client'
-import type { AdminFeedback, AdminPost, AdminReport, AdminStats, AdminUser, AdminUserDetail, AuditEntry, AuthResponse, Campaign, CampaignDraft, CampaignPreview, Comment, Disease, DiseaseDraft, PageResult, ReportStatus, RiskArea, RiskAreaInfo } from '../types'
+import type { DatasetImage, DatasetSummary, AdminFeedback, AdminPost, AdminReport, AdminStats, AdminUser, AdminUserDetail, AuditEntry, AuthResponse, Campaign, CampaignDraft, CampaignPreview, Comment, Disease, DiseaseDraft, PageResult, ReportStatus, RiskArea, RiskAreaInfo } from '../types'
 
 const unwrap = async <T>(request: Promise<{ data: T }>) => (await request).data
 const pageParams = (cursor?: string | null, limit = 20) => ({ ...(cursor ? { cursor } : {}), limit })
@@ -76,4 +76,12 @@ export const operationService = {
   status: () => unwrap(api.get<{ backend: string; firestore: string; diagnosis: { engine: string; available: boolean }; diseases: number; riskAreas: number; reports: number; jobs: { id: string; kind: string; count: number; createdAt: number }[] }>('/admin/operations')),
   refreshRisk: () => unwrap(api.post<{ count: number }>('/admin/jobs/risk-refresh')),
   syncDiseases: () => unwrap(api.post<{ count: number }>('/admin/jobs/disease-sync')),
+}
+export interface DatasetFilters { label?: string; review?: string; reported?: boolean; confidence?: string; q?: string }
+export const datasetService = {
+  summary: () => unwrap(api.get<DatasetSummary>('/admin/dataset/summary')),
+  list: (filters: DatasetFilters, cursor?: string | null, limit = 24) => unwrap(api.get<PageResult<DatasetImage>>('/admin/dataset', { params: { ...filters, ...pageParams(cursor, limit) } })),
+  review: (id: string, action: 'CONFIRM' | 'CORRECT' | 'REJECT' | 'RESET', trueLabel?: string, note?: string) => unwrap(api.put<DatasetImage>(`/admin/dataset/${encodeURIComponent(id)}/review`, { action, trueLabel, note })),
+  rediagnose: (id: string) => unwrap(api.post<DatasetImage>(`/admin/dataset/${encodeURIComponent(id)}/rediagnose`)),
+  backfill: () => unwrap(api.post<{ count: number }>('/admin/dataset/backfill')),
 }

@@ -6,7 +6,10 @@ import com.riceguard.api.common.*;
 import com.riceguard.api.community.Post;
 import com.riceguard.api.community.CommunityService;
 import com.riceguard.api.community.CommunityDtos.CommentView;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.riceguard.api.security.AuthUser;
+import com.riceguard.api.user.UserDtos.PublicUser;
+import com.riceguard.api.user.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.riceguard.api.scan.Scan;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +25,29 @@ public class AdminDataController {
     private final Paging paging;
     private final Times times;
     private final CommunityService community;
+    private final UserService users;
 
-    public AdminDataController(Fs fs, Refs refs, Paging paging, Times times, CommunityService community) {
-        this.fs = fs; this.refs = refs; this.paging = paging; this.times = times; this.community = community;
+    public AdminDataController(Fs fs, Refs refs, Paging paging, Times times, CommunityService community, UserService users) {
+        this.fs = fs; this.refs = refs; this.paging = paging; this.times = times; this.community = community; this.users = users;
     }
 
     public record AdminPost(String id, String authorId, String province, String topic, String title,
                             String content, List<com.riceguard.api.media.ImageRef> images,
                             long likeCount, long commentCount, long createdAt, long updatedAt, boolean hidden) {}
 
+    /** Bài viết kèm tên tác giả và số báo cáo chưa xử lý, để bảng quản trị không phải hiện UID. */
+    public record AdminPostView(@JsonUnwrapped AdminPost post, String authorName, long pendingReports) {}
+
+    private List<AdminPostView> views(List<AdminPost> posts) {
+        Map<String, PublicUser> names = users.lookup(posts.stream().map(AdminPost::authorId).collect(Collectors.toSet()));
+        Map<String, Long> pending = fs.query(refs.reports(), AdminController.AdminReport.class).stream().filter(r -> "NEW".equals(r.status()))
+                .collect(Collectors.groupingBy(AdminController.AdminReport::postId, Collectors.counting()));
+        return posts.stream().map(p -> new AdminPostView(p, names.containsKey(p.authorId()) ? names.get(p.authorId()).name() : null,
+                pending.getOrDefault(p.id(), 0L))).toList();
+    }
+
     @GetMapping("/posts")
-    public PageResult<AdminPost> posts(@RequestParam(defaultValue = "ALL") String status,
+    public PageResult<AdminPostView> posts(@RequestParam(defaultValue = "ALL") String status,
                                        @RequestParam(defaultValue = "") String topic,
                                        @RequestParam(defaultValue = "") String authorId,
                                        @RequestParam(required = false) Boolean reported,
@@ -42,17 +57,18 @@ public class AdminDataController {
         String needle = q.toLowerCase(Locale.ROOT).trim();
         Set<String> reportedPosts = reported == null ? Set.of() : fs.query(refs.reports(), AdminController.AdminReport.class)
                 .stream().map(AdminController.AdminReport::postId).collect(Collectors.toSet());
-        return paging.page(refs.posts(), cursor, Cursor.limit(limit, 20, 50), AdminPost.class, p ->
+        PageResult<AdminPost> page = paging.page(refs.posts(), cursor, Cursor.limit(limit, 20, 50), AdminPost.class, p ->
                 (status.equals("ALL") || (status.equals("HIDDEN") == p.hidden()))
                 && (topic.isBlank() || topic.equals(p.topic()))
                 && (authorId.isBlank() || authorId.equals(p.authorId()))
                 && (reported == null || reported == reportedPosts.contains(p.id()))
                 && (needle.isBlank() || (p.title() + " " + p.content() + " " + p.authorId()).toLowerCase(Locale.ROOT).contains(needle)));
+        return PageResult.of(views(page.items()), page.nextCursor());
     }
 
     @GetMapping("/posts/{id}")
-    public AdminPost post(@PathVariable String id) {
-        return fs.require(refs.posts().document(id), AdminPost.class, "Không tìm thấy bài viết");
+    public AdminPostView post(@PathVariable String id) {
+        return views(List.of(fs.require(refs.posts().document(id), AdminPost.class, "Không tìm thấy bài viết"))).get(0);
     }
 
     @GetMapping("/posts/{id}/comments")
@@ -71,13 +87,17 @@ public class AdminDataController {
         result.put("reports", Map.of("total", reports.size(), "pending", reports.stream().filter(r -> "NEW".equals(r.status())).count(),
                 "resolvedToday", reports.stream().filter(r -> !"NEW".equals(r.status()) && r.resolvedAt() != null && r.resolvedAt() >= today).count(),
                 "today", reports.stream().filter(r -> r.createdAt() >= today).count(),
-                "yesterday", reports.stream().filter(r -> r.createdAt() >= yesterday && r.createdAt() < today).count()));
+                "yesterday", reports.stream().filter(r -> r.createdAt() >= yesterday && r.createdAt() < today).count(),
+                "byReason", reports.stream().collect(Collectors.groupingBy(AdminController.AdminReport::reason, Collectors.counting()))));
         result.put("feedbacks", Map.of("total", feedbacks.size(), "pending", feedbacks.stream().filter(f -> "NEW".equals(f.status())).count(),
                 "reviewing", feedbacks.stream().filter(f -> "REVIEWING".equals(f.status())).count(),
-                "resolved", feedbacks.stream().filter(f -> "RESOLVED".equals(f.status())).count()));
+                "resolved", feedbacks.stream().filter(f -> "RESOLVED".equals(f.status())).count(),
+                "today", feedbacks.stream().filter(f -> f.createdAt() >= today).count(),
+                "byReason", feedbacks.stream().collect(Collectors.groupingBy(AdminController.AdminFeedback::reason, Collectors.counting()))));
         result.put("posts", Map.of("total", posts.size(), "visible", posts.stream().filter(p -> !p.hidden()).count(),
                 "hidden", posts.stream().filter(AdminPost::hidden).count(),
-                "today", posts.stream().filter(p -> p.createdAt() >= today).count()));
+                "today", posts.stream().filter(p -> p.createdAt() >= today).count(),
+                "reported", reports.stream().filter(r -> "NEW".equals(r.status())).map(AdminController.AdminReport::postId).distinct().count()));
         return result;
     }
 

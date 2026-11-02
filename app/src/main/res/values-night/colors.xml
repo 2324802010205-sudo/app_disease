@@ -27,6 +27,7 @@
     <color name="gray">#B8C5BD</color>
     <color name="gray_bg">#34433A</color>
     <color name="nav_bg">#1E2B25</color>
+    <color name="nav_item_on">#34443B</color>
     <color name="nav_stroke">#425247</color>
     <color name="nav_item_on_bg">#35513E</color>
     <color name="nav_icon">#BDCDC2</color>

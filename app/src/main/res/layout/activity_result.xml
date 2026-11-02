@@ -368,6 +368,7 @@
 
             <!-- quick advice -->
             <LinearLayout
+                android:id="@+id/card_advice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -416,7 +417,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:orientation="horizontal" />
+                    android:orientation="vertical" />
             </LinearLayout>
 
             <LinearLayout

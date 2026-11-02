@@ -51,9 +51,10 @@
                     android:src="@drawable/img_logo" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -70,9 +71,14 @@
                         android:layout_height="wrap_content"
                         style="@style/T.Small"
                         android:layout_marginTop="1dp"
-                        android:text="Chia sẻ kinh nghiệm – Cùng nhau vụ mùa bội thu"
+                        android:text="Chia sẻ kinh nghiệm cùng bà con"
                         android:textSize="@dimen/text_14" />
                 </LinearLayout>
+
+                <include
+                    layout="@layout/view_bell"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -209,4 +215,9 @@
             android:textStyle="bold" />
     </FrameLayout>
 
+
+    <com.example.project_final.view.NavBar
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

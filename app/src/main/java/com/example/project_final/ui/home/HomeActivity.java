@@ -15,6 +15,9 @@ import com.example.project_final.ui.scan.HistoryActivity;
 import com.example.project_final.ui.scan.ResultDetailActivity;
 import com.example.project_final.ui.scan.ScanActivity;
 import android.view.View;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.os.CancellationSignal;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ import com.example.project_final.model.Scan;
 import com.example.project_final.model.Stats;
 import com.example.project_final.model.User;
 import com.example.project_final.model.Weather;
+import com.example.project_final.util.DeviceLocation;
 import com.example.project_final.util.Fmt;
 import com.example.project_final.util.Img;
 import com.example.project_final.util.Look;
@@ -40,6 +44,15 @@ import java.util.List;
 public class HomeActivity extends BaseActivity {
     private SwipeRefreshLayout refresh;
     private int pendingLoads;
+    private boolean askedLocation;
+    private boolean locating;
+    private boolean weatherPending;   // mỗi lần tải chỉ tính xong thời tiết một lần dù vị trí được báo hai lần
+    private CancellationSignal locationRequest;
+    private final ActivityResultLauncher<String[]> locationPermission = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                if (DeviceLocation.hasPermission(this)) loadWeather(Session.user());   // định vị ngay khi vừa bấm cho phép
+                askNotifications();
+            });
 
     @Override
     protected int layout() {
@@ -53,11 +66,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onReady() {
-        if (Session.isLoggedIn() && android.os.Build.VERSION.SDK_INT >= 33
-                && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
-                != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 3401);
-        }
+        askStartupPermissions();
         setupBottomNav(NavBar.HOME);
         refresh = findViewById(R.id.refresh);
         refresh.setColorSchemeResources(R.color.primary);
@@ -89,6 +98,30 @@ public class HomeActivity extends BaseActivity {
         load();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (locationRequest != null) locationRequest.cancel();
+        super.onDestroy();
+    }
+
+    /** Hỏi quyền vị trí trước (để cập nhật thời tiết), xong mới hỏi quyền thông báo để hai hộp thoại không chồng nhau. */
+    private void askStartupPermissions() {
+        if (!DeviceLocation.hasPermission(this) && !askedLocation) {
+            askedLocation = true;
+            locationPermission.launch(DeviceLocation.PERMISSIONS);
+        } else {
+            askNotifications();
+        }
+    }
+
+    private void askNotifications() {
+        if (Session.isLoggedIn() && android.os.Build.VERSION.SDK_INT >= 33
+                && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 3401);
+        }
+    }
+
     private void toLoginFromGuest(boolean register) {
         Session.clear();
         android.content.Intent it = new android.content.Intent(this, LoginActivity.class).putExtra(LoginActivity.EXTRA_OPEN_REGISTER, register);
@@ -109,6 +142,7 @@ public class HomeActivity extends BaseActivity {
             ((ImageView) findViewById(R.id.greeting_icon)).setImageResource(Look.isNight() ? R.drawable.ic_dark_mode : R.drawable.ic_sun);
             showGuestLayout();
             pendingLoads = 1;
+            weatherPending = true;
             loadWeather(null);
             return;
         }
@@ -118,10 +152,18 @@ public class HomeActivity extends BaseActivity {
         ((ImageView) findViewById(R.id.greeting_icon)).setImageResource(Look.isNight() ? R.drawable.ic_dark_mode : R.drawable.ic_sun);
 
         pendingLoads = 4;
+        weatherPending = true;
         loadWeather(u);
         loadStats();
         loadFields();
         loadScans();
+    }
+
+    private void weatherDone() {
+        if (weatherPending) {
+            weatherPending = false;
+            done();
+        }
     }
 
     private void done() {
@@ -131,20 +173,50 @@ public class HomeActivity extends BaseActivity {
     // ---- thời tiết
 
     private void loadWeather(User u) {
-        Session.WeatherLocation location = Session.weatherLocation();
+        // Có quyền vị trí và người dùng chưa tự chọn tỉnh: cập nhật tọa độ hiện tại rồi mới gọi API thời tiết.
+        if (DeviceLocation.hasPermission(this) && !Session.hasChosenProvince()) {
+            if (locating) {
+                weatherDone();
+                return;
+            }
+            locating = true;
+            if (Session.weatherLocation() == null) {
+                setText(R.id.weather_place, "Đang xác định vị trí...");
+                setText(R.id.weather_hint, "Vui lòng chờ trong giây lát");
+            }
+            locationRequest = DeviceLocation.current(this, new DeviceLocation.Callback() {
+                @Override
+                public void onLocation(double lat, double lng) {
+                    locating = false;   // có thể được gọi lần hai khi vị trí mới chính xác hơn vị trí tạm
+                    Session.setWeatherLocation("Vị trí hiện tại", lat, lng);
+                    fetchWeather(Session.weatherLocation());
+                }
+
+                @Override
+                public void onUnavailable() {
+                    locating = false;
+                    fetchWeather(Session.weatherLocation());
+                }
+            });
+            return;
+        }
+        fetchWeather(Session.weatherLocation());
+    }
+
+    private void fetchWeather(Session.WeatherLocation location) {
         if (location == null) {
             setText(R.id.weather_place, "Chọn tỉnh/thành để xem thời tiết");
             setText(R.id.weather_temp, "--°");
             setText(R.id.weather_title, "Chưa có vị trí");
             setText(R.id.weather_hint, "Chạm để chọn khu vực của bạn");
             go(R.id.card_weather, WeatherActivity.class);
-            done();
+            weatherDone();
             return;
         }
         call(api().weather(location.label, location.lat, location.lng), new ApiCallback<Weather>() {
             @Override
             public void onSuccess(Weather w) {
-                done();
+                weatherDone();
                 Weather.Current c = w.current;
                 setText(R.id.weather_place, w.location);
                 setText(R.id.weather_temp, Math.round(c.tempC) + "°C");
@@ -158,7 +230,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onError(ApiError e) {
-                done();
+                weatherDone();
                 setText(R.id.weather_place, location.label);
                 setText(R.id.weather_temp, "--°C");
                 setText(R.id.weather_title, "Chưa có dữ liệu");
@@ -226,7 +298,6 @@ public class HomeActivity extends BaseActivity {
         int shown = Math.min(2, list.size());
         Ui.fill(box, R.layout.item_home_field, shown, (item, i) -> {
             RiceField f = list.get(i);
-            Img.load(item.findViewById(R.id.img), f.photoUrl, R.drawable.ph_field);
             Ui.text(item, R.id.name, f.name);
             Ui.text(item, R.id.meta, Fmt.area(f.areaHa) + (f.variety == null || f.variety.isEmpty() ? "" : " | " + f.variety));
             Ui.text(item, R.id.updated, Fmt.updated(f.lastScanAt));

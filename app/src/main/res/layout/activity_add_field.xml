@@ -87,7 +87,7 @@
     android:layout_height="wrap_content" android:id="@+id/location_title" style="@style/T.H3" android:text="Vị trí ruộng" android:textSize="@dimen/text_17" />
             <TextView
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" android:id="@+id/location_desc" style="@style/T.Small" android:layout_marginTop="2dp" android:text="Chọn vị trí trên bản đồ để xác định khu vực ruộng" android:textSize="@dimen/text_14" />
+    android:layout_height="wrap_content" android:id="@+id/location_desc" style="@style/T.Small" android:layout_marginTop="2dp" android:text="Chọn tỉnh/thành và nhập huyện/xã của ruộng" android:textSize="@dimen/text_14" />
         </LinearLayout>
         <TextView
     android:layout_width="wrap_content"

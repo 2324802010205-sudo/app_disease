@@ -51,6 +51,7 @@ const Users = lazy(() => import('./pages/Users').then(m => ({ default: m.Users }
 const UserDetail = lazy(() => import('./pages/Users').then(m => ({ default: m.UserDetail })))
 const DiseaseCreate = lazy(() => import('./pages/Diseases').then(m => ({ default: m.DiseaseCreate })))
 const Campaigns = lazy(() => import('./pages/Campaigns').then(m => ({ default: m.Campaigns })))
+const Dataset = lazy(() => import('./pages/Dataset').then(m => ({ default: m.Dataset })))
 const Audit = lazy(() => import('./pages/Audit').then(m => ({ default: m.Audit })))
 
 let snapshot = readSession()
@@ -64,7 +65,7 @@ function ProtectedRoute() {
   return !session ? <Navigate to="/login" replace /> : session.user.admin ? <Layout /> : <Navigate to="/access-denied" replace />
 }
 function AccessDenied() {
-  return <main className="admin-page"><h1>Không có quyền truy cập</h1><p>Tài khoản này không có quyền quản trị dashboard.</p><button onClick={() => { clearSession(); window.location.assign('/login') }}>Đăng nhập bằng tài khoản khác</button></main>
+  return <main className="denied"><h1>Không có quyền truy cập</h1><p>Tài khoản này không có quyền quản trị dashboard.</p><div><button className="btn btn-primary" onClick={() => { clearSession(); window.location.assign('/login') }}>Đăng nhập bằng tài khoản khác</button></div></main>
 }
 export default function App() {
   return (
@@ -81,6 +82,7 @@ export default function App() {
               <Route path="/posts" element={<Posts />} />
               <Route path="/posts/:id" element={<PostDetail />} />
               <Route path="/feedbacks" element={<Feedbacks />} />
+              <Route path="/dataset" element={<Dataset />} />
               <Route path="/diseases" element={<Diseases />} />
               <Route path="/diseases/new" element={<DiseaseCreate />} />
               <Route path="/diseases/:id" element={<DiseaseDetail />} />

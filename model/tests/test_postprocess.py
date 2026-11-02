@@ -43,8 +43,13 @@ def test_coverage_capped_at_one():
     assert diagnose(Detection("Brown spot", 0.8, 0.9), Detection("Brown spot", 0.7, 0.9))["severity"] == "HIGH"
 
 
-def test_unmapped_class_is_unknown_with_retake_advice():
-    r = diagnose(Detection("Leaf smut", 0.9, 0.1))
+def test_formerly_unmapped_classes_now_have_library_entries():
+    for name, code in [("Leaf Scald", "chay-la"), ("Leaf smut", "than-la"), ("Narrow brown spot", "dom-nau-hep")]:
+        assert diagnose(Detection(name, 0.9, 0.1))["diseaseCode"] == code
+
+
+def test_class_without_library_entry_is_unknown_with_retake_advice():
+    r = to_diagnosis([Detection("Leaf smut", 0.9, 0.1)], {"Leaf smut": None})
     assert r["riceLeaf"] is True and r["diseaseCode"] == "unknown" and r["retakeAdvice"]
 
 
@@ -60,3 +65,9 @@ def test_severity_thresholds(coverage, expected):
 def test_every_model_class_is_mapped():
     # 11 lớp của best.pt; thêm lớp mới vào model mà quên class_map.json sẽ bị bắt ở đây
     assert len(CLASS_MAP) == 11
+
+
+def test_every_mapped_code_exists_in_disease_library():
+    seed = json.loads((Path(__file__).parents[2] / "backend/src/main/resources/seed/diseases.json").read_text(encoding="utf-8"))
+    known = {d["id"] for d in seed} | {"healthy"}
+    assert {c for c in CLASS_MAP.values() if c} <= known

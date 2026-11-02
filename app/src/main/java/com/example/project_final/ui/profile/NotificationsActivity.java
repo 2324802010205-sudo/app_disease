@@ -18,7 +18,6 @@ import com.example.project_final.api.ApiError;
 import com.example.project_final.model.Notification;
 import com.example.project_final.model.Page;
 import com.example.project_final.util.Fmt;
-import com.example.project_final.view.NavBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,6 @@ public class NotificationsActivity extends BaseActivity {
 
     @Override
     protected void onReady() {
-        setupBottomNav(NavBar.NOTIFICATIONS);
         LinearLayout chips = findViewById(R.id.chips);
         Ui.fill(chips, R.layout.item_chip, FILTERS.length, (item, i) -> {
             TextView tv = (TextView) item;

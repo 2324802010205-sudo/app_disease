@@ -44,9 +44,13 @@ public class CommunityService {
     private final MediaService media;
     private final NotificationService notifications;
     private final AppProperties props;
+    private final CommentLive live;
+    // Quyền xem bài cho kênh thời gian thực: đọc bài 1 lần/phút/bài thay vì mỗi lần chờ.
+    private final com.github.benmanes.caffeine.cache.Cache<String, Boolean> hiddenCache = com.github.benmanes.caffeine.cache.Caffeine.newBuilder()
+            .expireAfterWrite(java.time.Duration.ofMinutes(1)).maximumSize(5000).build();
 
     public CommunityService(Fs fs, Refs refs, Paging paging, Times times, UserService users, MediaService media,
-                            NotificationService notifications, AppProperties props) {
+                            NotificationService notifications, AppProperties props, CommentLive live) {
         this.fs = fs;
         this.refs = refs;
         this.paging = paging;
@@ -55,6 +59,7 @@ public class CommunityService {
         this.media = media;
         this.notifications = notifications;
         this.props = props;
+        this.live = live;
     }
 
     // ---------------------------------------------------------------- bài viết
@@ -205,7 +210,20 @@ public class CommunityService {
             notifications.create(parent.authorId(), "COMMUNITY", "Có người trả lời bạn",
                     me.name() + " đã trả lời bình luận của bạn", "post", postId);
         }
-        return commentView(c, post, u.uid(), Map.of(u.uid(), me), List.of());
+        CommentView view = commentView(c, post, u.uid(), Map.of(u.uid(), me), List.of());
+        live.published(postId, view);
+        return view;
+    }
+
+    /** Kiểm tra quyền xem bài cho kênh thời gian thực (có cache); ném 404 nếu bài ẩn/không có. */
+    public void requireReadable(String viewerUid, String postId) {
+        Boolean hidden = hiddenCache.getIfPresent(postId + "|" + viewerUid);
+        if (hidden == null) {
+            Post p = fs.require(refs.posts().document(postId), Post.class, "Không tìm thấy bài viết");
+            hidden = p.hidden() && !p.authorId().equals(viewerUid);
+            hiddenCache.put(postId + "|" + viewerUid, hidden);
+        }
+        if (hidden) throw ApiException.notFound("Không tìm thấy bài viết");
     }
 
     /** sort: newest | helpful. Trả cây bình luận 2 cấp. */
@@ -253,6 +271,10 @@ public class CommunityService {
         batch.delete(refs.comments(postId).document(commentId));
         batch.update(refs.posts().document(postId), "commentCount", FieldValue.increment(-(1L + replies.size())));
         Fs.await(batch.commit());
+        List<String> gone = new ArrayList<>();
+        gone.add(commentId);
+        replies.forEach(d -> gone.add(d.getId()));
+        live.removed(postId, gone);
     }
 
     public void likeComment(String uid, String postId, String commentId, boolean like) {

@@ -78,6 +78,11 @@
                         android:text="Phát hiện bệnh lá lúa thông minh"
                         android:textSize="@dimen/text_13" />
                 </LinearLayout>
+
+                <include
+                    layout="@layout/view_bell"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp" />
             </LinearLayout>
 
             <!-- greeting -->
@@ -122,7 +127,7 @@
                 android:background="@drawable/bg_hero_scan">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    style="@style/Round16"
+                    style="@style/Round18"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
@@ -130,12 +135,11 @@
                     android:src="@drawable/img_home_hero" />
 
                 <View
-                    android:layout_width="170dp"
+                    android:layout_width="84dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="60dp"
-                    android:background="@drawable/bg_fade_side"
-                    android:rotation="180" />
+                    android:layout_marginEnd="66dp"
+                    android:background="@drawable/bg_hero_fade" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -159,8 +163,7 @@
                         android:layout_height="wrap_content"
                         style="@style/T.Body"
                         android:layout_width="wrap_content"
-                        android:maxWidth="230dp"
-                        android:layout_marginEnd="48dp"
+                        android:maxWidth="215dp"
                         android:layout_marginTop="4dp"
                         android:text="Chụp ảnh lá lúa để phát hiện bệnh, nhận tư vấn và giải pháp kịp thời."
                         android:textColor="#3E5A4C"
@@ -498,13 +501,13 @@
                         android:orientation="horizontal">
 
                         <FrameLayout
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
                             android:background="@drawable/bg_circle_tint">
 
                             <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:layout_gravity="center"
                                 android:importantForAccessibility="no"
                                 android:src="@drawable/ic_eco"
@@ -569,16 +572,16 @@
                         android:orientation="horizontal">
 
                         <FrameLayout
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
                             android:background="@drawable/bg_circle_tint">
 
                             <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:layout_gravity="center"
                                 android:importantForAccessibility="no"
-                                android:src="@drawable/ic_sprout"
+                                android:src="@drawable/ic_field"
                                 app:tint="@color/primary" />
                         </FrameLayout>
 
@@ -640,13 +643,13 @@
                         android:orientation="horizontal">
 
                         <FrameLayout
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
                             android:background="@drawable/bg_circle_tint">
 
                             <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:layout_gravity="center"
                                 android:importantForAccessibility="no"
                                 android:src="@drawable/ic_warning"
@@ -781,26 +784,24 @@
                 <LinearLayout
                     android:id="@+id/tile_community"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_tint"
-                    android:gravity="center_vertical"
                     android:minHeight="64dp"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:importantForAccessibility="no"
                         android:src="@drawable/ic_group"
                         app:tint="@color/primary" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_weight="1"
+                        android:layout_marginTop="8dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -808,7 +809,7 @@
                             android:layout_height="wrap_content"
                             style="@style/T"
                             android:text="Cộng đồng nông dân"
-                            android:textSize="@dimen/text_15"
+                            android:textSize="@dimen/text_14"
                             android:textStyle="bold" />
 
                         <TextView
@@ -817,34 +818,32 @@
                             style="@style/T.Small"
                             android:layout_marginTop="2dp"
                             android:text="Chia sẻ kinh nghiệm"
-                            android:textSize="@dimen/text_13" />
+                            android:textSize="@dimen/text_12" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tile_map"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_blue"
-                    android:gravity="center_vertical"
                     android:minHeight="64dp"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:importantForAccessibility="no"
                         android:src="@drawable/ic_map"
                         app:tint="@color/primary" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_weight="1"
+                        android:layout_marginTop="8dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -852,7 +851,7 @@
                             android:layout_height="wrap_content"
                             style="@style/T"
                             android:text="Bản đồ nguy cơ dịch bệnh"
-                            android:textSize="@dimen/text_15"
+                            android:textSize="@dimen/text_14"
                             android:textStyle="bold" />
 
                         <TextView
@@ -861,34 +860,32 @@
                             style="@style/T.Small"
                             android:layout_marginTop="2dp"
                             android:text="Xem tình hình khu vực"
-                            android:textSize="@dimen/text_13" />
+                            android:textSize="@dimen/text_12" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tile_library"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_card_amber"
-                    android:gravity="center_vertical"
                     android:minHeight="64dp"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
                     <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:importantForAccessibility="no"
                         android:src="@drawable/ic_menu_book"
                         app:tint="#B9801B" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="7dp"
-                        android:layout_weight="1"
+                        android:layout_marginTop="8dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -896,7 +893,7 @@
                             android:layout_height="wrap_content"
                             style="@style/T"
                             android:text="Thư viện kiến thức"
-                            android:textSize="@dimen/text_15"
+                            android:textSize="@dimen/text_14"
                             android:textStyle="bold" />
 
                         <TextView
@@ -905,7 +902,7 @@
                             style="@style/T.Small"
                             android:layout_marginTop="2dp"
                             android:text="Bệnh hại, giải pháp, kỹ thuật canh tác"
-                            android:textSize="@dimen/text_13" />
+                            android:textSize="@dimen/text_12" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

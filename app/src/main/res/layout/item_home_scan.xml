@@ -6,13 +6,13 @@
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="6dp">
+    android:padding="8dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
-        style="@style/Round10"
-        android:layout_width="46dp"
-        android:layout_height="40dp"
+        style="@style/Round12"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/title"
             style="@style/T"
-            android:textSize="@dimen/text_17"
+            android:textSize="@dimen/text_16"
             android:textStyle="bold" />
 
         <TextView
@@ -36,14 +36,15 @@
             android:id="@+id/meta"
             style="@style/T.Small"
             android:layout_marginTop="2dp"
-            android:textSize="@dimen/text_14" />
-    </LinearLayout>
+            android:textSize="@dimen/text_13" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/status"
-        style="@style/T.Pill" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/status"
+            style="@style/T.Pill"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
 
     <ImageView
         android:layout_width="16dp"

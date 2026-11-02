@@ -21,10 +21,10 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-/** Chuẩn bị ảnh để tải lên: xoay theo EXIF, thu nhỏ tối đa 1600 px, nén JPEG. Chạy trên luồng nền. */
+/** Chuẩn bị ảnh để tải lên: xoay theo EXIF, thu nhỏ tối đa 1600 px, nén JPEG chất lượng cao (AI cần chi tiết vết bệnh). Chạy trên luồng nền. */
 public final class Uploads {
     private static final int MAX_SIDE = 1600;
-    private static final int QUALITY = 85;
+    private static final int QUALITY = 92;
     private static final MediaType JPEG = MediaType.parse("image/jpeg");
     private static final MediaType TEXT = MediaType.parse("text/plain; charset=utf-8");
 

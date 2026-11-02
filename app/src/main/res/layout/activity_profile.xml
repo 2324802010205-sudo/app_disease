@@ -50,7 +50,7 @@
                         android:layout_height="wrap_content"
                         style="@style/T.H2"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="48dp"
+                        android:layout_marginStart="2dp"
                         android:text="Hồ sơ cá nhân"
                         android:textSize="@dimen/text_22" />
                 </FrameLayout>
@@ -126,6 +126,8 @@
                             android:drawablePadding="6dp"
                             android:drawableTint="@color/ink"
                             android:id="@+id/profile_email"
+                            android:ellipsize="middle"
+                            android:singleLine="true"
                             tools:text="vinh.nguyen@example.com"
                             android:textColor="@color/ink"
                             android:textSize="@dimen/text_15" />
@@ -160,7 +162,7 @@
                         android:background="@drawable/bg_card_tint"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="8dp">
 
                         <FrameLayout
                             android:layout_width="36dp"
@@ -187,6 +189,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/T.Small"
                                 android:text="Lượt quét"
+                                android:maxLines="1"
                                 android:textColor="@color/ink"
                                 android:textSize="@dimen/text_14" />
 
@@ -212,7 +215,7 @@
                         android:background="@drawable/bg_card_tint"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="8dp">
 
                         <FrameLayout
                             android:layout_width="36dp"
@@ -239,6 +242,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/T.Small"
                                 android:text="Ruộng lúa"
+                                android:maxLines="1"
                                 android:textColor="@color/ink"
                                 android:textSize="@dimen/text_14" />
 
@@ -263,11 +267,11 @@
                         android:background="@drawable/bg_card_orange"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="8dp">
 
                         <FrameLayout
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:background="@drawable/bg_circle_red">
 
                             <ImageView
@@ -290,6 +294,7 @@
                                 android:layout_height="wrap_content"
                                 style="@style/T.Small"
                                 android:text="Cảnh báo"
+                                android:maxLines="1"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/text_14" />
 

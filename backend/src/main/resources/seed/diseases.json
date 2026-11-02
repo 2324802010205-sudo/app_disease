@@ -1,93 +1,117 @@
 [
   {
     "id": "dao-on-la",
-    "version": 1,
+    "version": 2,
     "name": "Đạo ôn lá",
-    "scientificName": "Pyricularia oryzae",
-    "description": "Xuất hiện vết bệnh hình thoi, màu nâu xám, viền nâu đậm, có thể lan rộng nhanh.",
+    "scientificName": "Pyricularia oryzae (Magnaporthe oryzae)",
+    "description": "Đạo ôn là bệnh nấm nguy hiểm nhất trên lúa, gây hại từ mạ đến lúc trổ. Trên lá, bệnh tạo vết hình thoi (mắt én) tâm xám trắng, viền nâu; gặp thời tiết ẩm, âm u kéo dài bệnh lan rất nhanh và có thể làm cháy cả ruộng (\"cháy lá\").",
     "part": "LEAF",
     "cause": "FUNGUS",
     "common": true,
     "symptoms": [
-      "Vết bệnh hình thoi hoặc mắt én, tâm xám trắng, viền nâu đậm.",
-      "Nhiều vết liên kết thành mảng làm lá cháy khô.",
-      "Lá có dấu hiệu vàng quanh vết bệnh."
+      "Vết bệnh ban đầu là chấm nhỏ màu xanh xám, lớn dần thành hình thoi hoặc mắt én, dài 1–2 cm.",
+      "Tâm vết màu xám trắng, rìa màu nâu đỏ đến nâu đậm, bên ngoài có quầng vàng.",
+      "Nhiều vết liên kết thành mảng lớn làm lá khô cháy; ruộng bị nặng nhìn từ xa như bị cháy nắng, nhất là ở giai đoạn mạ và đẻ nhánh.",
+      "Bệnh có thể lan sang cổ bông, đốt thân (xem mục Đạo ôn cổ bông).",
+      "Giống nhiễm, ruộng bón thừa đạm: vết bệnh to, xốp, không có viền rõ."
     ],
     "conditions": [
-      "Ẩm độ cao, sương mù nhiều, trời âm u kéo dài.",
-      "Nhiệt độ 20–28°C, ngày nắng đêm lạnh.",
-      "Bón thừa đạm, cấy sạ quá dày."
+      "Độ ẩm không khí cao (trên 90%), sương mù nhiều, trời âm u, ít nắng kéo dài.",
+      "Nhiệt độ 20–28°C, ngày nắng đêm lạnh, có mưa phùn.",
+      "Bón thừa đạm hoặc bón đạm muộn; cấy sạ quá dày, ruộng thiếu thông thoáng.",
+      "Ruộng thiếu nước hoặc đất cát, đất nghèo kali; trồng liên tục một giống nhiễm."
     ],
     "prevention": [
-      "Dùng giống kháng bệnh, xử lý hạt giống trước khi gieo.",
-      "Bón phân cân đối N-P-K, không bón thừa đạm, tăng cường kali.",
-      "Kiểm tra đồng ruộng thường xuyên, nhất là giai đoạn đẻ nhánh và trước trổ."
+      "Chọn giống kháng hoặc chống chịu đạo ôn; thay đổi giống theo vùng, không trồng một giống nhiễm liên tục.",
+      "Xử lý hạt giống trước khi gieo; gieo cấy đúng lịch thời vụ của địa phương, tránh để lúa trổ vào đợt ẩm lạnh.",
+      "Bón cân đối N-P-K, bón đạm đúng giai đoạn và chia nhiều lần; tăng kali, bổ sung silic.",
+      "Giữ mực nước ổn định, không để ruộng khô nứt; dọn sạch rơm rạ và cỏ dại mang mầm bệnh.",
+      "Thăm đồng thường xuyên, nhất là lúc đẻ nhánh và trước trổ; phát hiện sớm ổ bệnh đầu tiên."
     ],
     "treatment": [
-      "Phun thuốc đặc trị nấm đạo ôn có hoạt chất Tricyclazole hoặc Isoprothiolane ngay khi bệnh mới xuất hiện.",
-      "Phun ướt đều tán lá, lặp lại sau 5–7 ngày nếu thời tiết còn thuận lợi cho bệnh.",
-      "Giữ nước ruộng ổn định 3–5 cm, tạm ngưng bón đạm khi đang có bệnh."
-    ]
+      "Phun ngay khi thấy vết bệnh đầu tiên bằng thuốc đặc trị đạo ôn có hoạt chất như Tricyclazole, Isoprothiolane, Azoxystrobin hoặc Fenoxanil.",
+      "Phun ướt đều tán lá, lặp lại sau 5–7 ngày nếu thời tiết còn ẩm; bệnh nặng nên phun hai lần liên tiếp.",
+      "Tạm ngưng bón đạm, giữ nước ruộng 3–5 cm cho đến khi bệnh dừng lan.",
+      "Với ruộng chuẩn bị trổ: phun phòng đạo ôn cổ bông trước khi trổ 5–7 ngày và lặp lại khi lúa trổ đều.",
+      "Chọn thuốc và liều theo nhãn đã đăng ký, hỏi cán bộ bảo vệ thực vật địa phương trước khi phun; tuân thủ thời gian cách ly."
+    ],
+    "aiDetectable": true
   },
   {
     "id": "bac-la",
-    "version": 1,
+    "version": 2,
     "name": "Bạc lá (cháy bìa lá)",
     "scientificName": "Xanthomonas oryzae pv. oryzae",
-    "description": "Lá bị bạc màu, khô nhanh, thường do vi khuẩn gây hại, có thể gây cháy lá hàng loạt.",
+    "description": "Bạc lá (cháy bìa lá) do vi khuẩn gây ra, thường xuất hiện sau mưa bão, ruộng bị ngập hoặc bón nhiều đạm. Bệnh làm lá khô từ chóp và mép lá, giảm quang hợp, có thể làm giảm năng suất 20–50% nếu bệnh nặng sớm.",
     "part": "LEAF",
     "cause": "BACTERIA",
-    "common": false,
+    "common": true,
     "symptoms": [
-      "Vết úa vàng lượn sóng bắt đầu từ mép hoặc chóp lá.",
-      "Vết bệnh lan dần xuống gốc lá, chuyển trắng xám và khô.",
-      "Sáng sớm có thể thấy giọt dịch vàng đục ở mép vết bệnh."
+      "Vết bệnh bắt đầu từ chóp hoặc mép lá, là sọc úng nước màu xanh vàng, sau chuyển vàng rồi trắng xám.",
+      "Vết bệnh lan dọc theo gân lá, ranh giới giữa mô bệnh và mô khỏe lượn sóng, thường có viền vàng.",
+      "Sáng sớm khi có sương có thể thấy giọt dịch vi khuẩn màu vàng đục ở mép vết bệnh.",
+      "Lá bệnh khô, cuộn lại và rách tua tủa; bệnh nặng làm cả ruộng bạc trắng.",
+      "Ở giai đoạn mạ và đẻ nhánh bệnh có thể gây héo xanh cả dảnh (\"héo kramer\")."
     ],
     "conditions": [
-      "Sau mưa bão, gió lớn làm lá xây xát.",
-      "Ruộng bón thừa đạm, ngập nước sâu kéo dài.",
-      "Nhiệt độ 25–30°C, ẩm độ cao."
+      "Mưa bão, gió mạnh làm lá xây xát tạo vết thương cho vi khuẩn xâm nhập.",
+      "Ruộng bị ngập úng, nước tù; nhiệt độ 25–34°C và độ ẩm cao.",
+      "Bón thừa đạm, bón muộn; mật độ sạ cấy dày.",
+      "Nước tưới mang mầm bệnh từ ruộng bị bệnh; gốc rạ, cỏ dại ký chủ phụ."
     ],
     "prevention": [
-      "Chọn giống kháng bạc lá, xử lý hạt giống.",
-      "Bón đạm vừa phải, chia nhiều đợt, bón nhiều kali.",
-      "Vệ sinh đồng ruộng, tiêu thoát nước tốt sau mưa bão."
+      "Dùng giống kháng hoặc chống chịu bạc lá, hạt giống sạch bệnh.",
+      "Bón phân cân đối, giảm đạm và tăng kali; không bón đạm muộn khi dự báo có mưa bão.",
+      "Giữ nước ruộng thoát được, tránh ngập kéo dài; không tháo nước từ ruộng bệnh sang ruộng khỏe.",
+      "Vệ sinh đồng ruộng, vùi gốc rạ, diệt cỏ dại ven bờ; luân canh khi có điều kiện.",
+      "Sau mưa bão kiểm tra ngay ruộng trong 3–5 ngày để phát hiện bệnh sớm."
     ],
     "treatment": [
-      "Ngừng bón đạm, rút bớt nước ruộng khi phát hiện bệnh.",
-      "Phun thuốc gốc đồng hoặc thuốc trừ vi khuẩn được phép sử dụng theo hướng dẫn trên nhãn.",
-      "Phun sớm sau mưa bão để hạn chế vi khuẩn xâm nhập qua vết thương."
-    ]
+      "Ngưng bón đạm và không phun phân bón lá có đạm khi bệnh đang phát triển.",
+      "Phun thuốc trừ vi khuẩn như Bismerthiazol, Kasugamycin, Oxolinic acid, hoặc thuốc gốc đồng; phun sớm khi tỷ lệ bệnh còn thấp, không phun khi lúa đang trổ rộ.",
+      "Phun lặp lại sau 5–7 ngày nếu thời tiết còn mưa ẩm.",
+      "Giữ mực nước ruộng nông, thoát nước khi ngập; có thể bón thêm kali để lúa phục hồi.",
+      "Chọn thuốc và liều theo nhãn đã đăng ký, hỏi cán bộ bảo vệ thực vật địa phương trước khi phun; tuân thủ thời gian cách ly."
+    ],
+    "aiDetectable": true
   },
   {
     "id": "dom-nau",
-    "version": 1,
+    "version": 2,
     "name": "Đốm nâu",
-    "scientificName": "Bipolaris oryzae",
-    "description": "Xuất hiện các chấm đốm tròn hoặc bầu dục màu nâu, tâm xám, làm giảm quang hợp.",
+    "scientificName": "Bipolaris oryzae (Cochliobolus miyabeanus)",
+    "description": "Đốm nâu là bệnh nấm phổ biến trên ruộng thiếu dinh dưỡng, đất nghèo kali hoặc thiếu nước. Bệnh tạo các đốm tròn đến bầu dục màu nâu trên lá và vỏ hạt, làm lá cháy sớm, hạt lép lửng và giảm chất lượng gạo.",
     "part": "LEAF",
     "cause": "FUNGUS",
-    "common": false,
+    "common": true,
     "symptoms": [
-      "Đốm tròn hoặc bầu dục màu nâu, có viền vàng nhạt.",
-      "Nhiều đốm nhỏ rải rác làm lá chóng già, giảm quang hợp.",
-      "Hạt có thể bị đốm nâu, lem lép khi bệnh nặng."
+      "Đốm tròn hoặc bầu dục màu nâu đến nâu đậm, kích thước như hạt mè đến hạt đậu, rải rác trên lá.",
+      "Vết lớn có tâm màu xám nhạt hoặc nâu xám, viền nâu đậm và quầng vàng nhạt.",
+      "Bệnh nặng nhiều đốm liên kết khiến lá khô, cây còi cọc, đẻ nhánh kém.",
+      "Có thể xuất hiện đốm nâu trên vỏ hạt, hạt lép lửng hoặc hạt lem lép.",
+      "Trên mạ, đốm làm mạ chết cháy từng đám nhỏ."
     ],
     "conditions": [
-      "Đất nghèo dinh dưỡng, thiếu kali và silic.",
-      "Ruộng khô hạn xen kẽ ngập, cây yếu.",
-      "Ẩm độ cao, nhiệt độ 25–30°C."
+      "Đất nghèo dinh dưỡng, thiếu kali, silic hoặc bị nhiễm phèn, mặn; ruộng khô hạn thiếu nước.",
+      "Nhiệt độ 25–30°C, độ ẩm cao kéo dài, lá ướt lâu do sương.",
+      "Bón thiếu hoặc mất cân đối phân đạm – lân – kali; lúa sinh trưởng yếu.",
+      "Hạt giống mang mầm bệnh; tàn dư rơm rạ ruộng bệnh còn trên đồng."
     ],
     "prevention": [
-      "Bón phân cân đối, bổ sung kali, vôi, silic cho đất trũng phèn.",
-      "Dùng hạt giống sạch bệnh, xử lý hạt trước khi gieo.",
-      "Giữ nước ruộng đều, tránh để ruộng khô hạn kéo dài."
+      "Xử lý hạt giống bằng thuốc phù hợp hoặc ngâm nước ấm trước khi gieo; dùng hạt giống sạch bệnh.",
+      "Cải tạo đất, bón đủ kali và bổ sung silic, lân; bón phân hữu cơ hoai mục.",
+      "Giữ đủ nước trong ruộng, tránh để ruộng khô hạn lúc đẻ nhánh và làm đòng.",
+      "Vùi rơm rạ sau thu hoạch, dọn sạch cỏ dại; luân canh khi có điều kiện.",
+      "Chọn giống ít nhiễm đốm nâu và thời vụ thích hợp."
     ],
     "treatment": [
-      "Phun thuốc trừ nấm có hoạt chất Propiconazole hoặc Azoxystrobin khi bệnh mới xuất hiện.",
-      "Kết hợp bón bổ sung kali để cây phục hồi.",
-      "Theo dõi lại sau 5–7 ngày."
-    ]
+      "Bón bổ sung kali và phân cân đối cho lúa phục hồi; hạn chế bón thêm đạm khi bệnh nặng.",
+      "Phun thuốc trừ nấm như Propiconazole, Difenoconazole, Azoxystrobin hoặc Hexaconazole khi bệnh bắt đầu lan rộng.",
+      "Lặp lại sau 7–10 ngày nếu thời tiết còn ẩm; ưu tiên phun trước và sau trổ nếu ruộng có tiền sử bệnh.",
+      "Giữ nước ruộng ổn định, không để khô nứt.",
+      "Chọn thuốc và liều theo nhãn đã đăng ký, hỏi cán bộ bảo vệ thực vật địa phương trước khi phun; tuân thủ thời gian cách ly."
+    ],
+    "aiDetectable": true
   },
   {
     "id": "kho-van",
@@ -226,6 +250,120 @@
     "treatment": [
       "Phun thuốc trừ nấm phổ rộng (Propiconazole + Trifloxystrobin hoặc tương đương) khi lúa trổ đều.",
       "Giữ nước ruộng hợp lý, thu hoạch đúng độ chín."
+    ]
+  },
+  {
+    "id": "chay-la",
+    "version": 2,
+    "aiDetectable": true,
+    "name": "Cháy lá (Leaf scald)",
+    "scientificName": "Microdochium oryzae (Monographella albescens)",
+    "description": "Cháy lá do nấm Microdochium oryzae gây ra, thường gặp ở ruộng bón nhiều đạm và ẩm cao. Bệnh làm các vết xám nâu từ đầu và mép lá lan vào trong theo dạng vằn như dải sóng, khiến lá khô cháy dần; thường gây hại lúc lúa đòng và trổ.",
+    "part": "LEAF",
+    "cause": "FUNGUS",
+    "common": false,
+    "symptoms": [
+      "Vết bệnh bắt đầu từ chóp hoặc mép lá, màu nâu xám đến nâu vàng, lan vào trong thành dải rộng.",
+      "Các vết có vằn đồng tâm sáng tối xen kẽ (dạng dải sóng), ranh giới giữa mô bệnh và mô khỏe có viền nâu đậm.",
+      "Mô bệnh khô dần thành màu rơm, lá cháy từ ngọn xuống; có thể bệnh cả bẹ lá.",
+      "Trên hạt có thể thấy đốm nâu, làm hạt lép hoặc lem.",
+      "Ruộng nặng thấy nhiều lá cháy rụi, nhìn giống bị bạc lá nhưng vết không úng nước và không có dịch vi khuẩn."
+    ],
+    "conditions": [
+      "Bón thừa đạm, mật độ sạ cấy dày làm ruộng rậm rạp, ẩm độ cao kéo dài.",
+      "Trời nhiều mây, nhiều mưa và sương; nhiệt độ ôn hòa.",
+      "Ruộng bị stress (thiếu nước, thiếu kali) hoặc lúa ở giai đoạn làm đòng – trổ.",
+      "Tàn dư rơm rạ bệnh và hạt giống nhiễm là nguồn lây ban đầu."
+    ],
+    "prevention": [
+      "Dùng hạt giống sạch bệnh, xử lý hạt trước khi gieo.",
+      "Bón phân cân đối, giảm đạm và tăng kali; không bón đạm muộn.",
+      "Gieo sạ mật độ vừa phải để ruộng thông thoáng; giữ mực nước hợp lý.",
+      "Vùi hoặc xử lý rơm rạ sau thu hoạch, dọn sạch cỏ dại.",
+      "Theo dõi ruộng ở giai đoạn đòng – trổ khi thời tiết ẩm và âm u kéo dài."
+    ],
+    "treatment": [
+      "Giảm hoặc ngưng bón đạm, tăng bón kali để lúa phục hồi.",
+      "Phun thuốc trừ nấm như Propiconazole, Hexaconazole, Azoxystrobin hoặc Difenoconazole khi bệnh mới xuất hiện.",
+      "Lặp lại sau 7–10 ngày nếu thời tiết còn ẩm, nhất là trước và sau khi lúa trổ.",
+      "Tháo nước phơi ruộng ngắn ngày (nếu giai đoạn cho phép) để giảm ẩm độ trong ruộng.",
+      "Chọn thuốc và liều theo nhãn đã đăng ký, hỏi cán bộ bảo vệ thực vật địa phương trước khi phun; tuân thủ thời gian cách ly."
+    ]
+  },
+  {
+    "id": "than-la",
+    "version": 2,
+    "aiDetectable": true,
+    "name": "Than lá (Leaf smut)",
+    "scientificName": "Entyloma oryzae",
+    "description": "Than lá là bệnh nấm nhẹ nhưng khá phổ biến, thường xuất hiện ở lúa giai đoạn chín. Bệnh tạo các đốm nhỏ màu đen như hạt than, hơi nổi trên hai mặt lá; hại thường không nặng nhưng làm lá già cỗi nhanh và giảm khả năng quang hợp khi bệnh dày.",
+    "part": "LEAF",
+    "cause": "FUNGUS",
+    "common": false,
+    "symptoms": [
+      "Đốm nhỏ hình thoi hoặc dạng hạt đen (như than) dài khoảng 0,5–5 mm, hơi nổi lên trên mặt lá.",
+      "Đốm nằm rải rác trên phiến lá, thường dọc theo gân, ở cả hai mặt lá, sờ thấy hơi sần.",
+      "Khi bệnh dày, các đốm liên kết và làm lá già hóa, chuyển vàng, khô sớm từ ngọn lá.",
+      "Thường chỉ xuất hiện trên lá già, ít ảnh hưởng đến bông nếu không gặp điều kiện bất lợi khác.",
+      "Dễ nhầm với đốm nâu hoặc đốm nâu hẹp; khác ở chỗ đốm than màu đen đậm, hơi nổi, không có viền vàng."
+    ],
+    "conditions": [
+      "Ẩm độ cao kéo dài, ruộng rậm rạp, thiếu thông thoáng ở giai đoạn lúa chín.",
+      "Bón thừa đạm; đất nghèo kali.",
+      "Hạt bào tử tồn tại trên tàn dư lá bệnh và phát tán theo gió, nước mưa.",
+      "Trồng liên tục trên cùng chân ruộng có tiền sử bệnh."
+    ],
+    "prevention": [
+      "Vệ sinh đồng ruộng, vùi hoặc xử lý rơm rạ sau thu hoạch để giảm nguồn bào tử.",
+      "Bón phân cân đối, hạn chế bón thừa đạm; bổ sung kali.",
+      "Gieo sạ mật độ hợp lý, giữ ruộng thông thoáng.",
+      "Luân canh cây trồng hoặc luân phiên giống nếu ruộng bị bệnh lặp lại.",
+      "Kiểm tra ruộng trước thu hoạch để biết chân ruộng nào cần lưu ý cho vụ sau."
+    ],
+    "treatment": [
+      "Bệnh nhẹ thường không cần phun riêng; ưu tiên cân đối phân bón và giữ ruộng thoáng.",
+      "Nếu bệnh dày ở giai đoạn trước trổ – chín sớm, có thể phun thuốc trừ nấm như Propiconazole hoặc Azoxystrobin kết hợp phòng các bệnh đốm lá khác.",
+      "Hạn chế bón đạm muộn và tưới giữ nước ổn định để lúa không bị già cỗi sớm.",
+      "Thu dọn tàn dư sau thu hoạch để cắt nguồn bệnh vụ sau.",
+      "Chọn thuốc và liều theo nhãn đã đăng ký, hỏi cán bộ bảo vệ thực vật địa phương trước khi phun; tuân thủ thời gian cách ly."
+    ]
+  },
+  {
+    "id": "dom-nau-hep",
+    "version": 2,
+    "aiDetectable": true,
+    "name": "Đốm nâu hẹp (Narrow brown spot)",
+    "scientificName": "Cercospora janseana (Sphaerulina oryzina)",
+    "description": "Đốm nâu hẹp là bệnh nấm tạo các sọc ngắn màu nâu đỏ hẹp song song với gân lá. Bệnh thường nặng ở giai đoạn lúa trổ – chín, ruộng đất nghèo kali và bón nhiều đạm, làm lá già chết sớm và có thể gây gãy cổ bông, hạt lép.",
+    "part": "LEAF",
+    "cause": "FUNGUS",
+    "common": false,
+    "symptoms": [
+      "Vết bệnh là sọc hẹp ngắn (2–10 mm) màu nâu đỏ đến nâu sẫm, nằm song song với gân lá.",
+      "Vết bệnh rất hẹp so với đốm nâu, không có tâm xám rộng như đạo ôn, thường nhiều và sát nhau.",
+      "Ở giống nhiễm vết dài và rộng hơn, có tâm nâu nhạt, bên ngoài viền nâu đỏ.",
+      "Bệnh nặng làm lá, bẹ lá và có khi cổ bông bị nâu, khô; hạt lép lửng và ít chắc.",
+      "Thường thấy rõ trên lá già khi lúa trổ đến chín."
+    ],
+    "conditions": [
+      "Đất nghèo kali hoặc thiếu silic, bón đạm cao.",
+      "Ẩm độ cao, nhiều sương, mưa kéo dài ở giai đoạn trổ – chín.",
+      "Nhiệt độ 25–30°C; ruộng thiếu thông thoáng.",
+      "Tàn dư rơm rạ và hạt giống nhiễm bệnh là nguồn lây ban đầu."
+    ],
+    "prevention": [
+      "Chọn giống ít nhiễm; dùng hạt giống sạch bệnh và xử lý hạt trước khi gieo.",
+      "Bón cân đối N-P-K, tăng cường kali và silic; tránh bón thừa đạm.",
+      "Gieo sạ mật độ vừa phải; giữ nước ổn định, tránh để ruộng khô.",
+      "Vệ sinh đồng ruộng, vùi rơm rạ sau thu hoạch, diệt cỏ dại ven bờ.",
+      "Kiểm tra ruộng giai đoạn trổ – chín khi thời tiết ẩm để xử lý kịp thời."
+    ],
+    "treatment": [
+      "Bổ sung kali và cân đối phân bón để lúa khỏe lại; ngưng bón đạm khi bệnh nặng.",
+      "Phun thuốc trừ nấm như Propiconazole, Difenoconazole, Hexaconazole hoặc Azoxystrobin, nhất là trước và sau trổ nếu ruộng hay bị bệnh.",
+      "Lặp lại sau 7–10 ngày khi thời tiết ẩm kéo dài.",
+      "Giữ mực nước ruộng ổn định đến sát thu hoạch.",
+      "Chọn thuốc và liều theo nhãn đã đăng ký, hỏi cán bộ bảo vệ thực vật địa phương trước khi phun; tuân thủ thời gian cách ly."
     ]
   }
 ]

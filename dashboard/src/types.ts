@@ -11,7 +11,7 @@ export type ReportStatus = 'NEW' | 'RESOLVED' | 'DISMISSED'
 export interface AdminReport {
   id: string; type: 'POST' | 'COMMENT'; postId: string; targetId: string;
   reporterId: string; reason: string; detail?: string | null; status: ReportStatus;
-  createdAt: number; resolvedAt?: number | null;
+  createdAt: number; resolvedAt?: number | null; reporterName?: string | null;
 }
 export interface AdminFeedback {
   id: string; userId: string; scanId: string; scanDiseaseCode?: string | null;
@@ -22,11 +22,12 @@ export interface AdminFeedback {
 export interface AdminPost {
   id: string; authorId: string; province?: string | null; topic: string; title: string; content: string;
   images: ImageRef[]; likeCount: number; commentCount: number; createdAt: number; updatedAt: number; hidden: boolean;
+  authorName?: string | null; pendingReports?: number;
 }
 export interface AdminStats {
-  reports: { total: number; pending: number; resolvedToday: number; today: number; yesterday: number };
-  feedbacks: { total: number; pending: number; reviewing: number; resolved: number };
-  posts: { total: number; visible: number; hidden: number; today: number };
+  reports: { total: number; pending: number; resolvedToday: number; today: number; yesterday: number; byReason?: Record<string, number> };
+  feedbacks: { total: number; pending: number; reviewing: number; resolved: number; today?: number; byReason?: Record<string, number> };
+  posts: { total: number; visible: number; hidden: number; today: number; reported?: number };
 }
 export interface PublicUser {
   id: string; name: string; avatarUrl?: string | null; role?: string;
@@ -47,7 +48,7 @@ export interface Disease {
   description: string; part: string; cause: string; common: boolean;
   symptoms: string[]; conditions: string[]; prevention: string[]; treatment: string[];
   imageUrl?: string | null; imagePublicId?: string | null; saved?: boolean;
-  related?: Disease[]; hidden?: boolean; adminEdited?: boolean;
+  related?: Disease[]; hidden?: boolean; adminEdited?: boolean; aiDetectable?: boolean;
 }
 export interface AdminUser {
   id: string; email: string; fullName: string; phone?: string | null; province?: string | null;
@@ -74,5 +75,18 @@ export interface RiskArea {
 }
 export interface RiskAreaInfo extends RiskArea {
   fromDate: string; toDate: string; advice: string;
-  weather?: { temperature?: number; description?: string } | null;
+  weather?: { tempC?: number; humidity?: number; condition?: { label: string } } | null;
+  daily?: { date: string; cases: number }[];
+}
+export type ReviewStatus = 'PENDING' | 'CONFIRMED' | 'CORRECTED' | 'REJECTED'
+export interface DatasetImage {
+  id: string; userId: string; label: string; diseaseName?: string | null; status: string; confidence: number; severity?: string | null;
+  engine?: string | null; imageUrl: string; thumbUrl?: string | null; province?: string | null; district?: string | null; stage?: string | null;
+  reviewStatus: ReviewStatus; trueLabel?: string | null; reviewNote?: string | null; reviewedBy?: string | null; reviewedAt?: number | null;
+  reportedWrong: boolean; suggestedLabel?: string | null; createdAt: number;
+}
+export interface DatasetFolder { label: string; name: string; total: number; confirmed: number; corrected: number; rejected: number; accuracy: number | null }
+export interface DatasetSummary {
+  total: number; reviewed: number; confirmed: number; corrected: number; rejected: number; accuracy: number | null;
+  folders: DatasetFolder[]; confusion: { ai: string; aiName: string; actual: string; actualName: string; count: number }[];
 }

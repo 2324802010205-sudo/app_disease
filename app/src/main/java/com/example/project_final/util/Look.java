@@ -48,7 +48,7 @@ public final class Look {
                 Ui.pill(tv, "Có nguy cơ", R.drawable.ic_warning, R.color.red, R.drawable.bg_pill_red);
                 break;
             default:
-                Ui.pill(tv, "Chưa quét", R.drawable.ic_schedule, R.color.gray, R.drawable.bg_pill_gray);
+                Ui.pill(tv, "Chưa có kết quả", R.drawable.ic_schedule, R.color.gray, R.drawable.bg_pill_gray);
         }
     }
 

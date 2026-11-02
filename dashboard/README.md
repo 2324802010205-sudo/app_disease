@@ -23,6 +23,15 @@ Dashboard React/TypeScript dùng API Spring Boot tại `../backend`. Mọi số 
 
 Các bản xuất CSV được tạo trong trình duyệt từ toàn bộ trang dữ liệu phù hợp với bộ lọc. Tác vụ làm mới vùng nguy cơ quét lại các lượt quét Firestore để xây dựng bộ đếm `areaStats`; tránh chạy đồng thời với việc ghi lượt quét mới. Thống kê toàn hệ thống và các bộ lọc văn bản hiện phải đọc toàn bộ tập dữ liệu ở backend, cần chuyển sang chỉ mục/truy vấn tổng hợp nếu dữ liệu tăng lớn.
 
+## Giao diện
+
+Bám theo 13 ảnh trong `../AnhDashBoard`: màu lấy trực tiếp từ ảnh, khai báo thành biến ở đầu `src/theme.css` (trang đăng nhập nằm trong `src/login.css`). Ảnh trang trí trong `public/art/` được cắt từ chính các ảnh thiết kế. `src/data/vnMap.ts` là ranh giới 63 tỉnh đã rút gọn cho bản đồ vùng nguy cơ.
+Các số liệu trong ảnh thiết kế mà backend không có (phần trăm so với tuần trước, thời gian chạy dự kiến, lượt lưu bài...) không được đưa vào: dashboard chỉ hiện số thật.
+
+## Kho ảnh AI (`/dataset`)
+
+Mỗi ảnh người dùng tải lên được ghi vào `datasetImages` và xếp theo nhãn AI dự đoán. Quản trị viên chọn thư mục (bệnh, lá khỏe, không xác định, chờ phân tích), mở ảnh và chọn **AI đúng**, **Lưu nhãn đúng** hoặc **Loại ảnh**. Trang cộng dồn độ chính xác, các cặp nhãn AI hay nhầm và xuất CSV ảnh đã duyệt để huấn luyện lại `best.pt`. Nút **Đồng bộ lượt quét cũ** đưa các lượt quét có trước tính năng này vào kho.
+
 ## Kiểm tra
 
 `npm.cmd run build` kiểm tra TypeScript và tạo bản web production. `cd ../backend && .\gradlew.bat test --offline` chạy bộ test backend. Kiểm thử đầu cuối cần Firebase Emulator hoặc môi trường Firebase thử nghiệm cùng tài khoản admin.

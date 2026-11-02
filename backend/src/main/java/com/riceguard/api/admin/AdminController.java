@@ -64,8 +64,11 @@ public class AdminController {
                                 String description, List<ImageRef> attachments, String status, String resolution,
                                 long createdAt, Long resolvedAt) {}
 
+    /** Báo cáo kèm tên người báo cáo. */
+    public record AdminReportView(@com.fasterxml.jackson.annotation.JsonUnwrapped AdminReport report, String reporterName) {}
+
     @GetMapping("/reports")
-    public PageResult<AdminReport> reports(@RequestParam(defaultValue = "NEW") String status,
+    public PageResult<AdminReportView> reports(@RequestParam(defaultValue = "NEW") String status,
                                            @RequestParam(defaultValue = "") String type,
                                            @RequestParam(defaultValue = "") String reason,
                                            @RequestParam(defaultValue = "") String priority,
@@ -73,12 +76,14 @@ public class AdminController {
                                            @RequestParam(required = false) String cursor,
                                            @RequestParam(required = false) Integer limit) {
         String needle = q.toLowerCase(java.util.Locale.ROOT).trim();
-        return paging.page(refs.reports(), cursor, Cursor.limit(limit, 20, 50), AdminReport.class,
+        PageResult<AdminReport> page = paging.page(refs.reports(), cursor, Cursor.limit(limit, 20, 50), AdminReport.class,
                 r -> ("ALL".equals(status) || status.equals(r.status()))
                         && (type.isBlank() || type.equals(r.type()))
                         && (reason.isBlank() || reason.equals(r.reason()))
                         && (priority.isBlank() || priority.equals("MISLEADING".equals(r.reason()) ? "HIGH" : "SPAM".equals(r.reason()) ? "MEDIUM" : "LOW"))
                         && (needle.isBlank() || (r.id() + " " + r.postId() + " " + r.targetId() + " " + r.reporterId() + " " + r.detail()).toLowerCase(java.util.Locale.ROOT).contains(needle)));
+        var names = users.lookup(page.items().stream().map(AdminReport::reporterId).collect(java.util.stream.Collectors.toSet()));
+        return PageResult.of(page.items().stream().map(r -> new AdminReportView(r, names.containsKey(r.reporterId()) ? names.get(r.reporterId()).name() : null)).toList(), page.nextCursor());
     }
 
     /** status: RESOLVED | DISMISSED. */

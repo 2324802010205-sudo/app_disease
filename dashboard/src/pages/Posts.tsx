@@ -1,68 +1,142 @@
-﻿import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { AlertTriangle, ArrowLeft, Calendar, CheckCircle2, Clock3, EyeOff, FileText, Filter, Globe, Image as ImageIcon, Info, MapPin, MessageCircle, MessageSquareText, Search, ShieldCheck, ThumbsUp, Trash2, User } from 'lucide-react'
 import { toast } from 'sonner'
 import { errorMessage } from '../api/client'
 import { postService, statsService } from '../api/services'
+import { Button, initials, Page, PageHeader, Pager, Panel, Pill, QueryState, SearchBox, Stat, useConfirm } from '../components/ui'
 import { useComments, usePost, usePosts } from '../hooks/useQueries'
-import { dateTime } from '../lib/admin'
+import { shortTime, TOPICS } from '../lib/admin'
+import type { AdminPost, Comment } from '../types'
+
+const statusOf = (p: AdminPost) => p.hidden ? { label: 'Đã ẩn', tone: 'neutral' as const } : p.pendingReports ? { label: 'Cần xem lại', tone: 'warning' as const } : { label: 'Đang hiển thị', tone: 'success' as const }
 
 export function Posts() {
-  const client = useQueryClient()
+  const [params] = useSearchParams()
   const [topic, setTopic] = useState('')
   const [status, setStatus] = useState('ALL')
-  const [authorId, setAuthorId] = useState('')
   const [reported, setReported] = useState('ALL')
-  const [search, setSearch] = useState('')
-  const [q, setQ] = useState('')
+  const [authorId, setAuthorId] = useState('')
+  const [advanced, setAdvanced] = useState(false)
+  const [search, setSearch] = useState(params.get('q') || '')
+  const [q, setQ] = useState(params.get('q') || '')
   const [page, setPage] = useState(0)
-  const [busy, setBusy] = useState(false)
-  const query = usePosts(topic,q,status,{authorId,reported:reported==='ALL'?undefined:reported==='YES'})
+  const query = usePosts(topic, q, status, { authorId, reported: reported === 'ALL' ? undefined : reported === 'YES' })
   const stats = useQuery({ queryKey: ['admin-stats'], queryFn: statsService.get })
-  const posts = query.data?.pages[page]?.items ?? []
+  const s = stats.data?.posts
+  const rows = query.data?.pages[page]?.items ?? []
+  const loaded = query.data?.pages.reduce((a, p) => a + p.items.length, 0) ?? 0
   async function changePage(index: number) {
     if (index < (query.data?.pages.length ?? 0)) { setPage(index); return }
     if (query.hasNextPage) { await query.fetchNextPage(); setPage(index) }
   }
-  async function toggle(id: string, hidden: boolean) {
-    setBusy(true)
-    try { await postService.visibility(id, hidden); await Promise.all([client.invalidateQueries({queryKey:['posts']}),client.invalidateQueries({queryKey:['post',id]}),client.invalidateQueries({queryKey:['admin-stats']})]); toast.success(hidden ? 'Đã ẩn bài viết' : 'Đã bỏ ẩn bài viết') }
-    catch(e) {toast.error(errorMessage(e))} finally {setBusy(false)}
-  }
-  async function remove(id: string) {
-    if (!confirm('Xóa bài viết này?')) return
-    setBusy(true)
-    try {await postService.remove(id); await Promise.all([client.invalidateQueries({queryKey:['posts']}),client.invalidateQueries({queryKey:['admin-stats']})]); toast.success('Đã xóa bài viết')}
-    catch(e) {toast.error(errorMessage(e))} finally {setBusy(false)}
-  }
-  return <main className="admin-page"><h1>Bài viết cộng đồng</h1><p>Quản trị bài viết trên toàn hệ thống</p>
-    {stats.data && <div className="admin-stats"><div className="admin-stat">Tổng bài viết<strong>{stats.data.posts.total}</strong></div><div className="admin-stat">Đang hiển thị<strong>{stats.data.posts.visible}</strong></div><div className="admin-stat">Đã ẩn<strong>{stats.data.posts.hidden}</strong></div><div className="admin-stat">Tạo hôm nay<strong>{stats.data.posts.today}</strong></div></div>}
-    {stats.isError && <div className="admin-error">{errorMessage(stats.error)}</div>}
-    <div className="admin-toolbar"><select aria-label="Trạng thái" value={status} onChange={e => {setStatus(e.target.value);setPage(0)}}><option value="ALL">Mọi trạng thái</option><option value="VISIBLE">Hiển thị</option><option value="HIDDEN">Đã ẩn</option></select>
-      <select aria-label="Chủ đề" value={topic} onChange={e => {setTopic(e.target.value);setPage(0)}}><option value="">Mọi chủ đề</option>{['PEST','EXPERIENCE','VARIETY','WEATHER','WATER'].map(x => <option key={x}>{x}</option>)}</select>
-      <input aria-label="UID tác giả" placeholder="UID tác giả" value={authorId} onChange={e => {setAuthorId(e.target.value);setPage(0)}}/>
-      <select aria-label="Bị báo cáo" value={reported} onChange={e=>{setReported(e.target.value);setPage(0)}}><option value="ALL">Mọi bài viết</option><option value="YES">Có báo cáo</option><option value="NO">Không có báo cáo</option></select>
-      <form onSubmit={e => {e.preventDefault();setQ(search);setPage(0)}}><input aria-label="Tìm kiếm" placeholder="Tiêu đề, nội dung, tác giả" value={search} onChange={e => setSearch(e.target.value)}/><button>Tìm</button></form>
+  const reset = (fn: () => void) => { fn(); setPage(0) }
+  return <Page art="field">
+    <PageHeader title="Bài viết cộng đồng" description="Theo dõi thảo luận và giữ nội dung hữu ích cho người trồng lúa." />
+    <div className="grid grid-3">
+      <Stat icon={FileText} label="Tổng bài viết" value={s?.total ?? '—'} sub={`${s?.visible ?? 0} đang hiển thị, ${s?.hidden ?? 0} đã ẩn`} />
+      <Stat icon={MessageSquareText} label="Bài viết mới hôm nay" value={s?.today ?? '—'} sub="Tính theo giờ Việt Nam" />
+      <Stat icon={AlertTriangle} tone="warning" label="Bài viết cần chú ý" value={s?.reported ?? '—'} sub="Có báo cáo chưa xử lý" subTone={s?.reported ? 'warn' : undefined} onClick={() => reset(() => setReported('YES'))} />
     </div>
-    {query.isPending && <div className="admin-empty">Đang tải bài viết...</div>}
-    {query.isError && <div className="admin-error">{errorMessage(query.error)} <button onClick={() => query.refetch()}>Thử lại</button></div>}
-    {query.isSuccess && posts.length === 0 && <div className="admin-empty">Không có bài viết phù hợp</div>}
-    {posts.length > 0 && <div className="admin-table-wrap"><table className="admin-table"><thead><tr><th>Tiêu đề</th><th>Tác giả</th><th>Chủ đề</th><th>Tương tác</th><th>Thời gian</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>{posts.map(p => <tr key={p.id}><td><Link className="admin-link" to={`/posts/${encodeURIComponent(p.id)}`}>{p.title}</Link><div className="admin-muted">{p.id}</div></td><td>{p.authorId}</td><td>{p.topic}</td><td>{p.likeCount} thích · {p.commentCount} bình luận</td><td>{dateTime(p.createdAt)}</td><td>{p.hidden ? 'Đã ẩn' : 'Hiển thị'}</td><td><div className="admin-actions"><button disabled={busy} onClick={() => toggle(p.id,!p.hidden)}>{p.hidden ? 'Bỏ ẩn' : 'Ẩn'}</button><button disabled={busy} onClick={() => remove(p.id)}>Xóa</button></div></td></tr>)}</tbody></table></div>}
-    {query.isSuccess && <div className="admin-pagination">{query.data.pages.map((_,index) => <button key={index} className={index === page ? 'primary' : ''} onClick={() => changePage(index)}>{index+1}</button>)}{query.hasNextPage && <button disabled={query.isFetchingNextPage} onClick={() => changePage(query.data.pages.length)}>{query.isFetchingNextPage ? 'Đang tải...' : 'Trang tiếp'}</button>}</div>}
-  </main>
+    <Panel flush>
+      <div style={{ padding: '16px 18px' }}>
+        <div className="toolbar">
+          <SearchBox placeholder="Tìm theo tiêu đề hoặc nội dung" value={search} onChange={setSearch} onSubmit={() => reset(() => setQ(search))} style={{ flexBasis: 300 }} />
+          <Button onClick={() => reset(() => setQ(search))}><Search size={16} />Tìm</Button>
+          <select className="field-select" aria-label="Chủ đề" value={topic} onChange={e => reset(() => setTopic(e.target.value))}><option value="">Tất cả chủ đề</option>{Object.entries(TOPICS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select>
+          <select className="field-select" aria-label="Trạng thái" value={status} onChange={e => reset(() => setStatus(e.target.value))}><option value="ALL">Mọi trạng thái</option><option value="VISIBLE">Đang hiển thị</option><option value="HIDDEN">Đã ẩn</option></select>
+          <Button variant="secondary" onClick={() => setAdvanced(v => !v)}><Filter size={16} />Lọc nâng cao</Button>
+          <span className="count-chip toolbar-push">Hiển thị {rows.length} bài viết</span>
+        </div>
+        {advanced && <div className="toolbar" style={{ marginTop: 11 }}><input className="field-input" aria-label="UID tác giả" placeholder="UID tác giả" value={authorId} onChange={e => reset(() => setAuthorId(e.target.value))} /><select className="field-select" aria-label="Bị báo cáo" value={reported} onChange={e => reset(() => setReported(e.target.value))}><option value="ALL">Mọi bài viết</option><option value="YES">Có báo cáo</option><option value="NO">Không có báo cáo</option></select></div>}
+      </div>
+      <QueryState query={query} empty={rows.length === 0} emptyText="Không có bài viết phù hợp" />
+      {rows.length > 0 && <div className="table-wrap"><table className="data-table"><thead><tr><th>Bài viết</th><th>Tác giả</th><th>Chủ đề</th><th>Ngày đăng</th><th>Hoạt động</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>{rows.map(p => {
+        const t = TOPICS[p.topic] ?? { label: p.topic, tone: 'info' as const }, st = statusOf(p), img = p.images?.[0]?.url
+        return <tr key={p.id}>
+          <td><div className="row-media">{img ? <img className="thumb" src={img} alt="" loading="lazy" /> : <div className="thumb"><ImageIcon size={22} /></div>}<div style={{ minWidth: 0, maxWidth: 340 }}><Link className="cell-title" to={`/posts/${encodeURIComponent(p.id)}`}>{p.title}</Link><div className="cell-sub cell-clip">{p.content}</div></div></div></td>
+          <td className="nowrap">{p.authorName || p.authorId.slice(0, 10)}</td>
+          <td><Pill tone={t.tone}>{t.label}</Pill></td>
+          <td className="nowrap">{shortTime(p.createdAt)}</td>
+          <td><span className="meta-icons"><span><ThumbsUp size={15} />{p.likeCount}</span><span><MessageCircle size={15} />{p.commentCount}</span></span></td>
+          <td><Pill tone={st.tone}>{st.label}</Pill></td>
+          <td><Link className="link" to={`/posts/${encodeURIComponent(p.id)}`}>Xem bài viết</Link></td>
+        </tr>
+      })}</tbody></table></div>}
+      {query.isSuccess && rows.length > 0 && <Pager page={page} pages={query.data.pages.length} hasNext={!!query.hasNextPage} loading={query.isFetchingNextPage} onPage={changePage} label={`Đã tải ${loaded} bài viết`} />}
+    </Panel>
+  </Page>
 }
+
+function CommentRow({ c, reply, busy, onRemove }: { c: Comment; reply?: boolean; busy: boolean; onRemove: (c: Comment) => void }) {
+  return <div className={`comment${reply ? ' reply' : ''}`}><div className="avatar" style={reply ? { width: 32, height: 32, fontSize: 11 } : undefined}>{initials(c.author?.name)}</div><div className="grow"><div className="comment-head"><strong>{c.author?.name || 'Người dùng'}</strong><small>{shortTime(c.createdAt)}</small>{c.badge === 'EXPERT' && <Pill tone="success" bare>Chuyên gia</Pill>}{c.badge === 'AUTHOR' && <Pill tone="info" bare>Tác giả</Pill>}{c.likeCount > 0 && <span className="meta-icons cell-sub"><span><ThumbsUp size={13} />{c.likeCount}</span></span>}</div><p>{c.text}</p></div><button className="comment-del" disabled={busy} onClick={() => onRemove(c)}><Trash2 size={15} />Xóa bình luận</button></div>
+}
+
 export function PostDetail() {
-  const {id = ''} = useParams()
+  const { id = '' } = useParams()
+  const navigate = useNavigate()
   const client = useQueryClient()
   const post = usePost(id)
   const comments = useComments(id)
-  const [busy,setBusy] = useState(false)
-  async function visibility(hidden: boolean) {setBusy(true);try {await postService.visibility(id,hidden);await client.invalidateQueries({queryKey:['post',id]});toast.success('Đã lưu trạng thái')}catch(e){toast.error(errorMessage(e))}finally{setBusy(false)}}
-  async function removeComment(commentId: string) {if (!confirm('Xóa bình luận này?')) return;setBusy(true);try {await postService.removeComment(id,commentId);await client.invalidateQueries({queryKey:['comments',id]});toast.success('Đã xóa bình luận')}catch(e){toast.error(errorMessage(e))}finally{setBusy(false)}}
-  return <main className="admin-page"><Link to="/posts">← Danh sách bài viết</Link>
-    {post.isPending && <div className="admin-empty">Đang tải bài viết...</div>}
-    {post.isError && <div className="admin-error">{errorMessage(post.error)}</div>}
-    {post.data && <section className="admin-panel"><h1>{post.data.title}</h1><p>{post.data.authorId} · {dateTime(post.data.createdAt)} · {post.data.hidden ? 'Đã ẩn' : 'Hiển thị'}</p><p style={{whiteSpace:'pre-wrap'}}>{post.data.content}</p>{post.data.images?.map((img,i) => <a key={i} href={img.url} target="_blank" rel="noreferrer"><img className="preview" src={img.url} alt={`Ảnh bài viết ${i+1}`}/></a>)}<div className="admin-actions"><button disabled={busy} onClick={() => visibility(!post.data!.hidden)}>{post.data.hidden ? 'Bỏ ẩn' : 'Ẩn bài viết'}</button></div></section>}
-    <h2>Bình luận</h2>{comments.isPending && <div className="admin-empty">Đang tải bình luận...</div>}{comments.isError && <div className="admin-error">{errorMessage(comments.error)}</div>}{comments.data?.length === 0 && <div className="admin-empty">Chưa có bình luận</div>}{comments.data?.map(c => <div className="admin-panel" key={c.id}><strong>{c.author?.name}</strong> · {dateTime(c.createdAt)}<p>{c.text}</p><button disabled={busy} onClick={() => removeComment(c.id)}>Xóa bình luận</button></div>)}
-  </main>
+  const [busy, setBusy] = useState(false)
+  const confirm = useConfirm()
+  const p = post.data
+  const refresh = () => Promise.all([client.invalidateQueries({ queryKey: ['post', id] }), client.invalidateQueries({ queryKey: ['posts'] }), client.invalidateQueries({ queryKey: ['admin-stats'] })])
+  async function visibility(hidden: boolean) {
+    setBusy(true)
+    try { await postService.visibility(id, hidden); await refresh(); toast.success(hidden ? 'Đã ẩn bài viết' : 'Bài viết đang hiển thị') }
+    catch (e) { toast.error(errorMessage(e)) } finally { setBusy(false) }
+  }
+  const removePost = () => confirm.ask({ title: 'Xóa bài viết này?', description: `Bài viết "${p?.title}" cùng toàn bộ bình luận sẽ bị xóa vĩnh viễn.`, confirmText: 'Xóa bài viết', destructive: true, icon: Trash2, onConfirm: async () => {
+    try { await postService.remove(id); await refresh(); toast.success('Đã xóa bài viết'); navigate('/posts') } catch (e) { toast.error(errorMessage(e)) }
+  } })
+  const removeComment = (c: Comment) => confirm.ask({ title: 'Xóa bình luận này?', description: `Bình luận của ${c.author?.name || 'người dùng'}${c.replies?.length ? ` và ${c.replies.length} trả lời` : ''} sẽ bị xóa.`, confirmText: 'Xóa bình luận', destructive: true, icon: Trash2, onConfirm: async () => {
+    try { await postService.removeComment(id, c.id); await Promise.all([client.invalidateQueries({ queryKey: ['comments', id] }), refresh()]); toast.success('Đã xóa bình luận') } catch (e) { toast.error(errorMessage(e)) }
+  } })
+  const t = p ? TOPICS[p.topic] ?? { label: p.topic, tone: 'info' as const } : null
+  const st = p ? statusOf(p) : null
+  return <Page art="rice">
+    <PageHeader title="Chi tiết bài viết" description="Xem nội dung và thực hiện kiểm duyệt khi cần." actions={<Link className="back-chip" to="/posts"><ArrowLeft size={16} />Danh sách bài viết</Link>} />
+    {!p && <Panel><QueryState query={post} /></Panel>}
+    {p && <div className="detail-grid">
+      <div className="stack">
+        <Panel>
+          <div className="author-row"><div className="avatar">{initials(p.authorName)}</div><div className="grow"><strong>{p.authorName || p.authorId}</strong><small>{shortTime(p.createdAt)}{p.province ? `  •  ${p.province}` : ''}</small></div>{t && <Pill tone={t.tone}>{t.label}</Pill>}</div>
+          <h2 className="article-title">{p.title}</h2>
+          {p.images?.[0] && <a href={p.images[0].url} target="_blank" rel="noreferrer"><img className="article-photo" src={p.images[0].url} alt="Ảnh bài viết" /></a>}
+          {p.images?.length > 1 && <div className="photo-grid">{p.images.slice(1).map((img, i) => <a key={i} href={img.url} target="_blank" rel="noreferrer"><img src={img.url} alt={`Ảnh ${i + 2}`} /></a>)}</div>}
+          <p className="article-body">{p.content}</p>
+          <div className="op-tags" style={{ margin: '0 0 14px' }}><Pill bare tone={p.hidden ? 'neutral' : 'success'}><Globe size={14} />{p.hidden ? 'Đang ẩn khỏi cộng đồng' : 'Đã đăng công khai'}</Pill>{!!p.pendingReports && <Pill bare tone="warning"><AlertTriangle size={14} />{p.pendingReports} báo cáo chưa xử lý</Pill>}</div>
+          <div className="article-stats"><span><ThumbsUp size={16} />{p.likeCount} lượt thích</span><span><MessageCircle size={16} />{p.commentCount} bình luận</span></div>
+        </Panel>
+        <Panel icon={MessageSquareText} title="Bình luận" description="Nội dung thảo luận dưới bài viết.">
+          <QueryState query={comments} empty={comments.data?.length === 0} emptyText="Chưa có bình luận" />
+          {comments.data?.map(c => <div key={c.id}><CommentRow c={c} busy={busy} onRemove={removeComment} />{c.replies?.map(r => <CommentRow key={r.id} c={{ ...r, replies: [] }} reply busy={busy} onRemove={removeComment} />)}</div>)}
+        </Panel>
+      </div>
+      <Panel icon={ShieldCheck} title="Kiểm duyệt" description="Xem xét nội dung bài viết và thực hiện thao tác quản lý phù hợp sau khi đánh giá.">
+        <div className="mod-grid">
+          <div className="mod-row"><Info size={17} />Trạng thái{st && <Pill tone={st.tone}>{st.label}</Pill>}</div>
+          <div className="mod-row"><AlertTriangle size={17} />Báo cáo chờ<Pill tone={p.pendingReports ? 'warning' : 'success'}>{p.pendingReports || 'Không có'}</Pill></div>
+          <div className="mod-row"><FileText size={17} />Chủ đề{t && <Pill tone={t.tone}>{t.label}</Pill>}</div>
+        </div>
+        <div className="divider" />
+        <div className="facts">
+          <div className="mod-row"><User size={17} />Tác giả<b>{p.authorName || p.authorId}</b></div>
+          <div className="mod-row"><Calendar size={17} />Ngày đăng<b>{shortTime(p.createdAt)}</b></div>
+          <div className="mod-row"><Clock3 size={17} />Cập nhật<b>{shortTime(p.updatedAt)}</b></div>
+          <div className="mod-row"><MapPin size={17} />Địa bàn<b>{p.province || 'Chưa có'}</b></div>
+          <div className="mod-row"><ThumbsUp size={17} />Tương tác<b>{p.likeCount} thích, {p.commentCount} bình luận</b></div>
+        </div>
+        <div className="divider" />
+        <div className="stack" style={{ gap: 11 }}>
+          <Button block disabled={busy || !p.hidden} onClick={() => visibility(false)}><CheckCircle2 size={18} />Giữ bài viết</Button>
+          <Button block variant="outline" disabled={busy || p.hidden} onClick={() => visibility(true)}><EyeOff size={18} />Ẩn tạm thời</Button>
+          <Button block variant="danger" disabled={busy} onClick={removePost}><Trash2 size={18} />Xóa bài viết</Button>
+        </div>
+      </Panel>
+    </div>}
+    {confirm.node}
+  </Page>
 }

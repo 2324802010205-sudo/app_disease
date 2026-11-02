@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -32,6 +34,19 @@ public class LocalMediaStorage implements MediaStorage {
             throw ApiException.unavailable("Không lưu được ảnh");
         }
         return new ImageRef(baseUrl + "/files/" + publicId, publicId, null, null, (long) data.length);
+    }
+
+    @Override
+    public ImageRef move(String publicId, String toFolder, Map<String, String> context, List<String> tags) {
+        String target = toFolder + "/" + publicId.substring(publicId.lastIndexOf('/') + 1);
+        try {
+            Path to = resolve(target);
+            Files.createDirectories(to.getParent());
+            Files.move(resolve(publicId), to);
+        } catch (IOException e) {
+            throw ApiException.unavailable("Không sắp xếp được ảnh");
+        }
+        return new ImageRef(baseUrl + "/files/" + target, target, null, null, null);
     }
 
     @Override

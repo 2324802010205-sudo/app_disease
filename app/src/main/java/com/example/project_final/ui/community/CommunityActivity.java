@@ -21,6 +21,7 @@ import com.example.project_final.model.Page;
 import com.example.project_final.model.Post;
 import com.example.project_final.util.Fmt;
 import com.example.project_final.util.Img;
+import com.example.project_final.view.NavBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class CommunityActivity extends BaseActivity {
 
     @Override
     protected void onReady() {
+        setupBottomNav(NavBar.COMMUNITY);
         findViewById(R.id.btn_my_posts).setOnClickListener(v -> {
             if (requireAccount("xem bài viết của bạn")) startActivity(new Intent(this, MyPostsActivity.class));
         });
@@ -189,7 +191,7 @@ public class CommunityActivity extends BaseActivity {
         }
         for (Post p : posts) {
             View item = getLayoutInflater().inflate(R.layout.item_post, list, false);
-            Img.avatar(item.findViewById(R.id.avatar), p.author == null ? null : p.author.avatarUrl);
+            Img.communityAvatar(item.findViewById(R.id.avatar), p.author);
             Ui.text(item, R.id.author, p.author == null ? "Người dùng" : p.author.name);
             Ui.text(item, R.id.meta, Fmt.relative(p.createdAt) + (p.province == null || p.province.isEmpty() ? "" : " · " + p.province));
             Ui.text(item, R.id.title, p.title);

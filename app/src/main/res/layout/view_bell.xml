@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chuông thông báo ở góc phải đầu màn hình (id btn_notifications, huy hiệu notif_badge). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btn_notifications"
+    android:layout_width="44dp"
+    android:layout_height="44dp"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:contentDescription="Thông báo"
+    android:focusable="true">
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_circle_white"
+        android:elevation="2dp"
+        android:importantForAccessibility="no"
+        android:padding="8dp"
+        android:src="@drawable/ic_notifications_outline"
+        android:tint="@color/ink_deep" />
+
+    <TextView
+        android:id="@+id/notif_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="1dp"
+        android:background="@drawable/bg_nav_badge"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:includeFontPadding="false"
+        android:minWidth="20dp"
+        android:minHeight="20dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="9+"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_12"
+        android:textStyle="bold"
+        android:visibility="gone" />
+</FrameLayout>

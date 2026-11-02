@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -49,8 +50,9 @@ public class AuthService {
             throw ApiException.badRequest("Không tạo được tài khoản: " + e.getMessage());
         }
         try {
+            // Không cấp admin ở đây: email đăng ký bằng mật khẩu chưa được xác minh, ai cũng có thể đăng ký trước email admin.
+            // Tài khoản admin do AdminBootstrap tạo/cấp quyền khi khởi động.
             users.create(created.getUid(), email, r.fullName().trim(), blank(r.phone()), blank(r.province()), blank(r.role()));
-            grantAdminIfListed(created.getUid(), email);
         } catch (RuntimeException e) {
             // Không để lại tài khoản Auth "mồ côi" nếu tạo hồ sơ thất bại.
             try { auth.deleteUser(created.getUid()); } catch (FirebaseAuthException ignored) { /* best-effort */ }
@@ -87,6 +89,7 @@ public class AuthService {
         boolean hadProfile = users.exists(uid);
         UserProfile p = users.getOrCreate(new AuthUser(uid, email, r.displayName(), false));
         if (!hadProfile) {
+            // Chỉ Google mới cấp admin theo danh sách: email trong token Google đã được Google xác minh.
             grantAdminIfListed(uid, email);
             if (r.photoUrl() != null && !r.photoUrl().isBlank()) p = users.setExternalAvatar(uid, r.photoUrl());
         }
@@ -157,7 +160,9 @@ public class AuthService {
     private void grantAdminIfListed(String uid, String email) {
         if (!adminEmails.contains(email)) return;
         try {
-            auth.setCustomUserClaims(uid, Map.of("admin", true));
+            Map<String, Object> claims = new HashMap<>(auth.getUser(uid).getCustomClaims());
+            claims.put("admin", true);
+            auth.setCustomUserClaims(uid, claims);
         } catch (FirebaseAuthException e) {
             log.warn("Không gán quyền admin cho {}", email, e);
         }

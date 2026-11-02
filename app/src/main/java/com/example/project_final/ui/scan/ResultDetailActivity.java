@@ -59,12 +59,30 @@ public class ResultDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(Scan s) {
                 bind(s);
+                if (s.isPending()) rediagnose();
             }
 
             @Override
             public void onError(ApiError e) {
                 showError(e);
                 finish();
+            }
+        });
+    }
+
+    /** Lượt quét lúc AI chưa chạy được: phân tích lại ngay khi mở; AI vẫn lỗi thì giữ nguyên trạng thái chờ. */
+    private void rediagnose() {
+        busy(true);
+        call(api().diagnose(id), new ApiCallback<Scan>() {
+            @Override
+            public void onSuccess(Scan s) {
+                busy(false);
+                bind(s);
+            }
+
+            @Override
+            public void onError(ApiError e) {
+                busy(false);
             }
         });
     }
@@ -82,7 +100,7 @@ public class ResultDetailActivity extends BaseActivity {
 
         LinearLayout summary = findViewById(R.id.list_summary);
         summary.removeAllViews();
-        List<String> lines = new ArrayList<>(s.symptoms == null ? List.of() : s.symptoms);
+        List<String> lines = new ArrayList<>(s.symptoms == null || !s.isDiagnosed() ? List.of() : s.symptoms);
         if (lines.isEmpty()) Ui.emptyNote(summary, "Chưa có tóm tắt cho lượt quét này", null);
         else Ui.fill(summary, R.layout.item_check_line, lines.size(), (item, i) -> ((TextView) item).setText(lines.get(i)));
 
@@ -95,7 +113,7 @@ public class ResultDetailActivity extends BaseActivity {
         boolean hasNote = s.note != null && !s.note.isEmpty();
         String weather = s.weather == null ? "—" : Math.round(s.weather.tempC) + "°C";
         String weatherNote = s.weather == null ? "Chưa có dữ liệu" : s.weather.condition + ", độ ẩm " + s.weather.humidity + "%";
-        String[] label = {"Thời tiết lúc quét", "Giai đoạn lúa", "Ghi chú"};
+        String[] label = {"Thời tiết", "Giai đoạn lúa", "Ghi chú"};
         String[] value = {weather, s.stage == null || s.stage.isEmpty() ? "—" : s.stage, hasNote ? s.note : "Không có ghi chú"};
         String[] note = {weatherNote, "", hasNote ? "Sửa ghi chú" : "Thêm ghi chú"};
         int[] icon = {R.drawable.ic_w_rain, R.drawable.ic_sprout, R.drawable.ic_description};

@@ -1,5 +1,5 @@
 {
-  "_ghi_chu": "Ánh xạ tên lớp của best.pt -> mã bệnh trong thư viện bệnh của backend (backend/src/main/resources/seed/diseases.json). null = mô hình nhận ra nhưng thư viện chưa có bệnh này; 'healthy' = lá khỏe.",
+  "_ghi_chu": "Ánh xạ tên lớp của best.pt (đọc từ file trọng số, 11 lớp) -> mã bệnh trong thư viện bệnh của backend (backend/src/main/resources/seed/diseases.json). 'healthy' = lá khỏe. Ba cặp trùng nghĩa do gộp bộ dữ liệu được gộp về cùng một mã.",
   "Brown spot": "dom-nau",
   "Rice Brownspot": "dom-nau",
   "Leaf Blight": "bac-la",
@@ -7,8 +7,8 @@
   "bacterial leaf blight": "bac-la",
   "Leaf blast": "dao-on-la",
   "Rice Blast": "dao-on-la",
-  "Leaf Scald": null,
-  "Leaf smut": null,
-  "Narrow brown spot": null,
+  "Leaf Scald": "chay-la",
+  "Leaf smut": "than-la",
+  "Narrow brown spot": "dom-nau-hep",
   "healthy": "healthy"
 }

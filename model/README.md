@@ -1,6 +1,6 @@
 # Mô hình nhận dạng bệnh lá lúa (`best.pt`)
 
-`weights/best.pt` là YOLOv9c (ultralytics, detect, huấn luyện ở ảnh 768 px, 11 lớp). `service/` bọc nó thành một dịch vụ HTTP mà backend gọi qua `DIAGNOSIS_PROVIDER=http`.
+`weights/best.pt` là YOLOv9c (ultralytics, detect, huấn luyện ở ảnh 768 px, 11 lớp; dịch vụ suy luận mặc định ở 640 px vì trên 28 ảnh mẫu có nhãn 640 px đúng 11/28 còn 768 px đúng 6/28, đổi bằng `MODEL_IMGSZ`). `service/` bọc nó thành một dịch vụ HTTP mà backend gọi qua `DIAGNOSIS_PROVIDER=http`.
 
 ```
 model/
@@ -32,6 +32,8 @@ DIAGNOSIS_HTTP_TOKEN=doi-token-nay        # cùng giá trị MODEL_API_TOKEN
 
 Dịch vụ phải tải được `imageUrl` mà backend gửi (ảnh lưu local thì `PUBLIC_BASE_URL` phải truy cập được từ máy chạy dịch vụ).
 
+Trên máy phát triển Windows: chạy `scripts\RunModel.cmd` (dùng WSL, Python ở `~/riceguard-venv`, token lấy từ `backend/.env`) rồi mới chạy backend. Dịch vụ tắt thì ảnh quét vào `dataset/cho-phan-tich` và được phân tích lại khi mở lượt quét đó.
+
 ## Gỡ lỗi
 
 * `GET /health`: trọng số có tồn tại không, mô hình đã nạp chưa (nạp ở yêu cầu đầu tiên, vài giây).
@@ -47,14 +49,43 @@ Dịch vụ phải tải được `imageUrl` mà backend gửi (ảnh lưu local
 | Có vùng bệnh | bệnh có độ tin cậy cao nhất; lá khỏe không thắng bệnh |
 | Lớp bệnh chưa có trong thư viện (`null` trong `class_map.json`) | `unknown` → app báo chưa xác định |
 
+* Mô hình không có lớp "không phải lá lúa": ảnh lạ thường không ra phát hiện nào, nhưng ảnh có hình lá/lúa (logo, tranh) vẫn có thể bị nhận nhầm.
 * **Mức độ nặng** là heuristic theo diện tích khung bệnh / diện tích ảnh: < 5 % LOW, 5–20 % MEDIUM, ≥ 20 % HIGH (`postprocess.py`). Chưa được kiểm chứng với chuyên gia, cần hiệu chỉnh khi có dữ liệu thật.
 * **Triệu chứng / khuyến nghị** không nằm trong mô hình: backend điền từ thư viện bệnh (`HttpDiagnosisEngine.enrich`), nên admin sửa thư viện là app thấy ngay.
 * Backend còn có ngưỡng riêng `min-confidence: 0.5` (`application.yml`); dưới ngưỡng này lượt quét thành "cần chụp lại". Ngưỡng giữ phát hiện của dịch vụ là `MODEL_CONF=0.25`.
 
-## Ánh xạ lớp → bệnh (cần chuyên gia xác nhận)
+## Ánh xạ lớp → bệnh
 
-11 lớp của `best.pt` có 3 cặp trùng nghĩa (`Brown spot`/`Rice Brownspot`, `Leaf blast`/`Rice Blast`, `Rice Bacterial Blight`/`bacterial leaf blight`) do gộp nhiều bộ dữ liệu; chúng được gộp về cùng một mã bệnh. `Leaf Blight` được ánh xạ sang **bạc lá** (`bac-la`) — đây là giả định.
-`Leaf Scald`, `Leaf smut`, `Narrow brown spot` chưa có trong thư viện bệnh nên trả `unknown`. Muốn app nhận ra chúng: thêm bệnh trong dashboard (trang Thư viện bệnh), rồi đổi `null` thành mã bệnh trong `class_map.json`.
+Tên lớp đọc trực tiếp từ `best.pt` (11 lớp, thứ tự chữ cái): `Brown spot`, `Leaf Blight`, `Leaf Scald`, `Leaf blast`, `Leaf smut`, `Narrow brown spot`, `Rice Bacterial Blight`, `Rice Blast`, `Rice Brownspot`, `bacterial leaf blight`, `healthy`. Dữ liệu huấn luyện là `rice-leaf-2` (gộp nhiều bộ dữ liệu) nên có 3 cặp trùng nghĩa, được gộp về cùng một mã bệnh:
+
+| Lớp trong `best.pt` | Mã bệnh trong thư viện |
+|---|---|
+| `Brown spot`, `Rice Brownspot` | `dom-nau` (Đốm nâu) |
+| `Leaf blast`, `Rice Blast` | `dao-on-la` (Đạo ôn lá) |
+| `Rice Bacterial Blight`, `bacterial leaf blight`, `Leaf Blight` | `bac-la` (Bạc lá) |
+| `Leaf Scald` | `chay-la` (Cháy lá) |
+| `Leaf smut` | `than-la` (Than lá) |
+| `Narrow brown spot` | `dom-nau-hep` (Đốm nâu hẹp) |
+| `healthy` | `healthy` |
+
+`Leaf Blight` được ánh xạ sang **bạc lá** là một giả định (trong bộ dữ liệu gốc nó đi cùng các lớp bạc lá do vi khuẩn); cần chuyên gia xác nhận.
+Các bệnh `aiDetectable: true` trong `backend/src/main/resources/seed/diseases.json` chính là sáu bệnh trên; app hiện "AI RiceGuard nhận diện được" ở chi tiết bệnh.
+Khô vằn, rỉ sắt, lùn xoắn lá, đạo ôn cổ bông, lem lép hạt có trong thư viện để đọc nhưng **mô hình này không nhận ra** chúng.
+Thêm lớp mới vào mô hình: thêm bệnh vào thư viện, thêm dòng vào `class_map.json` (test `test_every_mapped_code_exists_in_disease_library` bắt quên mã).
+
+## Ảnh người dùng → cải tiến mô hình
+
+Mỗi ảnh quét, sau khi AI chẩn đoán, backend **chuyển** (không nhân đôi) ảnh vào thư mục theo nhãn AI trên Cloudinary:
+
+```
+riceguard/{env}/dataset/dom-nau/   dao-on-la/   bac-la/   chay-la/   than-la/   dom-nau-hep/   la-khoe/
+riceguard/{env}/dataset/khong-xac-dinh/   ảnh không xác định: không phải lá lúa, độ tin cậy thấp hơn ngưỡng, hoặc lớp chưa có trong thư viện
+riceguard/{env}/dataset/cho-phan-tich/    dịch vụ AI chưa bật hoặc lỗi; chẩn đoán lại thì ảnh đổi sang thư mục đúng
+```
+
+Mỗi ảnh có tag `dataset`, `ai-{nhãn}` và context `scan_id`, `uid`, `ai_label`, `confidence`, `engine`, `status` (lọc trong Media Library hoặc Admin API). 
+Quy trình cải tiến: mở trang **Kho ảnh AI** trên dashboard, duyệt từng thư mục (AI đúng, sửa nhãn hoặc loại ảnh), dùng thư mục Không xác định làm nguồn ảnh cần gán nhãn mới, xuất CSV ảnh đã duyệt (cột nhãn đúng) rồi huấn luyện lại. Ảnh đã duyệt hiện trong `riceguard/{env}/verified/{nhãn đúng}` trên Cloudinary. Phản hồi "kết quả sai" của người dùng nằm ở collection `feedbacks` (kèm `scanDiseaseCode` và `suggestedDiseaseCode`) để lọc ảnh nghi sai.
+Xóa tài khoản xóa luôn ảnh của người đó trong các thư mục này. Cần có thông báo/đồng ý của người dùng về việc dùng ảnh để cải tiến mô hình trước khi phát hành.
 
 ## Biến môi trường
 

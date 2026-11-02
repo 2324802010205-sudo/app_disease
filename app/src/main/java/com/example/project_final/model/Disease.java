@@ -12,6 +12,7 @@ public class Disease {
     public String part;
     public String cause;
     public boolean common;
+    public boolean aiDetectable;          // mô hình AI (best.pt) nhận diện được bệnh này
     public List<String> symptoms = new ArrayList<>();
     public List<String> conditions = new ArrayList<>();
     public List<String> prevention = new ArrayList<>();

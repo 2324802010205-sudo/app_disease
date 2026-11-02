@@ -29,7 +29,9 @@ public class RiskService {
 
     public record AreaInfo(String province, String district, String fromDate, String toDate, long cases, String level,
                            Long lastAt, List<DiseaseCount> diseases, String dominantStage, String advice,
-                           WeatherDto.Current weather) {}
+                           WeatherDto.Current weather, List<DayCount> daily) {}
+
+    public record DayCount(String date, long cases) {}
 
     private final Fs fs;
     private final Refs refs;
@@ -79,7 +81,7 @@ public class RiskService {
         var today = times.today();
         return new AreaInfo(province, district, today.minusDays(days - 1L).toString(), today.toString(), cases, level,
                 a == null ? null : a.lastAt, a == null ? List.of() : top(a), a == null ? null : dominantStage(a),
-                RiskLevels.advice(level), w);
+                RiskLevels.advice(level), w, a == null ? List.of() : daily(a, today.minusDays(days - 1L), today));
     }
 
     private Map<String, Acc> aggregate(int days) {
@@ -92,6 +94,8 @@ public class RiskService {
             Acc a = out.computeIfAbsent(Slug.of(province) + "|" + Slug.of(district), k -> new Acc(province, district));
             Long total = d.getLong("total");
             a.total += total == null ? 0 : Math.max(0, total);
+            String date = d.getString("date");
+            if (date != null) a.byDate.merge(date, total == null ? 0 : Math.max(0, total), Long::sum);
             Long last = d.getLong("lastAt");
             if (last != null && (a.lastAt == null || last > a.lastAt)) a.lastAt = last;
             addAll(a.byDisease, d.get("byDisease"));
@@ -117,6 +121,12 @@ public class RiskService {
                 }).toList();
     }
 
+    private static List<DayCount> daily(Acc a, java.time.LocalDate from, java.time.LocalDate to) {
+        List<DayCount> out = new ArrayList<>();
+        for (var d = from; !d.isAfter(to); d = d.plusDays(1)) out.add(new DayCount(d.toString(), a.byDate.getOrDefault(d.toString(), 0L)));
+        return out;
+    }
+
     private static String dominantStage(Acc a) {
         return a.byStage.entrySet().stream().max(Map.Entry.comparingByValue()).map(Map.Entry::getKey).orElse(null);
     }
@@ -128,6 +138,7 @@ public class RiskService {
         Long lastAt;
         final Map<String, Long> byDisease = new HashMap<>();
         final Map<String, Long> byStage = new HashMap<>();
+        final Map<String, Long> byDate = new HashMap<>();
 
         Acc(String province, String district) {
             this.province = province;

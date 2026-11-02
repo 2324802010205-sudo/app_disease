@@ -127,6 +127,13 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
+    <style name="Round18">
+        <item name="shapeAppearanceOverlay">@style/Round18Shape</item>
+    </style>
+    <style name="Round18Shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">18dp</item>
+    </style>
     <style name="Round10">
         <item name="shapeAppearanceOverlay">@style/Round10Shape</item>
     </style>
@@ -142,14 +149,10 @@
         <item name="android:layout_weight">1</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:clipChildren">false</item>
     </style>
     <style name="NavBlob">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">52dp</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_marginStart">2dp</item>
-        <item name="android:layout_marginEnd">2dp</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@drawable/bg_nav_item_on</item>
         <item name="android:visibility">invisible</item>
     </style>

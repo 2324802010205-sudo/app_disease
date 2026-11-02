@@ -31,7 +31,7 @@ public class FirebaseConfig {
         FirebaseOptions.Builder options = FirebaseOptions.builder().setCredentials(credentials(fb));
         if (!fb.projectId().isBlank()) options.setProjectId(fb.projectId());
         log.info("Khởi tạo Firebase (project={}, emulator={})", fb.projectId().isBlank() ? "<từ credentials>" : fb.projectId(), fb.emulator());
-        return FirebaseApp.initializeApp(options.build());
+        return FirebaseApp.getApps().isEmpty() ? FirebaseApp.initializeApp(options.build()) : FirebaseApp.getInstance();
     }
 
     @Bean

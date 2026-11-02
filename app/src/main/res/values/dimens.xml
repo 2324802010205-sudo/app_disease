@@ -25,5 +25,5 @@
 
     <!-- Thanh điều hướng nổi: chiều cao viên thuốc và vùng chừa cho nội dung cuộn bên dưới. -->
     <dimen name="nav_height">68dp</dimen>
-    <dimen name="nav_clearance">100dp</dimen>
+    <dimen name="nav_clearance">104dp</dimen>
 </resources>

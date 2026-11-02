@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.example.project_final.ui.community.CommunityActivity;
 import com.example.project_final.ui.field.FieldsActivity;
 import com.example.project_final.ui.home.HomeActivity;
-import com.example.project_final.ui.library.LibraryActivity;
-import com.example.project_final.ui.profile.NotificationsActivity;
 import com.example.project_final.ui.profile.ProfileActivity;
 import com.example.project_final.R;
 import com.example.project_final.ui.scan.ScanActivity;
@@ -23,12 +21,12 @@ import com.example.project_final.util.Img;
 
 /** Thanh điều hướng nổi dạng viên thuốc của các màn hình chính. */
 public class NavBar extends FrameLayout {
-    public static final int HOME = 0, FIELDS = 1, SCAN = 2, LIBRARY = 3, NOTIFICATIONS = 4, PROFILE = 5;
+    public static final int HOME = 0, COMMUNITY = 1, SCAN = 2, FIELDS = 3, PROFILE = 4;
 
-    private static final int[] ITEMS = {R.id.nav_home, R.id.nav_fields, R.id.nav_scan, R.id.nav_library, R.id.nav_notifications, R.id.nav_profile};
-    private static final int[] ICONS = {R.id.nav_home_icon, R.id.nav_fields_icon, R.id.nav_scan_icon, R.id.nav_library_icon, R.id.nav_notifications_icon, 0};
-    private static final int[] BLOBS = {R.id.nav_home_blob, R.id.nav_fields_blob, R.id.nav_scan_blob, R.id.nav_library_blob, R.id.nav_notifications_blob, R.id.nav_profile_blob};
-    private static final Class<?>[] TARGETS = {HomeActivity.class, FieldsActivity.class, ScanActivity.class, LibraryActivity.class, NotificationsActivity.class, ProfileActivity.class};
+    private static final int[] ITEMS = {R.id.nav_home, R.id.nav_community, R.id.nav_scan, R.id.nav_fields, R.id.nav_profile};
+    private static final int[] ICONS = {R.id.nav_home_icon, R.id.nav_community_icon, R.id.nav_scan_icon, R.id.nav_fields_icon, 0};
+    private static final int[] BLOBS = {R.id.nav_home_blob, R.id.nav_community_blob, R.id.nav_scan_blob, R.id.nav_fields_blob, R.id.nav_profile_blob};
+    private static final Class<?>[] TARGETS = {HomeActivity.class, CommunityActivity.class, ScanActivity.class, FieldsActivity.class, ProfileActivity.class};
 
     private int selected = -1;
 
@@ -61,19 +59,16 @@ public class NavBar extends FrameLayout {
         }
         findViewById(R.id.nav_profile_ring).setVisibility(index == PROFILE ? VISIBLE : GONE);
         ((ImageView) findViewById(R.id.nav_home_icon)).setImageResource(index == HOME ? R.drawable.ic_home : R.drawable.ic_home_outline);
-        ((ImageView) findViewById(R.id.nav_notifications_icon)).setImageResource(index == NOTIFICATIONS ? R.drawable.ic_notifications : R.drawable.ic_notifications_outline);
     }
 
-    /** Số thông báo chưa đọc; 0 thì ẩn huy hiệu. */
-    public void setBadge(long count) {
-        TextView badge = findViewById(R.id.nav_badge);
-        if (count <= 0) {
-            badge.setVisibility(GONE);
-            findViewById(R.id.nav_notifications).setContentDescription("Thông báo");
-        } else {
-            badge.setText(count > 9 ? "9+" : String.valueOf(count));
-            badge.setVisibility(VISIBLE);
-            findViewById(R.id.nav_notifications).setContentDescription("Thông báo, " + count + " chưa đọc");
+    /** Thanh nổi cách mép dưới một khoảng, tính thêm phần gạch điều hướng của hệ thống. */
+    public void setBottomInset(int px) {
+        View bar = findViewById(R.id.nav_pill);
+        MarginLayoutParams lp = (MarginLayoutParams) bar.getLayoutParams();
+        int margin = px + (int) (10 * getResources().getDisplayMetrics().density);
+        if (lp.bottomMargin != margin) {
+            lp.bottomMargin = margin;
+            bar.setLayoutParams(lp);
         }
     }
 
@@ -83,7 +78,7 @@ public class NavBar extends FrameLayout {
         Img.load((ImageView) findViewById(R.id.nav_profile_icon), u == null ? null : u.avatarUrl, R.drawable.ic_avatar_default);
     }
 
-    private static final String[] GUEST_ACTIONS = {null, "quản lý ruộng lúa", "quét và phân tích bệnh lúa", null, "xem thông báo", "xem hồ sơ cá nhân"};
+    private static final String[] GUEST_ACTIONS = {null, null, "quét và phân tích bệnh lúa", "quản lý ruộng lúa", "xem hồ sơ cá nhân"};
 
     private void open(int index) {
         if (index == selected) return;

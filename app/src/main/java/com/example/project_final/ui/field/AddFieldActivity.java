@@ -25,6 +25,7 @@ import com.example.project_final.util.Uploads;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.MultipartBody;
 
@@ -36,6 +37,7 @@ public class AddFieldActivity extends BaseActivity {
     private EditText name, area, note;
     private TextView ddVariety, ddStage, ddDate;
     private ImagePicker picker;
+    private RiceField original;
 
     @Override
     protected int layout() {
@@ -81,15 +83,18 @@ public class AddFieldActivity extends BaseActivity {
 
         if (editId != null) {
             setText(R.id.screen_title, "Chỉnh sửa ruộng");
+            busy(true);
             call(api().field(editId), new ApiCallback<RiceField.Detail>() {
                 @Override
                 public void onSuccess(RiceField.Detail d) {
                     prefill(d.field);
+                    busy(false);
                 }
 
                 @Override
                 public void onError(ApiError e) {
                     showError(e);
+                    busy(false);
                     finish();
                 }
             });
@@ -108,6 +113,7 @@ public class AddFieldActivity extends BaseActivity {
     }
 
     private void prefill(RiceField f) {
+        original = f;
         name.setText(f.name);
         if (f.areaHa > 0) area.setText(Fmt.areaNumber(f.areaHa).replace(',', '.'));
         note.setText(f.note);
@@ -130,10 +136,10 @@ public class AddFieldActivity extends BaseActivity {
     /** Hai bước: chọn tỉnh/thành, rồi nhập huyện/xã (không bắt buộc). */
     private void chooseLocation() {
         withMeta(o -> Ui.chooser(this, "Chọn tỉnh/thành", o.provinces, (i, label) -> {
-            province = label;
             EditText input = new EditText(this);
             input.setHint("Huyện / xã (không bắt buộc)");
-            input.setText(district);
+            input.setSingleLine(true);
+            input.setText(Objects.equals(province, label) ? district : null);
             int pad = (int) Ui.dp(this, 20);
             android.widget.FrameLayout box = new android.widget.FrameLayout(this);
             box.setPadding(pad, pad / 2, pad, 0);
@@ -142,10 +148,11 @@ public class AddFieldActivity extends BaseActivity {
                     .setTitle(label)
                     .setView(box)
                     .setPositiveButton("Xong", (d, w) -> {
+                        province = label;
                         district = Forms.orNull(input);
                         showLocation();
                     })
-                    .setNegativeButton("Bỏ qua", (d, w) -> showLocation())
+                    .setNegativeButton("Hủy", null)
                     .show();
         }));
     }
@@ -158,8 +165,9 @@ public class AddFieldActivity extends BaseActivity {
     }
 
     private void save() {
+        if (editId != null && original == null) return;
         if (!Forms.require(name, "Nhập tên ruộng để lưu")) return;
-        Requests.FieldBody b = new Requests.FieldBody();
+        Requests.FieldBody b = original == null ? new Requests.FieldBody() : Requests.FieldBody.from(original);
         b.name = Forms.text(name);
         String areaText = Forms.text(area).replace(',', '.');
         if (!areaText.isEmpty()) {
@@ -176,6 +184,12 @@ public class AddFieldActivity extends BaseActivity {
         b.plantingDate = plantingDate;
         b.province = province;
         b.district = district;
+        if (original != null && (!Objects.equals(original.province, province) || !Objects.equals(original.district, district))) {
+            // An address or GPS point from the previous area must not follow a new area.
+            b.address = null;
+            b.lat = null;
+            b.lng = null;
+        }
         b.note = Forms.orNull(note);
 
         busy(true);

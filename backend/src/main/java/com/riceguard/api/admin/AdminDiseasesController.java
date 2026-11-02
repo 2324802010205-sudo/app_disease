@@ -89,7 +89,7 @@ public class AdminDiseasesController {
         return new Disease(id, version, draft.name().trim(), draft.scientificName(), draft.description().trim(),
                 draft.part(), draft.cause(), draft.common(), list(draft.symptoms()), list(draft.conditions()),
                 list(draft.prevention()), list(draft.treatment()), old == null ? null : old.imageUrl(),
-                old == null ? null : old.imagePublicId(), old != null && old.hidden(), true);
+                old == null ? null : old.imagePublicId(), old != null && old.hidden(), true, old != null && old.aiDetectable());
     }
 
     private static List<String> list(List<String> input) {

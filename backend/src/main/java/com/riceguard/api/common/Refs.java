@@ -33,4 +33,6 @@ public class Refs {
     public CollectionReference feedbacks() { return db.collection("feedbacks"); }
     public CollectionReference reports() { return db.collection("reports"); }
     public CollectionReference locks() { return db.collection("locks"); }
+    public CollectionReference datasetImages() { return db.collection("datasetImages"); }
+    public CollectionReference meta() { return db.collection("meta"); }
 }

@@ -50,7 +50,7 @@ public class SecurityConfig {
                         // Khách (chưa đăng nhập) được xem: thư viện bệnh, thời tiết, bản đồ nguy cơ, bảng tin cộng đồng.
                         .requestMatchers(HttpMethod.GET, "/api/v1/diseases/**", "/api/v1/weather/**", "/api/v1/risk/**",
                                 "/api/v1/meta/**", "/files/**", "/api/v1/posts", "/api/v1/posts/*",
-                                "/api/v1/posts/*/comments").permitAll()
+                                "/api/v1/posts/*/comments", "/api/v1/posts/*/comments/live").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(e -> e

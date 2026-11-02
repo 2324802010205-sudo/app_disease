@@ -37,6 +37,13 @@ public class PostDetailActivity extends BaseActivity {
     private String sort = "newest";
     private Comment replyTo;
     private EditText input;
+    private List<Comment> comments = new java.util.ArrayList<>();
+    // Bình luận thời gian thực: chuỗi yêu cầu chờ (long-poll) chỉ chạy khi màn hình đang hiện.
+    private long liveAfter;
+    private int liveGen;
+    private boolean liveOn;
+    private retrofit2.Call<com.example.project_final.model.CommentLive> liveCall;
+    private final android.os.Handler liveHandler = new android.os.Handler(android.os.Looper.getMainLooper());
 
     @Override
     protected boolean allowsGuest() {
@@ -81,6 +88,114 @@ public class PostDetailActivity extends BaseActivity {
         loadComments();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startLive();
+    }
+
+    @Override
+    protected void onPause() {
+        stopLive();
+        super.onPause();
+    }
+
+    // ---- bình luận thời gian thực
+
+    private void startLive() {
+        if (liveOn || id == null) return;
+        liveOn = true;
+        liveAfter = 0;   // lần đầu chỉ lấy mốc; từ đó chỉ nhận bình luận mới
+        pollLive(++liveGen);
+    }
+
+    private void stopLive() {
+        liveOn = false;
+        liveGen++;
+        liveHandler.removeCallbacksAndMessages(null);
+        if (liveCall != null) liveCall.cancel();
+    }
+
+    private void pollLive(int gen) {
+        if (!liveOn || gen != liveGen || isFinishing() || isDestroyed()) return;
+        liveCall = api().commentsLive(id, liveAfter, 20);
+        liveCall.enqueue(new ApiCallback<com.example.project_final.model.CommentLive>() {
+            @Override
+            public void onSuccess(com.example.project_final.model.CommentLive b) {
+                if (!liveOn || gen != liveGen || isFinishing() || isDestroyed()) return;
+                liveAfter = Math.max(liveAfter, b.latest);
+                applyLive(b);
+                pollLive(gen);
+            }
+
+            @Override
+            public void onError(ApiError e) {
+                if (!liveOn || gen != liveGen || isFinishing() || isDestroyed()) return;
+                // mất mạng/lỗi máy chủ: thử lại sau vài giây, không làm phiền người dùng
+                liveHandler.postDelayed(() -> pollLive(gen), 5000);
+            }
+        });
+    }
+
+    private void applyLive(com.example.project_final.model.CommentLive b) {
+        if (b.reset) {
+            loadComments();
+            return;
+        }
+        boolean changed = false;
+        for (String rid : b.removed) {
+            Comment gone = find(rid);
+            if (gone == null) continue;
+            int n = 1 + gone.replies.size();
+            if (!comments.remove(gone)) for (Comment c : comments) if (c.replies.remove(gone)) { n = 1; break; }
+            if (post != null) post.commentCount = Math.max(0, post.commentCount - n);
+            changed = true;
+        }
+        for (Comment c : b.comments) {
+            if (find(c.id) != null) continue;
+            if (!insertComment(c)) {
+                loadComments();   // không thấy bình luận cha: tải lại cho chắc
+                return;
+            }
+            if (post != null) post.commentCount++;
+            changed = true;
+        }
+        if (changed) {
+            renderComments(comments);
+            bindCommentCount();
+        }
+    }
+
+    private Comment find(String commentId) {
+        for (Comment c : comments) {
+            if (c.id.equals(commentId)) return c;
+            for (Comment r : c.replies) if (r.id.equals(commentId)) return r;
+        }
+        return null;
+    }
+
+    /** Thêm bình luận vào cây đang hiển thị; false nếu là trả lời mà không tìm thấy bình luận cha. */
+    private boolean insertComment(Comment c) {
+        if (c.parentId == null) {
+            if ("helpful".equals(sort)) comments.add(c);
+            else comments.add(0, c);
+            return true;
+        }
+        for (Comment p : comments) {
+            if (p.id.equals(c.parentId)) {
+                p.replies.add(c);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void bindCommentCount() {
+        if (post == null) return;
+        setText(R.id.comment_count, String.valueOf(post.commentCount));
+        setText(R.id.comments_title, "Bình luận (" + post.commentCount + ")");
+    }
+
     // ---- bài viết
 
     private void loadPost() {
@@ -100,7 +215,7 @@ public class PostDetailActivity extends BaseActivity {
     }
 
     private void bindPost() {
-        Img.avatar(findViewById(R.id.post_avatar), post.author == null ? null : post.author.avatarUrl);
+        Img.communityAvatar(findViewById(R.id.post_avatar), post.author);
         setText(R.id.post_author, post.author == null ? "Người dùng" : post.author.name);
         setText(R.id.post_meta, Fmt.relative(post.createdAt) + (post.province == null || post.province.isEmpty() ? "" : " · " + post.province));
         CommunityActivity.topicPill(findViewById(R.id.post_topic), post.topic);
@@ -263,7 +378,8 @@ public class PostDetailActivity extends BaseActivity {
         call(api().comments(id, sort), new ApiCallback<List<Comment>>() {
             @Override
             public void onSuccess(List<Comment> list) {
-                renderComments(list);
+                comments = new java.util.ArrayList<>(list);
+                renderComments(comments);
             }
 
             @Override
@@ -284,7 +400,7 @@ public class PostDetailActivity extends BaseActivity {
             Comment c = list.get(index);
             View item = getLayoutInflater().inflate(R.layout.item_comment, box, false);
             if (index > 0) item.findViewById(R.id.divider).setVisibility(View.VISIBLE);
-            Img.avatar(item.findViewById(R.id.avatar), c.author == null ? null : c.author.avatarUrl);
+            Img.communityAvatar(item.findViewById(R.id.avatar), c.author);
             Ui.text(item, R.id.author, c.author == null ? "Người dùng" : c.author.name);
             bindBadge(item.findViewById(R.id.badge), c.badge);
             Ui.text(item, R.id.time, Fmt.relative(c.createdAt));
@@ -296,7 +412,7 @@ public class PostDetailActivity extends BaseActivity {
             LinearLayout replies = item.findViewById(R.id.replies);
             for (Comment r : c.replies) {
                 View rv = getLayoutInflater().inflate(R.layout.item_reply, replies, false);
-                Img.avatar(rv.findViewById(R.id.avatar), r.author == null ? null : r.author.avatarUrl);
+                Img.communityAvatar(rv.findViewById(R.id.avatar), r.author);
                 Ui.text(rv, R.id.author, r.author == null ? "Người dùng" : r.author.name);
                 bindBadge(rv.findViewById(R.id.badge), r.badge);
                 Ui.text(rv, R.id.time, Fmt.relative(r.createdAt));
@@ -402,8 +518,17 @@ public class PostDetailActivity extends BaseActivity {
                 busy(false);
                 input.setText("");
                 setReplyTarget(null);
-                loadComments();
-                loadPost();
+                // Hiện ngay bình luận vừa gửi, không tải lại cả danh sách (tiết kiệm đọc Firestore); kênh thời gian thực sẽ bỏ qua bản trùng.
+                if (find(c.id) == null) {
+                    if (insertComment(c)) {
+                        if (post != null) post.commentCount++;
+                        renderComments(comments);
+                        bindCommentCount();
+                    } else {
+                        loadComments();
+                        loadPost();
+                    }
+                }
             }
 
             @Override

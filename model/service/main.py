@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 WEIGHTS = Path(os.getenv("MODEL_WEIGHTS", ROOT / "weights" / "best.pt"))
 CLASS_MAP = Path(os.getenv("MODEL_CLASS_MAP", ROOT / "class_map.json"))
-IMGSZ = int(os.getenv("MODEL_IMGSZ", "768"))             # kích thước lúc huấn luyện
+IMGSZ = int(os.getenv("MODEL_IMGSZ", "640"))             # đo trên 28 ảnh mẫu: 640 đúng 11/28, 768 chỉ 6/28
 CONF = float(os.getenv("MODEL_CONF", "0.25"))             # ngưỡng giữ phát hiện
 API_TOKEN = os.getenv("MODEL_API_TOKEN", "")               # trùng DIAGNOSIS_HTTP_TOKEN của backend; rỗng = không kiểm tra
 ALLOWED_HOSTS = {h.strip().lower() for h in os.getenv("MODEL_ALLOWED_HOSTS", "").split(",") if h.strip()}

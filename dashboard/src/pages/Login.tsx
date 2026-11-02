@@ -14,58 +14,6 @@ const loginSchema = z.object({
 })
 type LoginValues = z.infer<typeof loginSchema>
 
-function AiNetworkOverlay() {
-  return (
-    <svg className="login-ai-network" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <filter id="ai-glow" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <linearGradient id="ai-line-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#34d399" stopOpacity="0.85" />
-          <stop offset="50%" stopColor="#6ee7b7" stopOpacity="0.65" />
-          <stop offset="100%" stopColor="#10b981" stopOpacity="0.25" />
-        </linearGradient>
-      </defs>
-
-      {/* Main glowing connection curves */}
-      <path d="M 60 520 Q 220 360, 420 420 T 780 370" stroke="url(#ai-line-grad)" strokeWidth="1.8" filter="url(#ai-glow)" />
-      <path d="M 30 460 Q 200 400, 360 450 T 640 460" stroke="url(#ai-line-grad)" strokeWidth="1.4" strokeDasharray="6 4" filter="url(#ai-glow)" />
-      <path d="M 160 550 Q 320 430, 520 470 T 740 430" stroke="url(#ai-line-grad)" strokeWidth="1.2" filter="url(#ai-glow)" />
-
-      {/* Secondary branch lines */}
-      <path d="M 190 395 L 360 450" stroke="rgba(52, 211, 153, 0.45)" strokeWidth="1" strokeDasharray="3 3" />
-      <path d="M 420 420 L 520 470" stroke="rgba(52, 211, 153, 0.45)" strokeWidth="1" strokeDasharray="3 3" />
-
-      {/* Glowing Nodes */}
-      <g className="node-group">
-        <circle cx="190" cy="395" r="10" fill="rgba(52, 211, 153, 0.3)" />
-        <circle cx="190" cy="395" r="4.5" fill="#ffffff" stroke="#10b981" strokeWidth="2" />
-      </g>
-      <g className="node-group">
-        <circle cx="360" cy="450" r="11" fill="rgba(52, 211, 153, 0.35)" />
-        <circle cx="360" cy="450" r="5" fill="#ffffff" stroke="#10b981" strokeWidth="2.5" />
-      </g>
-      <g className="node-group">
-        <circle cx="420" cy="420" r="13" fill="rgba(52, 211, 153, 0.35)" />
-        <circle cx="420" cy="420" r="6" fill="#ffffff" stroke="#10b981" strokeWidth="2.5" />
-      </g>
-      <g className="node-group">
-        <circle cx="520" cy="470" r="10" fill="rgba(52, 211, 153, 0.3)" />
-        <circle cx="520" cy="470" r="4.5" fill="#ffffff" stroke="#10b981" strokeWidth="2" />
-      </g>
-      <g className="node-group">
-        <circle cx="680" cy="390" r="10" fill="rgba(52, 211, 153, 0.3)" />
-        <circle cx="680" cy="390" r="4.5" fill="#ffffff" stroke="#10b981" strokeWidth="2" />
-      </g>
-    </svg>
-  )
-}
-
 function RiceLeavesDeco() {
   return (
     <div className="login-leaves-wrapper" aria-hidden="true">
@@ -125,7 +73,6 @@ export function Login() {
       {/* Left Story Side */}
       <div className="login-story">
         <div className="login-story-backdrop" aria-hidden="true" />
-        <AiNetworkOverlay />
 
         {/* Top bar with brand & slogan */}
         <div className="login-story-top">
@@ -155,7 +102,7 @@ export function Login() {
           <h1>
             Mỗi quyết định tốt hơn,
             <br />
-            một mùa vụ an lành hơn.
+            <span>một mùa vụ an lành hơn.</span>
           </h1>
 
           <p className="story-desc">
@@ -275,48 +222,6 @@ function SproutIcon() {
   )
 }
 
-function BrightAiNetworkOverlay() {
-  return (
-    <svg className="forgot-ai-network" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <filter id="bright-glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="3.5" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <linearGradient id="bright-line-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
-          <stop offset="55%" stopColor="#34d399" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#6ee7b7" stopOpacity="0.12" />
-        </linearGradient>
-      </defs>
-
-      <path d="M 60 520 Q 240 340, 460 400 T 820 350" stroke="url(#bright-line-grad)" strokeWidth="1.8" filter="url(#bright-glow)" />
-      <path d="M 30 440 Q 200 380, 380 430 T 680 430" stroke="url(#bright-line-grad)" strokeWidth="1.4" strokeDasharray="6 4" filter="url(#bright-glow)" />
-      <path d="M 160 550 Q 320 420, 540 455 T 760 415" stroke="url(#bright-line-grad)" strokeWidth="1.2" filter="url(#bright-glow)" />
-
-      <g className="bright-node-group">
-        <circle cx="215" cy="385" r="10" fill="rgba(16, 185, 129, 0.25)" />
-        <circle cx="215" cy="385" r="4.5" fill="#ffffff" stroke="#059669" strokeWidth="2" />
-      </g>
-      <g className="bright-node-group">
-        <circle cx="380" cy="430" r="11" fill="rgba(16, 185, 129, 0.28)" />
-        <circle cx="380" cy="430" r="5" fill="#ffffff" stroke="#059669" strokeWidth="2.5" />
-      </g>
-      <g className="bright-node-group">
-        <circle cx="460" cy="400" r="12" fill="rgba(16, 185, 129, 0.28)" />
-        <circle cx="460" cy="400" r="5.5" fill="#ffffff" stroke="#059669" strokeWidth="2.5" />
-      </g>
-      <g className="bright-node-group">
-        <circle cx="540" cy="455" r="10" fill="rgba(16, 185, 129, 0.22)" />
-        <circle cx="540" cy="455" r="4" fill="#ffffff" stroke="#059669" strokeWidth="2" />
-      </g>
-    </svg>
-  )
-}
-
 function FloatingLeaves() {
   return (
     <div className="forgot-floating-leaves" aria-hidden="true">
@@ -374,7 +279,6 @@ export function ForgotPassword() {
     <div className="forgot-layout">
       {/* Background layer with sunny rice terraces fading gracefully */}
       <div className="forgot-bg-layer" aria-hidden="true" />
-      <BrightAiNetworkOverlay />
       <FloatingLeaves />
 
       {/* Top Header Bar */}
@@ -406,9 +310,7 @@ export function ForgotPassword() {
             vì một mùa vụ bền vững.
           </h1>
           <p className="forgot-desc">
-            Ứng dụng công nghệ để quản trị dữ liệu, theo dõi đồng ruộng
-            <br />
-            và bảo vệ cây lúa, đồng hành cùng nhà nông Việt Nam.
+            Ứng dụng công nghệ để quản trị dữ liệu, theo dõi đồng ruộng và bảo vệ cây lúa, đồng hành cùng nhà nông Việt Nam.
           </p>
 
           <div className="forgot-features-row">
@@ -487,16 +389,14 @@ export function ForgotPassword() {
                 <span className="divider-line" />
               </div>
             </form>
-          </div>
-
-          {/* Security Note under card */}
-          <div className="forgot-bottom-note">
-            <Lock size={15} className="forgot-lock-icon" strokeWidth={1.8} />
-            <p>
-              Thông tin của bạn được bảo mật và chỉ sử dụng
-              <br />
-              cho mục đích đặt lại mật khẩu.
-            </p>
+            <div className="forgot-bottom-note">
+              <Lock size={15} className="forgot-lock-icon" strokeWidth={1.8} />
+              <p>
+                Thông tin của bạn được bảo mật và chỉ sử dụng
+                <br />
+                cho mục đích đặt lại mật khẩu.
+              </p>
+            </div>
           </div>
         </div>
       </main>

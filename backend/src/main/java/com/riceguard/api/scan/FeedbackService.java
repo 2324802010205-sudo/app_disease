@@ -4,6 +4,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.riceguard.api.common.Fs;
 import com.riceguard.api.common.Refs;
 import com.riceguard.api.common.Times;
+import com.riceguard.api.dataset.DatasetService;
 import com.riceguard.api.disease.DiseaseService;
 import com.riceguard.api.media.ImageRef;
 import com.riceguard.api.media.MediaService;
@@ -29,13 +30,15 @@ public class FeedbackService {
     private final Times times;
     private final MediaService media;
     private final DiseaseService diseases;
+    private final DatasetService dataset;
 
-    public FeedbackService(Fs fs, Refs refs, Times times, MediaService media, DiseaseService diseases) {
+    public FeedbackService(Fs fs, Refs refs, Times times, MediaService media, DiseaseService diseases, DatasetService dataset) {
         this.fs = fs;
         this.refs = refs;
         this.times = times;
         this.media = media;
         this.diseases = diseases;
+        this.dataset = dataset;
     }
 
     public String submit(String uid, Scan scan, FeedbackRequest r) {
@@ -57,6 +60,7 @@ public class FeedbackService {
         data.put("createdAt", times.now());
         data.values().removeIf(java.util.Objects::isNull);
         Fs.await(ref.set(data));
+        if ("WRONG_RESULT".equals(r.reason())) dataset.markReported(scan.id(), r.suggestedDiseaseCode());
         return ref.getId();
     }
 }

@@ -71,7 +71,7 @@
                 android:orientation="vertical"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:paddingBottom="@dimen/nav_clearance">
+                android:paddingBottom="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -146,9 +146,4 @@
         </ScrollView>
     </LinearLayout>
 
-    <com.example.project_final.view.NavBar
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
 </FrameLayout>

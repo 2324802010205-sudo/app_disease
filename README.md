@@ -14,6 +14,38 @@ project_final/
 
 **Tìm lỗi ở đâu:** đăng nhập/Google → `app/.../GoogleAuth.java`, `util/GoogleSignIn.java` và `backend/.../auth/`; chẩn đoán AI → `model/service/` (mô hình) và `backend/.../diagnosis/` (cổng gọi + quy đổi kết quả); số liệu dashboard → `backend/.../admin/` và `dashboard/src/pages/`; cấu hình Firebase → `app/google-services.json` (không commit).
 
+## Các lệnh cần chạy (môi trường thật: Firebase + Cloudinary)
+
+Cần: JDK 17, Node 20+, Android Studio (SDK + một emulator, ví dụ Pixel 7), Python 3.10+ (chỉ cho dịch vụ AI), `backend/.env` và `backend/firebase-service-account.local.json` (hai file này không commit; mẫu ở `backend/.env.example`), `app/google-services.json` (xem mục Firebase bên dưới).
+
+| # | Việc | Lệnh | Ghi chú |
+|---|---|---|---|
+| 1 | Backend API (cổng 8080) | `cd backend && ./gradlew bootRun` (Windows: `gradlew.bat bootRun`) | Đọc `.env`; kiểm tra: `curl localhost:8080/actuator/health` |
+| 2 | Dịch vụ AI `best.pt` (cổng 8000) | `cd model && python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && MODEL_API_TOKEN=<cùng DIAGNOSIS_HTTP_TOKEN> uvicorn service.main:app --port 8000` | Cần `DIAGNOSIS_PROVIDER=http` trong `backend/.env`; chi tiết ở `model/README.md`. Mặc định suy luận ở 640 px (`MODEL_IMGSZ`) |
+| 3 | Dashboard quản trị | `cd dashboard && npm install && npm run dev` | Mở `http://localhost:5173`, đăng nhập bằng `ADMIN_BOOTSTRAP_EMAIL`/`PASSWORD` trong `.env` |
+| 4 | Dựng app Android | `./gradlew :app:assembleDebug` (Windows: `gradlew.bat :app:assembleDebug`) | APK ở `app/build/outputs/apk/debug/app-debug.apk` |
+| 5 | Cài app lên emulator | `adb -s emulator-5556 install -r app/build/outputs/apk/debug/app-debug.apk` | Hoặc bấm Run trong Android Studio |
+| 6 | Chép ảnh thử vào máy ảo | `adb -s emulator-5556 push model/test-images /sdcard/Pictures/test-images` | Rồi chạy quét media (dưới đây) để bộ chọn ảnh thấy ảnh |
+| 7 | Chạy test backend | `cd backend && ./gradlew test` | Dùng Firestore emulator, xem `backend/README.md` |
+| 8 | Chạy test AI | `cd model && pytest` | |
+
+Quét media để bộ chọn ảnh của emulator thấy ảnh vừa chép:
+
+```bash
+for f in $(adb -s emulator-5556 shell ls /sdcard/Pictures/test-images | tr -d '\r'); do
+  adb -s emulator-5556 shell "am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d file:///sdcard/Pictures/test-images/$f"
+done
+```
+
+**Ảnh thư viện bệnh (Cloudinary).** Ảnh được tải lên qua dashboard (Thư viện bệnh → chọn bệnh → đổi ảnh) hoặc bằng API, và lưu ở folder Cloudinary `riceguard/<APP_ENV>/library/diseases`:
+
+```bash
+TOKEN=$(curl -s -H 'Content-Type: application/json' -d '{"email":"<admin>","password":"<mật khẩu>"}' localhost:8080/api/v1/auth/login | python -c "import sys,json;print(json.load(sys.stdin)['idToken'])")
+curl -H "Authorization: Bearer $TOKEN" -F "file=@anh.jpg" localhost:8080/api/v1/admin/diseases/<ma-benh>/image   # ma-benh: bac-la, dao-on-la, dom-nau, ...
+```
+
+Ảnh đang dùng cho thư viện bệnh lấy từ bộ ảnh thử trong `model/test-images` (CC BY 4.0) và một ảnh khô vằn (miền công cộng, Wikimedia Commons, tệp `RiceSheathArk.jpg`); nguồn nằm ở `model/test-images/ATTRIBUTION.md`. Bệnh chưa có ảnh (đạo ôn cổ bông, rỉ sắt, lùn xoắn lá, lem lép hạt) hiện biểu tượng mầm lúa thay thế cho tới khi quản trị viên tải ảnh lên.
+
 ## Chạy thử nhanh (không cần khóa thật)
 
 0. **Windows, một cú nhấp**: chạy `scripts\RunDemo.cmd` (dựng emulator, backend, dữ liệu mẫu và dashboard). Hoặc làm tay theo các bước dưới.

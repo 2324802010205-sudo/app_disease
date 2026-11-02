@@ -2,6 +2,7 @@ package com.example.project_final.ui.common;
 
 import com.example.project_final.R;
 import com.example.project_final.ui.auth.LoginActivity;
+import com.example.project_final.ui.profile.NotificationsActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -122,7 +123,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Session.
         final boolean padTop = padTopInset();
         ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(bars.left, padTop ? bars.top : 0, bars.right, bars.bottom);
+            v.setPadding(bars.left, padTop ? bars.top : 0, bars.right, navBar != null ? 0 : bars.bottom);
+            if (navBar != null) navBar.setBottomInset(bars.bottom);
             if (padTop) liftDecorations(v, -bars.top);
             return insets;
         });
@@ -308,19 +310,44 @@ public abstract class BaseActivity extends AppCompatActivity implements Session.
         // Màn hình chính không có nút quay lại
         View back = findViewById(R.id.btn_back);
         if (back != null) back.setVisibility(View.GONE);
+        bindBell();
+    }
+
+    /** Chuông thông báo ở góc phải đầu màn hình chính (view_bell); không có chuông trong layout thì bỏ qua. */
+    private void bindBell() {
+        View bell = findViewById(R.id.btn_notifications);
+        if (bell == null) return;
+        bell.setVisibility(View.VISIBLE);
+        bell.setOnClickListener(v -> {
+            if (requireAccount("xem thông báo")) startActivity(new Intent(this, NotificationsActivity.class));
+        });
+    }
+
+    private void setBadge(long count) {
+        TextView badge = findViewById(R.id.notif_badge);
+        View bell = findViewById(R.id.btn_notifications);
+        if (badge == null || bell == null) return;
+        if (count <= 0) {
+            badge.setVisibility(View.GONE);
+            bell.setContentDescription("Thông báo");
+        } else {
+            badge.setText(count > 9 ? "9+" : String.valueOf(count));
+            badge.setVisibility(View.VISIBLE);
+            bell.setContentDescription("Thông báo, " + count + " chưa đọc");
+        }
     }
 
     private void refreshNav() {
         navBar.bindAvatar();
         if (Session.isGuest()) {
-            navBar.setBadge(0);
+            setBadge(0);
             return;
         }
         call(api().unreadCount(), new ApiCallback<java.util.Map<String, Long>>() {
             @Override
             public void onSuccess(java.util.Map<String, Long> body) {
                 Long n = body == null ? null : body.get("unread");
-                navBar.setBadge(n == null ? 0 : n);
+                setBadge(n == null ? 0 : n);
             }
 
             @Override
