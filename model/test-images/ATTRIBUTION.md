@@ -14,4 +14,4 @@ Prajapati, Harshadkumar B.; Shah, Jitesh P.; Dabhi, Vipul K. *Rice Leaf Diseases
 
 ## Ảnh thư viện bệnh trên Cloudinary
 
-Ảnh bạc lá, đạo ôn lá, đốm nâu, cháy lá, đốm nâu hẹp và than lá của thư viện bệnh là các ảnh trong thư mục này (nguồn và giấy phép như trên). Ảnh khô vằn: *RiceSheathArk.jpg*, Wikimedia Commons, miền công cộng (https://commons.wikimedia.org/wiki/File:RiceSheathArk.jpg).
+Ảnh bạc lá, đạo ôn lá, đốm nâu, cháy lá, đốm nâu hẹp và than lá của thư viện bệnh là các ảnh trong thư mục này (nguồn và giấy phép như trên). Ảnh khô vằn: *RiceSheathArk.jpg*, Wikimedia Commons, miền công cộng (https://commons.wikimedia.org/wiki/File:RiceSheathArk.jpg). Ảnh rỉ sắt và lùn xoắn lá là ảnh minh họa có sẵn của app (`app/src/main/res/drawable-nodpi/img_saved_5.png`, `img_saved_6.png`).

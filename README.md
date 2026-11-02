@@ -44,7 +44,7 @@ TOKEN=$(curl -s -H 'Content-Type: application/json' -d '{"email":"<admin>","pass
 curl -H "Authorization: Bearer $TOKEN" -F "file=@anh.jpg" localhost:8080/api/v1/admin/diseases/<ma-benh>/image   # ma-benh: bac-la, dao-on-la, dom-nau, ...
 ```
 
-Ảnh đang dùng cho thư viện bệnh lấy từ bộ ảnh thử trong `model/test-images` (CC BY 4.0) và một ảnh khô vằn (miền công cộng, Wikimedia Commons, tệp `RiceSheathArk.jpg`); nguồn nằm ở `model/test-images/ATTRIBUTION.md`. Bệnh chưa có ảnh (đạo ôn cổ bông, rỉ sắt, lùn xoắn lá, lem lép hạt) hiện biểu tượng mầm lúa thay thế cho tới khi quản trị viên tải ảnh lên.
+Ảnh đang dùng cho thư viện bệnh lấy từ bộ ảnh thử trong `model/test-images` (CC BY 4.0) và một ảnh khô vằn (miền công cộng, Wikimedia Commons, tệp `RiceSheathArk.jpg`); nguồn nằm ở `model/test-images/ATTRIBUTION.md`. Rỉ sắt và lùn xoắn lá dùng ảnh minh họa có sẵn trong app (`drawable-nodpi/img_saved_5.png`, `img_saved_6.png`, đã cắt viền và phóng lớn; độ phân giải thấp, nên thay bằng ảnh rõ hơn khi có). Bệnh chưa có ảnh (đạo ôn cổ bông) hiện biểu tượng mầm lúa thay thế cho tới khi quản trị viên tải ảnh lên.
 
 ## Chạy thử nhanh (không cần khóa thật)
 
