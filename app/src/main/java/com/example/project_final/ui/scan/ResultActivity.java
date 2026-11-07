@@ -9,6 +9,7 @@ import com.example.project_final.ui.home.HomeActivity;
 import com.example.project_final.ui.library.DiseaseDetailActivity;
 import android.content.Intent;
 import android.view.View;
+import androidx.activity.OnBackPressedCallback;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -44,6 +45,15 @@ public class ResultActivity extends BaseActivity {
 
         String json = getIntent().getStringExtra(EXTRA_SCAN_JSON);
         if (json != null) {
+            // Vừa quét xong: ngăn xếp đang là Trang chủ → Camera → Kết quả, nên "quay lại" phải về thẳng Trang chủ, không lùi vào camera.
+            View back = findViewById(R.id.btn_back);
+            if (back != null) back.setOnClickListener(v -> goHome());
+            getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    goHome();
+                }
+            });
             bind(new Gson().fromJson(json, Scan.class));
             return;
         }
@@ -64,6 +74,15 @@ public class ResultActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    private Intent homeIntent() {
+        return new Intent(this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    }
+
+    private void goHome() {
+        startActivity(homeIntent());
+        finish();
     }
 
     private void bind(Scan s) {
@@ -164,7 +183,13 @@ public class ResultActivity extends BaseActivity {
             setText(R.id.state_text, s.retakeAdvice == null ? "Ảnh chưa đủ rõ để kết luận." : s.retakeAdvice);
             retry.setText("Chụp lại");
             retry.setOnClickListener(v -> {
-                startActivity(new Intent(this, ScanActivity.class).putExtra(ScanActivity.EXTRA_FIELD_ID, s.fieldId));
+                Intent scanAgain = new Intent(this, ScanActivity.class).putExtra(ScanActivity.EXTRA_FIELD_ID, s.fieldId);
+                if (getIntent().hasExtra(EXTRA_SCAN_JSON)) {
+                    // Dọn camera cũ khỏi ngăn xếp để quay lại từ camera mới vẫn về Trang chủ.
+                    startActivities(new Intent[]{homeIntent(), scanAgain});
+                } else {
+                    startActivity(scanAgain);
+                }
                 finish();
             });
         } else {
