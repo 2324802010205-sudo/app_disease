@@ -6,6 +6,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class ScanActivity extends BaseActivity {
     private PreviewView preview;
     private ImageCapture capture;
     private boolean flashAuto = true;
+    private boolean cameraStarted;
     private String fieldId;
     private ActivityResultLauncher<String> permission;
     private ActivityResultLauncher<PickVisualMediaRequest> gallery;
@@ -50,7 +52,7 @@ public class ScanActivity extends BaseActivity {
 
         permission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
             if (granted) startCamera();
-            else showCameraMessage("Cần cho phép dùng máy ảnh để chụp lá lúa.\nBạn vẫn có thể chọn ảnh từ thư viện.");
+            else showPermissionDenied();
         });
         gallery = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             if (uri != null) prepare(uri);
@@ -62,8 +64,26 @@ public class ScanActivity extends BaseActivity {
         findViewById(R.id.btn_history).setOnClickListener(v -> startActivity(new Intent(this, HistoryActivity.class)));
         findViewById(R.id.btn_flash).setOnClickListener(v -> toggleFlash());
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) startCamera();
+        if (hasCameraPermission()) startCamera();
         else permission.launch(Manifest.permission.CAMERA);
+    }
+
+    /** Quay lại từ Cài đặt sau khi cấp quyền thì tự bật máy ảnh, không bắt người dùng thoát màn hình. */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (permission != null && !cameraStarted && hasCameraPermission()) startCamera();
+    }
+
+    private boolean hasCameraPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /** Bị từ chối: hướng dẫn mở Cài đặt (hệ thống không hỏi lại sau lần từ chối thứ hai). */
+    private void showPermissionDenied() {
+        showCameraMessage("Cần cho phép dùng máy ảnh để chụp lá lúa.\nChạm vào đây để mở Cài đặt, hoặc chọn ảnh từ thư viện.");
+        findViewById(R.id.camera_message).setOnClickListener(v -> startActivity(
+                new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", getPackageName(), null))));
     }
 
     private void showCameraMessage(String text) {
@@ -74,6 +94,9 @@ public class ScanActivity extends BaseActivity {
 
     private void startCamera() {
         findViewById(R.id.camera_message).setVisibility(View.GONE);
+        findViewById(R.id.camera_message).setOnClickListener(null);
+        findViewById(R.id.camera_message).setClickable(false);
+        cameraStarted = true;
         ListenableFuture<ProcessCameraProvider> future = ProcessCameraProvider.getInstance(this);
         future.addListener(() -> {
             try {
@@ -85,9 +108,13 @@ public class ScanActivity extends BaseActivity {
                         .setFlashMode(flashAuto ? ImageCapture.FLASH_MODE_AUTO : ImageCapture.FLASH_MODE_OFF)
                         .build();
                 provider.unbindAll();
-                provider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, p, capture);
+                // Ưu tiên camera sau; máy không có thì dùng camera trước
+                CameraSelector selector = provider.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA)
+                        ? CameraSelector.DEFAULT_BACK_CAMERA : CameraSelector.DEFAULT_FRONT_CAMERA;
+                provider.bindToLifecycle(this, selector, p, capture);
             } catch (Exception e) {
                 capture = null;
+                cameraStarted = false;
                 showCameraMessage("Không mở được máy ảnh trên thiết bị này.\nHãy chọn ảnh từ thư viện.");
             }
         }, ContextCompat.getMainExecutor(this));

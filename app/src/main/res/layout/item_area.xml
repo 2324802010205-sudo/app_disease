@@ -88,7 +88,8 @@
         <TextView
             android:id="@+id/btn_info"
             style="@style/T"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
+            android:minWidth="150dp"
             android:layout_height="wrap_content"
         android:minHeight="26dp"
             android:layout_marginTop="6dp"

@@ -127,7 +127,8 @@
             android:textSize="@dimen/text_16" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/share"
             style="@style/T"
@@ -137,12 +138,9 @@
             android:drawableTint="@color/ink_deep"
             android:padding="4dp"
             android:text="Chia sẻ"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textSize="@dimen/text_16" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <TextView
             android:layout_width="wrap_content"

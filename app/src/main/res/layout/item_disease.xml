@@ -102,10 +102,11 @@
                     android:paddingEnd="7dp"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
+                    android:ellipsize="end"
                     android:singleLine="true"
                     android:text="Thường gặp"
                     android:textColor="@color/orange"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/text_12" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
