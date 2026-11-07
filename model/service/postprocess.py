@@ -19,6 +19,39 @@ class Detection:
     area: float         # diện tích hộp / diện tích ảnh, 0..1
 
 
+# Dưới mức này kết quả vẫn được báo nhưng kèm lời nhắc đối chiếu thêm (mô hình thường cho độ tin cậy thấp).
+CONFIDENT_FROM = 0.6
+
+
+def merge_runs(runs: list[list[Detection]], class_map: dict[str, Optional[str]]) -> list[Detection]:
+    """
+    Gộp phát hiện của nhiều lần suy luận (kích thước ảnh khác nhau, có TTA) thành một danh sách.
+    Mỗi mã bệnh có độ tin cậy = trung bình các lần chạy của (độ tin cậy cao nhất trong lần đó), lần không thấy tính 0;
+    diện tích = trung bình tổng diện tích các hộp cùng mã. Một lần chạy riêng lẻ rất hay dao động (cùng một lá, đổi
+    640 px sang 800 px là đổi bệnh hoặc rơi dưới ngưỡng), gộp lại làm kết quả ổn định hơn.
+    """
+    if not runs:
+        return []
+    n = len(runs)
+    conf: dict[str, float] = {}
+    area: dict[str, float] = {}
+    names: dict[str, tuple[float, str]] = {}      # mã -> (conf cao nhất, tên lớp tương ứng)
+    for dets in runs:
+        best: dict[str, float] = {}
+        cover: dict[str, float] = {}
+        for d in dets:
+            code = class_map.get(d.name) or UNKNOWN
+            if d.confidence > best.get(code, 0.0):
+                best[code] = d.confidence
+            cover[code] = cover.get(code, 0.0) + d.area
+            if d.confidence > names.get(code, (0.0, ""))[0]:
+                names[code] = (d.confidence, d.name)
+        for code, c in best.items():
+            conf[code] = conf.get(code, 0.0) + c / n
+            area[code] = area.get(code, 0.0) + min(1.0, cover[code]) / n
+    return [Detection(names[code][1], conf[code], area[code]) for code in conf]
+
+
 def severity_of(coverage: float) -> str:
     if coverage >= SEVERITY_HIGH_FROM:
         return "HIGH"
@@ -50,8 +83,8 @@ def to_diagnosis(detections: list[Detection], class_map: dict[str, Optional[str]
     - Lớp bệnh chưa ánh xạ    -> diseaseCode="unknown": backend xử lý như chưa xác định.
     """
     if not detections:
-        return _result(False, UNKNOWN, 0.0, "NONE", "Không nhận ra lá lúa trong ảnh.",
-                       "Hãy chụp cận một chiếc lá lúa, đủ sáng, lá nằm giữa khung hình và không rung tay.")
+        return _result(False, UNKNOWN, 0.0, "NONE", "AI chưa nhận ra dấu hiệu bệnh nào đủ rõ trong ảnh này.",
+                       "Hãy chụp cận vùng lá có vết bệnh, đủ sáng, vết bệnh nằm giữa khung hình và không rung tay; có thể chụp thêm một vài góc.")
 
     def code_of(d: Detection) -> str:
         return class_map.get(d.name) or UNKNOWN
@@ -69,5 +102,7 @@ def to_diagnosis(detections: list[Detection], class_map: dict[str, Optional[str]
         return _result(True, UNKNOWN, top.confidence, "NONE",
                        f"Mô hình phát hiện dấu hiệu \"{top.name}\" nhưng thư viện bệnh chưa có bệnh này.",
                        "Hãy nhờ cán bộ bảo vệ thực vật xác nhận, hoặc chụp lại cận lá bệnh để thử lại.")
-    return _result(True, code, top.confidence, severity_of(coverage),
-                   f"Phát hiện {len(same)} vùng nghi bệnh, che khoảng {round(coverage * 100)}% khung ảnh.")
+    summary = f"Phát hiện vùng nghi bệnh, che khoảng {round(coverage * 100)}% khung ảnh."
+    if top.confidence < CONFIDENT_FROM:
+        summary += " Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật."
+    return _result(True, code, top.confidence, severity_of(coverage), summary)

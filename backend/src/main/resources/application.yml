@@ -83,7 +83,7 @@ riceguard:
     local-dir: ${MEDIA_LOCAL_DIR:uploads}
   diagnosis:
     provider: ${DIAGNOSIS_PROVIDER:none}     # claude | http | none
-    min-confidence: 0.5
+    min-confidence: ${DIAGNOSIS_MIN_CONFIDENCE:0.35}   # dưới mức này lượt quét thành 'cần chụp lại'. best.pt hiếm khi vượt 0.5 (đo trên 28 ảnh: 0.5 loại 21/28 ảnh, 0.35 chỉ loại 9/28)
     timeout-seconds: 60
     claude-model: ${DIAGNOSIS_CLAUDE_MODEL:claude-opus-5-5}
     http-url: ${DIAGNOSIS_HTTP_URL:}

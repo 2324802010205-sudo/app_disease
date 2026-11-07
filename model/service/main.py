@@ -22,15 +22,21 @@ from fastapi import Depends, FastAPI, File, Header, HTTPException, UploadFile
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel
 
-from .postprocess import Detection, to_diagnosis
+from .postprocess import Detection, merge_runs, to_diagnosis
 
 log = logging.getLogger("riceguard.model")
 ROOT = Path(__file__).resolve().parent.parent
 
 WEIGHTS = Path(os.getenv("MODEL_WEIGHTS", ROOT / "weights" / "best.pt"))
 CLASS_MAP = Path(os.getenv("MODEL_CLASS_MAP", ROOT / "class_map.json"))
-IMGSZ = int(os.getenv("MODEL_IMGSZ", "640"))             # đo trên 28 ảnh mẫu: 640 đúng 11/28, 768 chỉ 6/28
-CONF = float(os.getenv("MODEL_CONF", "0.25"))             # ngưỡng giữ phát hiện
+# Mỗi ảnh chạy qua nhiều kích thước rồi gộp (xem postprocess.merge_runs): một lần chạy 640 px đơn lẻ rất dao động
+# (cùng một lá, đổi 640 -> 800 px là đổi bệnh hoặc rơi dưới ngưỡng). Đo trên 28 ảnh mẫu, gộp 640+800 có TTA giữ nguyên
+# số ảnh đúng nhưng giảm số ảnh "không thấy gì" từ 10 xuống 4. Đặt MODEL_IMGSZ=640 và MODEL_AUGMENT=0 để về một lần chạy.
+IMGSZ_LIST = [int(x) for x in os.getenv("MODEL_IMGSZ", "640,800").replace(" ", "").split(",") if x]
+IMGSZ = IMGSZ_LIST[0]
+AUGMENT = os.getenv("MODEL_AUGMENT", "1").lower() not in ("0", "false", "no")
+RUN_CONF = float(os.getenv("MODEL_RUN_CONF", "0.05"))     # ngưỡng thô của từng lần chạy (thấp để gộp thấy đủ tín hiệu)
+CONF = float(os.getenv("MODEL_CONF", "0.15"))             # ngưỡng giữ phát hiện SAU khi gộp
 API_TOKEN = os.getenv("MODEL_API_TOKEN", "")               # trùng DIAGNOSIS_HTTP_TOKEN của backend; rỗng = không kiểm tra
 ALLOWED_HOSTS = {h.strip().lower() for h in os.getenv("MODEL_ALLOWED_HOSTS", "").split(",") if h.strip()}
 MAX_BYTES = int(os.getenv("MODEL_MAX_IMAGE_BYTES", str(12 * 1024 * 1024)))
@@ -94,16 +100,21 @@ def decode(data: bytes) -> Image.Image:
         raise HTTPException(400, "Không đọc được ảnh") from e
 
 
-def detect(image: Image.Image) -> list[Detection]:
-    model = get_model()
-    with _lock:
-        result = model.predict(image, imgsz=IMGSZ, conf=CONF, verbose=False)[0]
+def detect_once(model, image: Image.Image, imgsz: int) -> list[Detection]:
+    result = model.predict(image, imgsz=imgsz, conf=RUN_CONF, augment=AUGMENT, verbose=False)[0]
     h, w = result.orig_shape
     out = []
     for box in result.boxes:
         x1, y1, x2, y2 = box.xyxy[0].tolist()
         out.append(Detection(model.names[int(box.cls)], float(box.conf), max(0.0, (x2 - x1) * (y2 - y1) / (w * h))))
     return out
+
+
+def detect(image: Image.Image) -> list[Detection]:
+    model = get_model()
+    with _lock:
+        runs = [detect_once(model, image, size) for size in IMGSZ_LIST]
+    return [d for d in merge_runs(runs, class_map()) if d.confidence >= CONF]
 
 
 class DiagnoseRequest(BaseModel):
@@ -117,7 +128,7 @@ class DiagnoseRequest(BaseModel):
 def health():
     ready = _model is not None
     return {"status": "ok", "weights": str(WEIGHTS), "weightsExist": WEIGHTS.is_file(), "modelLoaded": ready,
-            "classes": list(_model.names.values()) if ready else None, "imgsz": IMGSZ, "conf": CONF}
+            "classes": list(_model.names.values()) if ready else None, "imgsz": IMGSZ_LIST, "augment": AUGMENT, "conf": CONF}
 
 
 @app.post("/diagnose", dependencies=[Depends(require_token)])

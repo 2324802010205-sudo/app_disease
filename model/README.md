@@ -1,6 +1,6 @@
 # Mô hình nhận dạng bệnh lá lúa (`best.pt`)
 
-`weights/best.pt` là YOLOv9c (ultralytics, detect, huấn luyện ở ảnh 768 px, 11 lớp; dịch vụ suy luận mặc định ở 640 px vì trên 28 ảnh mẫu có nhãn 640 px đúng 11/28 còn 768 px đúng 6/28, đổi bằng `MODEL_IMGSZ`). `service/` bọc nó thành một dịch vụ HTTP mà backend gọi qua `DIAGNOSIS_PROVIDER=http`.
+`weights/best.pt` là YOLOv9c (ultralytics, detect, huấn luyện ở ảnh 768 px, 11 lớp; dịch vụ suy luận chạy mỗi ảnh ở 640 px và 800 px (có TTA) rồi gộp kết quả, vì một lần chạy đơn lẻ rất dao động: trên 28 ảnh mẫu có nhãn, ảnh bị báo "không thấy gì" giảm từ 10 xuống 4; đổi bằng `MODEL_IMGSZ` và `MODEL_AUGMENT`). `service/` bọc nó thành một dịch vụ HTTP mà backend gọi qua `DIAGNOSIS_PROVIDER=http`.
 
 ```
 model/
@@ -52,7 +52,7 @@ Trên máy phát triển Windows: chạy `scripts\RunModel.cmd` (dùng WSL, Pyth
 * Mô hình không có lớp "không phải lá lúa": ảnh lạ thường không ra phát hiện nào, nhưng ảnh có hình lá/lúa (logo, tranh) vẫn có thể bị nhận nhầm.
 * **Mức độ nặng** là heuristic theo diện tích khung bệnh / diện tích ảnh: < 5 % LOW, 5–20 % MEDIUM, ≥ 20 % HIGH (`postprocess.py`). Chưa được kiểm chứng với chuyên gia, cần hiệu chỉnh khi có dữ liệu thật.
 * **Triệu chứng / khuyến nghị** không nằm trong mô hình: backend điền từ thư viện bệnh (`HttpDiagnosisEngine.enrich`), nên admin sửa thư viện là app thấy ngay.
-* Backend còn có ngưỡng riêng `min-confidence: 0.5` (`application.yml`); dưới ngưỡng này lượt quét thành "cần chụp lại". Ngưỡng giữ phát hiện của dịch vụ là `MODEL_CONF=0.25`.
+* Backend còn có ngưỡng riêng `DIAGNOSIS_MIN_CONFIDENCE` (mặc định 0.35, `application.yml`); dưới ngưỡng này lượt quét thành "cần chụp lại". Trước đây là 0.5, mức mà `best.pt` hiếm khi đạt: trên 28 ảnh mẫu 0.5 chỉ cho 9 kết quả (sau khi gộp nhiều lần chạy; trước đó chỉ 3) và 15 ảnh bị báo chụp lại, còn 0.35 cho 12 đúng, 7 sai, 9 chụp lại. Kết quả dưới 0.6 kèm lời nhắc đối chiếu thêm. Ngưỡng giữ phát hiện của dịch vụ sau khi gộp là `MODEL_CONF=0.15`.
 
 ## Ánh xạ lớp → bệnh
 
@@ -89,7 +89,7 @@ Xóa tài khoản xóa luôn ảnh của người đó trong các thư mục nà
 
 ## Biến môi trường
 
-`MODEL_WEIGHTS`, `MODEL_CLASS_MAP`, `MODEL_IMGSZ` (768), `MODEL_CONF` (0.25), `MODEL_API_TOKEN`, `MODEL_ALLOWED_HOSTS` (danh sách host ảnh được phép, phân tách bằng dấu phẩy; nên đặt khi triển khai để dịch vụ không bị dùng làm cầu tải URL tùy ý), `MODEL_MAX_IMAGE_BYTES`, `MODEL_FETCH_TIMEOUT`.
+`MODEL_WEIGHTS`, `MODEL_CLASS_MAP`, `MODEL_IMGSZ` (`640,800`, danh sách kích thước, mỗi cỡ một lần chạy), `MODEL_AUGMENT` (1 = bật TTA), `MODEL_RUN_CONF` (0.05, ngưỡng thô mỗi lần chạy), `MODEL_CONF` (0.15, sau khi gộp), `MODEL_API_TOKEN`, `MODEL_ALLOWED_HOSTS` (danh sách host ảnh được phép, phân tách bằng dấu phẩy; nên đặt khi triển khai để dịch vụ không bị dùng làm cầu tải URL tùy ý), `MODEL_MAX_IMAGE_BYTES`, `MODEL_FETCH_TIMEOUT`.
 
 ## Kiểm thử
 
