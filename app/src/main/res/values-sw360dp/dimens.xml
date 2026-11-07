@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Thang cỡ chữ chuẩn cho điện thoại (>= 360dp). Mọi cỡ chữ trong layout dùng @dimen/text_N, không ghi số trực tiếp. -->
+    <dimen name="text_10">10sp</dimen>
     <dimen name="text_12">12sp</dimen>
     <dimen name="text_13">13sp</dimen>
     <dimen name="text_14">14sp</dimen>
