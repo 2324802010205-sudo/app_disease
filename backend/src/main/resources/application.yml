@@ -82,12 +82,20 @@ riceguard:
     max-bytes: 10485760
     local-dir: ${MEDIA_LOCAL_DIR:uploads}
   diagnosis:
-    provider: ${DIAGNOSIS_PROVIDER:none}     # claude | http | none
+    provider: ${DIAGNOSIS_PROVIDER:none}     # claude | http | onnx | none
     min-confidence: ${DIAGNOSIS_MIN_CONFIDENCE:0.35}   # dưới mức này lượt quét thành 'cần chụp lại'. best.pt hiếm khi vượt 0.5 (đo trên 28 ảnh: 0.5 loại 21/28 ảnh, 0.35 chỉ loại 9/28)
     timeout-seconds: 60
     claude-model: ${DIAGNOSIS_CLAUDE_MODEL:claude-opus-5-5}
     http-url: ${DIAGNOSIS_HTTP_URL:}
     http-token: ${DIAGNOSIS_HTTP_TOKEN:}
+    # provider=onnx: chạy best.pt ngay trong backend (xuất ONNX bằng model/export-onnx.sh), không cần dịch vụ Python
+    onnx:
+      model: ${DIAGNOSIS_ONNX_MODEL:../model/weights/best.onnx}
+      class-map: ${DIAGNOSIS_ONNX_CLASS_MAP:../model/class_map.json}
+      imgsz: ${DIAGNOSIS_ONNX_IMGSZ:640,800}      # mỗi cỡ một lần chạy rồi gộp
+      augment: ${DIAGNOSIS_ONNX_AUGMENT:true}      # TTA ba tỉ lệ
+      run-conf: ${DIAGNOSIS_ONNX_RUN_CONF:0.05}    # ngưỡng thô của từng lần chạy
+      conf: ${DIAGNOSIS_ONNX_CONF:0.15}            # ngưỡng giữ phát hiện sau khi gộp
   weather:
     base-url: https://api.open-meteo.com/v1
     cache-minutes: 10

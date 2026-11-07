@@ -57,7 +57,7 @@ curl -H "Authorization: Bearer $TOKEN" -F "file=@anh.jpg" localhost:8080/api/v1/
 2. **App**: mở thư mục gốc bằng Android Studio, chạy trên máy ảo. Mặc định app gọi `http://10.0.2.2:8080` (máy tính chủ nhìn từ máy ảo).
    Điện thoại thật: đặt IP máy tính vào `gradle.properties` (`riceguard.apiBaseUrl=http://192.168.1.10:8080`), máy tính và điện thoại cùng Wi-Fi.
 3. Đăng ký tài khoản trong app rồi dùng bình thường. Chưa có AI thì ảnh vẫn được lưu và kết quả hiện “Đang chờ phân tích” (xem `DIAGNOSIS_PROVIDER` trong `backend/README.md`).
-4. **Bật chẩn đoán bằng `best.pt`**: chạy dịch vụ trong `model/` rồi đặt `DIAGNOSIS_PROVIDER=http` cho backend (các bước trong `model/README.md`).
+4. **Bật chẩn đoán bằng `best.pt`**: cách gọn nhất là `bash model/export-onnx.sh` (một lần) rồi đặt `DIAGNOSIS_PROVIDER=onnx` cho backend, chạy thẳng trong Java, không cần Python. Cách cũ: chạy dịch vụ trong `model/` rồi đặt `DIAGNOSIS_PROVIDER=http` (các bước trong `model/README.md`).
 
 > **Android 17**: kết nối tới địa chỉ mạng nội bộ (10.0.2.2, IP LAN) cần quyền `ACCESS_LOCAL_NETWORK`. Bản debug tự xin quyền khi mở app;
 > nếu lỡ từ chối, cấp lại bằng `adb shell pm grant com.example.project_final android.permission.ACCESS_LOCAL_NETWORK`.

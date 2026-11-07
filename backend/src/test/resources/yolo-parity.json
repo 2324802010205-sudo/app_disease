@@ -1,0 +1,2539 @@
+{
+ "imgsz": [
+  640,
+  800
+ ],
+ "augment": true,
+ "runConf": 0.05,
+ "conf": 0.15,
+ "images": {
+  "bac-la/mendeley-bac-la-01.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.9174144268035889,
+      "area": 0.4048585391214583
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.701915442943573,
+      "area": 0.001652952487859875
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.39898213744163513,
+      "area": 0.001281336915155407
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.17295284569263458,
+      "area": 0.0008167904416409631
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.11314485222101212,
+      "area": 0.000976493434033667
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.1085803210735321,
+      "area": 0.000806901309035796
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09491579979658127,
+      "area": 0.00030118722934275867
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08610676229000092,
+      "area": 0.001073679731345813
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08279882371425629,
+      "area": 0.0011425392251461744
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.058145672082901,
+      "area": 0.0007393732439425852
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0556761734187603,
+      "area": 0.0011469284529739526
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.8212113380432129,
+      "area": 0.3081747231882997
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.18338508903980255,
+      "area": 0.0013429746295635899
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.1815418303012848,
+      "area": 0.27832684834798177
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08994604647159576,
+      "area": 0.0008973941859478752
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.8693128824234009,
+     "area": 0.4956800553288699
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.4426502659916878,
+     "area": 0.006089275642994228
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.8693,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 50% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "bac-la/mendeley-bac-la-02.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.8769291043281555,
+      "area": 0.15576000535098428
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.8668962121009827,
+      "area": 0.14920798606515068
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.8719126582145691,
+     "area": 0.15248399570806748
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.8719,
+    "severity": "MEDIUM",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 15% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "bac-la/mendeley-bac-la-03.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.7706505060195923,
+      "area": 0.2644296626335866
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.4931161105632782,
+      "area": 0.08998656861247728
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.1300077885389328,
+      "area": 0.00047100982815027236
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.11912679672241211,
+      "area": 0.0005071263116318733
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10300111770629883,
+      "area": 0.0006812120734713972
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.0967012569308281,
+      "area": 0.002713372364752771
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.08108247071504593,
+      "area": 0.2700409437087122
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0741003081202507,
+      "area": 0.0014621800928842276
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0699550211429596,
+      "area": 0.0005231500370427966
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.061913613229990005,
+      "area": 0.06300498471576721
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.057633332908153534,
+      "area": 0.00043934212373569607
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05689644068479538,
+      "area": 0.00046703330236487093
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05414631962776184,
+      "area": 0.00034076238749548794
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.81520676612854,
+      "area": 0.23075095868410522
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.6564108729362488,
+      "area": 0.13922627061844492
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.29494863748550415,
+      "area": 0.00041654080748558043
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.25915345549583435,
+      "area": 0.000399666511407122
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2331889271736145,
+      "area": 0.0003553902514278889
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.23077107965946198,
+      "area": 0.0005520120849832892
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.11133208125829697,
+      "area": 0.0029966124704883744
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.08548829704523087,
+      "area": 0.0031281790928915144
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07693106681108475,
+      "area": 0.0003601478735605876
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.054641660302877426,
+      "area": 0.073651419729266
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.052307698875665665,
+      "area": 0.0003614358275818328
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.7929286360740662,
+     "area": 0.43052493249682366
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.21247821301221848,
+     "area": 0.0036685047566114614
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.7929,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 43% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "bac-la/mendeley-bac-la-04.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.8951624631881714,
+      "area": 0.32371447283573945
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.3811631202697754,
+      "area": 0.0009556633808339636
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.3067129850387573,
+      "area": 0.000279467711225152
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.17354384064674377,
+      "area": 0.0004007093924718599
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.15101607143878937,
+      "area": 0.0002904917949344963
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.11460830271244049,
+      "area": 0.0005537985699484125
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08979257941246033,
+      "area": 0.0002485343567561358
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06562220305204391,
+      "area": 0.0009228434304861973
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.056420765817165375,
+      "area": 0.00045322219065080084
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.7058807611465454,
+      "area": 0.3096060055846833
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.22039619088172913,
+      "area": 0.00022139493208378554
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.09930329024791718,
+      "area": 0.20481617789539353
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06729236245155334,
+      "area": 0.0003651201233267784
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.05285485088825226,
+      "area": 0.009278919363450646
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.8005216121673584,
+     "area": 0.4190683281579082
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.30077965557575226,
+     "area": 0.0023456229413587916
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.8005,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 42% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "chay-la/mendeley-chay-la-01.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10994594544172287,
+      "area": 0.0010246977027893688
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09759719669818878,
+      "area": 0.0007279400949482806
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.4109989106655121,
+      "area": 0.0005707564443582669
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.11783900111913681,
+      "area": 0.33659204794021014
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07162238657474518,
+      "area": 0.0005318495302461088
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.2604724280536175,
+     "area": 0.0014276218861710125
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.2605,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 0% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "chay-la/mendeley-chay-la-02.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Leaf Scald",
+      "confidence": 0.8213134407997131,
+      "area": 0.3297418485236994
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.31176847219467163,
+      "area": 0.0004176895039369507
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07450538873672485,
+      "area": 0.0003590163406382392
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06121544539928436,
+      "area": 0.00040067703072175695
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.6617040038108826,
+      "area": 0.32545119724726923
+     },
+     {
+      "name": "Leaf Scald",
+      "confidence": 0.543491780757904,
+      "area": 0.3376272544459091
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Leaf Scald",
+     "confidence": 0.6824026107788086,
+     "area": 0.33368455148480425
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.15588423609733582,
+     "area": 0.0005886914376484734
+    },
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.3308520019054413,
+     "area": 0.16272559862363462
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "chay-la",
+    "confidence": 0.6824,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 33% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "chay-la/mendeley-chay-la-03.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.677340567111969,
+      "area": 0.294472614071401
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.4572252333164215,
+      "area": 0.0011714396273115805
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.27824223041534424,
+      "area": 0.1299962955949983
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.150772362947464,
+      "area": 0.09492603459004313
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.1287546008825302,
+      "area": 0.0008274495241474748
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.11432713270187378,
+      "area": 0.06748584617717425
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.7199205756187439,
+      "area": 0.2610437366216977
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.536400318145752,
+      "area": 0.1656136492365622
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.4582981765270233,
+      "area": 0.11221606158509385
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.37748903036117554,
+      "area": 0.0010202407437221457
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.33831021189689636,
+      "area": 0.0008657435065601021
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.0933232307434082,
+      "area": 0.06053627816177905
+     },
+     {
+      "name": "Rice Blast",
+      "confidence": 0.08004176616668701,
+      "area": 0.055826961969708405
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.06751050800085068,
+      "area": 0.3423329466501736
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.6986305713653564,
+     "area": 0.7643117313444616
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.4173571318387985,
+     "area": 0.0019424367008706517
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.6986,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 76% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "chay-la/mendeley-chay-la-04.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.5510693788528442,
+      "area": 0.21667446799523604
+     },
+     {
+      "name": "Leaf Scald",
+      "confidence": 0.5365725755691528,
+      "area": 0.2340211179147785
+     }
+    ],
+    [
+     {
+      "name": "Leaf Scald",
+      "confidence": 0.49569904804229736,
+      "area": 0.21476765404120088
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.2755346894264221,
+     "area": 0.10833723399761802
+    },
+    {
+     "name": "Leaf Scald",
+     "confidence": 0.5161358118057251,
+     "area": 0.2243943859779897
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "chay-la",
+    "confidence": 0.5161,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 22% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dao-on-la/mendeley-dao-on-la-01.jpg": {
+   "size": [
+    1200,
+    1295
+   ],
+   "runs": [
+    [
+     {
+      "name": "Leaf blast",
+      "confidence": 0.46596646308898926,
+      "area": 0.7283222820676547
+     },
+     {
+      "name": "healthy",
+      "confidence": 0.23551148176193237,
+      "area": 0.689042772446174
+     }
+    ],
+    [
+     {
+      "name": "healthy",
+      "confidence": 0.6181535124778748,
+      "area": 0.683055547929303
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.4660568833351135,
+      "area": 0.7956606976973665
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Leaf blast",
+     "confidence": 0.4660116732120514,
+     "area": 0.7619914898825106
+    },
+    {
+     "name": "healthy",
+     "confidence": 0.42683249711990356,
+     "area": 0.6860491601877385
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dao-on-la",
+    "confidence": 0.466,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 76% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dao-on-la/mendeley-dao-on-la-02.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.8451841473579407,
+      "area": 0.16677247588675673
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.4388992190361023,
+      "area": 0.0009246171511476859
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.7802967429161072,
+      "area": 0.14397358465382906
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.6806798577308655,
+      "area": 0.07448846863214859
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.39093467593193054,
+      "area": 0.005269353102739357
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.321338951587677,
+      "area": 0.004683753841510043
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.1532646119594574,
+      "area": 0.00039554667677730324
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.1405644416809082,
+      "area": 0.0005398237322767576
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06896961480379105,
+      "area": 0.000800489781719322
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.8127404451370239,
+     "area": 0.1926172645863672
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.4149169474840164,
+     "area": 0.006306792143085235
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.8127,
+    "severity": "MEDIUM",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 19% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dao-on-la/mendeley-dao-on-la-03.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2832416892051697,
+      "area": 0.00041630206646514124
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.11085470765829086,
+      "area": 0.000533199023533598
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0990113914012909,
+      "area": 0.0005454979046286705
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06229375675320625,
+      "area": 0.000294677427439431
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05917177349328995,
+      "area": 0.000549767616225472
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.3564482033252716,
+      "area": 0.0007286597677040845
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.25890710949897766,
+      "area": 0.0007139950622469769
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09174355119466782,
+      "area": 0.00046738240821941874
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09083085507154465,
+      "area": 0.00027995316591113807
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07361402362585068,
+      "area": 0.0002736519770459286
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.31984494626522064,
+     "area": 0.00240154320970993
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.3198,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 0% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dao-on-la/mendeley-dao-on-la-04.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.8968711495399475,
+      "area": 0.35349355421631384
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2133827805519104,
+      "area": 0.001567453781530882
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.15201127529144287,
+      "area": 0.000937522558671238
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.10297513008117676,
+      "area": 0.010359890767664182
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.10105574131011963,
+      "area": 0.01177130353100753
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.0888548344373703,
+      "area": 0.014917429441961576
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06025451049208641,
+      "area": 0.0004314694644320601
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.32581427693367004,
+      "area": 0.3036781126268829
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.10738810151815414,
+      "area": 0.008838181860221084
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.0933951586484909,
+      "area": 0.00908675583874962
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.08077461272478104,
+      "area": 0.010820775919348428
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.08012209832668304,
+      "area": 0.13886493530040606
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07498371601104736,
+      "area": 0.00030280532548204064
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.062407512217760086,
+      "area": 0.2040827023348616
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.6113427132368088,
+     "area": 0.5000596522392322
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.6113,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 50% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau/mendeley-dom-nau-01.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.24255308508872986,
+      "area": 0.004270179435610771
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.22807539999485016,
+      "area": 0.003218932101254662
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.23531424254179,
+     "area": 0.003744555768432717
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.2353,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 0% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau/mendeley-dom-nau-02.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8114380240440369,
+      "area": 0.018753834686795017
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.3332759141921997,
+      "area": 0.0015886123816041314
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.22995468974113464,
+      "area": 0.017141421731578885
+     },
+     {
+      "name": "healthy",
+      "confidence": 0.1369149088859558,
+      "area": 0.9878527308376319
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.056164562702178955,
+      "area": 0.004101417763018981
+     },
+     {
+      "name": "healthy",
+      "confidence": 0.05147956311702728,
+      "area": 0.5377046374936095
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.7999534606933594,
+      "area": 0.018691504161890287
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.5756778120994568,
+      "area": 0.017523663163126913
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.13628606498241425,
+      "area": 0.0007028005827683956
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08357036113739014,
+      "area": 0.001094002528892209
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.8056957423686981,
+     "area": 0.02246608605248451
+    },
+    {
+     "name": "Leaf blast",
+     "confidence": 0.4028162509202957,
+     "area": 0.017332542447352897
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.8057,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 2% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau/mendeley-dom-nau-03.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8556403517723083,
+      "area": 0.004739311416192019
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8042891621589661,
+      "area": 0.0038163615912926614
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.7129435539245605,
+      "area": 0.0041084456101525575
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.7055744528770447,
+      "area": 0.004359858464371064
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.6594175696372986,
+      "area": 0.003003550925218345
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.5764362812042236,
+      "area": 0.004203175800115181
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.5247321724891663,
+      "area": 0.000520995867685997
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.27019429206848145,
+      "area": 0.0037916427653763092
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.23834826052188873,
+      "area": 0.003378565319532451
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.22307312488555908,
+      "area": 0.00541570540558314
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.20758484303951263,
+      "area": 0.003446870660355004
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.20382466912269592,
+      "area": 0.001396621326042805
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.18553604185581207,
+      "area": 0.001075713207726949
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.12873993813991547,
+      "area": 0.002526249890855979
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.11447187513113022,
+      "area": 0.004072295681091782
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10823497176170349,
+      "area": 0.0010612368868508687
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10492318868637085,
+      "area": 0.004637684655443688
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09086421132087708,
+      "area": 0.0011083774542397199
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08783654868602753,
+      "area": 0.0033334691878563415
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08367665857076645,
+      "area": 0.0021704437517910263
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0664205402135849,
+      "area": 0.001772510851781893
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05953751504421234,
+      "area": 0.0030059332173317673
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05633854866027832,
+      "area": 0.0005839032323662346
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05489088594913483,
+      "area": 0.005568924379986129
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05033639818429947,
+      "area": 0.0017606140418453531
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8743705749511719,
+      "area": 0.004464370825677179
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8431675434112549,
+      "area": 0.003743880216119578
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8395076990127563,
+      "area": 0.004430290924023333
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.5643578171730042,
+      "area": 0.0031567007361290355
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.5457295179367065,
+      "area": 0.0032500216324736052
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.502685546875,
+      "area": 0.00033973057630937544
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.37926632165908813,
+      "area": 0.003285640347159157
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.26045575737953186,
+      "area": 0.0015668035690672695
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2557239234447479,
+      "area": 0.0004388465247116983
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2546389102935791,
+      "area": 0.003501226962194778
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2305721640586853,
+      "area": 0.0009163473755121231
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.18018990755081177,
+      "area": 0.004052042793016881
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.16542747616767883,
+      "area": 0.004131439360580407
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.13707417249679565,
+      "area": 0.0004884806904010474
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.13685762882232666,
+      "area": 0.003477805355453165
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.1344105750322342,
+      "area": 0.000954658384481445
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.12262922525405884,
+      "area": 0.019517313963291236
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10679303109645844,
+      "area": 0.0008827346806569645
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09563496708869934,
+      "area": 0.0003762856305887302
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09300944209098816,
+      "area": 0.004444980456732446
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09252849966287613,
+      "area": 0.0011852242894276666
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08741959184408188,
+      "area": 0.0022548277128410215
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07342411577701569,
+      "area": 0.0013808622229844333
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07303696870803833,
+      "area": 0.00463031231390778
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07101868838071823,
+      "area": 0.0006590991284387807
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06002643704414368,
+      "area": 0.000749216663154463
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.057321976870298386,
+      "area": 0.0005168014905415475
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05017664656043053,
+      "area": 0.001412319127866067
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.8650054633617401,
+     "area": 0.07753336277241324
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.865,
+    "severity": "MEDIUM",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 8% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau/mendeley-dom-nau-04.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8172945380210876,
+      "area": 0.004991898039447066
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8167293667793274,
+      "area": 0.0036055008228480195
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.7371086478233337,
+      "area": 0.004047039455793856
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.6732510328292847,
+      "area": 0.004174149968566781
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.4996452331542969,
+      "area": 0.003986008356684276
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.40667834877967834,
+      "area": 0.005930524179164786
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.3912475109100342,
+      "area": 0.00337043332553003
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.32138803601264954,
+      "area": 0.003316455373674398
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2847655415534973,
+      "area": 0.0016162998290383257
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.19345438480377197,
+      "area": 0.0037853621571829234
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.19297459721565247,
+      "area": 0.004686575680784396
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.15004895627498627,
+      "area": 0.004635899845678553
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.1353779137134552,
+      "area": 0.0005346506790568431
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10355312377214432,
+      "area": 0.004890204360718781
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10340713709592819,
+      "area": 0.001280410461119027
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09620387107133865,
+      "area": 0.0026819400342113415
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08601449429988861,
+      "area": 0.0007075624589012781
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08218104392290115,
+      "area": 0.022568359865729387
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06838510930538177,
+      "area": 0.0010383601860899944
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05802701413631439,
+      "area": 0.005537249764347507
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05117075517773628,
+      "area": 0.0006372749323248475
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8692958950996399,
+      "area": 0.004881019997201899
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8330265879631042,
+      "area": 0.004093897667893907
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.8229442238807678,
+      "area": 0.003470406404836103
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.613510012626648,
+      "area": 0.0035687637869967147
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.59999018907547,
+      "area": 0.002986211263667792
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.5130170583724976,
+      "area": 0.000380313135124743
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.41465485095977783,
+      "area": 0.0014066715155029669
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.4135509431362152,
+      "area": 0.0036211102975532415
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.36455902457237244,
+      "area": 0.000778263886148731
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.3373536169528961,
+      "area": 0.003400075295357965
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.32521092891693115,
+      "area": 0.005927714021441837
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.324950248003006,
+      "area": 0.0004929633811116219
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.32255181670188904,
+      "area": 0.0040920182877259015
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.22442854940891266,
+      "area": 0.0008204074080102146
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.20940770208835602,
+      "area": 0.0012968797402689233
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.19291867315769196,
+      "area": 0.0005909992104590249
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.18160802125930786,
+      "area": 0.0037201786266018947
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.17296341061592102,
+      "area": 0.0005694849138730205
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10595343261957169,
+      "area": 0.00040977039870728426
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09029008448123932,
+      "area": 0.004785751651297324
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.061372462660074234,
+      "area": 0.0011428947337437422
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.057521890848875046,
+      "area": 0.0026261213795204337
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.057035915553569794,
+      "area": 0.0008780970969353803
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.8432952165603638,
+     "area": 0.07198108693843655
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.8433,
+    "severity": "MEDIUM",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 7% khung ảnh.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau-hep/mendeley-dom-nau-hep-01.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.6628124713897705,
+      "area": 0.0014546802800323349
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.23286914825439453,
+      "area": 0.0009292915574585398
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10507836192846298,
+      "area": 0.002945356912794523
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.10269951075315475,
+      "area": 0.000897159933312408
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08443194627761841,
+      "area": 0.0013353890189590554
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08030997961759567,
+      "area": 0.00044838674119091593
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06436624377965927,
+      "area": 0.0007130795487125094
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.05940727889537811,
+      "area": 0.5214225681635564
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.22539082169532776,
+      "area": 0.0014766663521062582
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.1983346939086914,
+      "area": 0.4875030252288193
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.11081837862730026,
+      "area": 0.00022964156876939038
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.10140158981084824,
+      "area": 0.29245933512893973
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.057272445410490036,
+      "area": 0.0003089478296538194
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0556170828640461,
+      "area": 0.00044089996013790367
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.44410164654254913,
+     "area": 0.00558974985156383
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.4441,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 1% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau-hep/mendeley-dom-nau-hep-02.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Leaf blast",
+      "confidence": 0.16017884016036987,
+      "area": 0.01088342227791145
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.14066274464130402,
+      "area": 0.014527711486363842
+     },
+     {
+      "name": "Rice Blast",
+      "confidence": 0.08331122249364853,
+      "area": 0.011086980261311207
+     }
+    ],
+    [
+     {
+      "name": "Leaf blast",
+      "confidence": 0.39981141686439514,
+      "area": 0.011708107206434943
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.2968684136867523,
+      "area": 0.013255034364678432
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.1769533008337021,
+      "area": 0.009198887874395587
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Leaf blast",
+     "confidence": 0.2799951285123825,
+     "area": 0.035330071735547725
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dao-on-la",
+    "confidence": 0.28,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 4% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau-hep/mendeley-dom-nau-hep-03.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.4316513240337372,
+      "area": 0.21672031725535199
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.23981374502182007,
+      "area": 0.0020063879003049804
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.12119968235492706,
+      "area": 0.008433972937703947
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09878256171941757,
+      "area": 0.0012347086390967889
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.07705912739038467,
+      "area": 0.0012126849972798179
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05726240575313568,
+      "area": 0.001357158867150853
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05548112094402313,
+      "area": 0.001093038727180101
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.6566686034202576,
+      "area": 0.0006969365907018073
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.3523244857788086,
+      "area": 0.23071970242801132
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.2794337272644043,
+      "area": 0.0018398782098665834
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.23398759961128235,
+      "area": 0.0018263367659722765
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.22683733701705933,
+      "area": 0.0016058822303651444
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.1784595400094986,
+      "area": 0.3682603278564328
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.12937183678150177,
+      "area": 0.0003627201228712996
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09280011802911758,
+      "area": 0.0014311042260999481
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.06904350221157074,
+      "area": 0.0026687910661567
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.3919879049062729,
+     "area": 0.41206716023875
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.4482411742210388,
+     "area": 0.0073334186384448
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.4482,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 1% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "dom-nau-hep/mendeley-dom-nau-hep-04.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.5034120678901672,
+      "area": 0.21903781346629864
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.2881471514701843,
+      "area": 0.08670540504790843
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.26843902468681335,
+      "area": 0.12013658061979732
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.15629124641418457,
+      "area": 0.0016275888400152326
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.10546952486038208,
+      "area": 0.14563834433355685
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.09481065720319748,
+      "area": 0.12229716254241745
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.07989079505205154,
+      "area": 0.1965241449972782
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.07566563040018082,
+      "area": 0.004803499854169786
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06551927328109741,
+      "area": 0.0007254299102383812
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.06374987959861755,
+      "area": 0.0004127403982953789
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.050547823309898376,
+      "area": 0.031876103848700585
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.05033685639500618,
+      "area": 0.00278734153417948
+     }
+    ],
+    [
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.6456230878829956,
+      "area": 0.2412141192002576
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.47748062014579773,
+      "area": 0.1240122385466549
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.2730938196182251,
+      "area": 0.04192051069597946
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.1949310451745987,
+      "area": 0.07403001391450234
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.17877835035324097,
+      "area": 0.0026903807086870075
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.17219862341880798,
+      "area": 0.002550772115464012
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.13398949801921844,
+      "area": 0.0011738486756454221
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.1329074651002884,
+      "area": 0.14703100765831187
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09824977815151215,
+      "area": 0.0018748310536146164
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.09507925063371658,
+      "area": 0.0007704681530478411
+     },
+     {
+      "name": "Rice Bacterial Blight",
+      "confidence": 0.08510593324899673,
+      "area": 0.15817856991132528
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.07945691049098969,
+      "area": 0.004344108340702951
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.054299745708703995,
+      "area": 0.00031961628506915074
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Bacterial Blight",
+     "confidence": 0.5745175778865814,
+     "area": 0.8543010073914945
+    },
+    {
+     "name": "Rice Brownspot",
+     "confidence": 0.16753479838371277,
+     "area": 0.006191122779396255
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "bac-la",
+    "confidence": 0.5745,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 85% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "la-khoe/mendeley-la-khoe-01.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [],
+    []
+   ],
+   "merged": [],
+   "diagnosis": {
+    "riceLeaf": false,
+    "diseaseCode": "unknown",
+    "confidence": 0.0,
+    "severity": "NONE",
+    "symptoms": [],
+    "summary": "AI chưa nhận ra dấu hiệu bệnh nào đủ rõ trong ảnh này.",
+    "recommendations": [],
+    "retakeAdvice": "Hãy chụp cận vùng lá có vết bệnh, đủ sáng, vết bệnh nằm giữa khung hình và không rung tay; có thể chụp thêm một vài góc."
+   }
+  },
+  "la-khoe/mendeley-la-khoe-02.jpg": {
+   "size": [
+    2160,
+    3840
+   ],
+   "runs": [
+    [
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.21795931458473206,
+      "area": 0.0040363932141594385
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0732923224568367,
+      "area": 0.001292968161329487
+     }
+    ],
+    [
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.08472312986850739,
+      "area": 0.002016219734853812
+     },
+     {
+      "name": "Narrow brown spot",
+      "confidence": 0.06719920039176941,
+      "area": 0.0046775030053147395
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0630800649523735,
+      "area": 0.0016915398724786765
+     }
+    ]
+   ],
+   "merged": [],
+   "diagnosis": {
+    "riceLeaf": false,
+    "diseaseCode": "unknown",
+    "confidence": 0.0,
+    "severity": "NONE",
+    "symptoms": [],
+    "summary": "AI chưa nhận ra dấu hiệu bệnh nào đủ rõ trong ảnh này.",
+    "recommendations": [],
+    "retakeAdvice": "Hãy chụp cận vùng lá có vết bệnh, đủ sáng, vết bệnh nằm giữa khung hình và không rung tay; có thể chụp thêm một vài góc."
+   }
+  },
+  "la-khoe/mendeley-la-khoe-03.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [
+     {
+      "name": "Rice Blast",
+      "confidence": 0.7328383922576904,
+      "area": 0.003642286035055652
+     },
+     {
+      "name": "Rice Blast",
+      "confidence": 0.05463894456624985,
+      "area": 0.0017382323925752038
+     },
+     {
+      "name": "Rice Blast",
+      "confidence": 0.05035463720560074,
+      "area": 0.007044245428111754
+     }
+    ],
+    [
+     {
+      "name": "Rice Blast",
+      "confidence": 0.08614571392536163,
+      "area": 0.004401602018806928
+     },
+     {
+      "name": "Rice Blast",
+      "confidence": 0.07065099477767944,
+      "area": 0.0016568149692961014
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Rice Blast",
+     "confidence": 0.40949205309152603,
+     "area": 0.00924159042192282
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dao-on-la",
+    "confidence": 0.4095,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 1% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "la-khoe/mendeley-la-khoe-04.jpg": {
+   "size": [
+    1200,
+    1600
+   ],
+   "runs": [
+    [],
+    []
+   ],
+   "merged": [],
+   "diagnosis": {
+    "riceLeaf": false,
+    "diseaseCode": "unknown",
+    "confidence": 0.0,
+    "severity": "NONE",
+    "symptoms": [],
+    "summary": "AI chưa nhận ra dấu hiệu bệnh nào đủ rõ trong ảnh này.",
+    "recommendations": [],
+    "retakeAdvice": "Hãy chụp cận vùng lá có vết bệnh, đủ sáng, vết bệnh nằm giữa khung hình và không rung tay; có thể chụp thêm một vài góc."
+   }
+  },
+  "than-la/uci-than-la-01.jpg": {
+   "size": [
+    3081,
+    897
+   ],
+   "runs": [
+    [
+     {
+      "name": "Brown spot",
+      "confidence": 0.16455434262752533,
+      "area": 0.00492604504303756
+     },
+     {
+      "name": "Brown spot",
+      "confidence": 0.14812661707401276,
+      "area": 0.0036441105334319426
+     },
+     {
+      "name": "bacterial leaf blight",
+      "confidence": 0.11734925210475922,
+      "area": 0.39900016809259553
+     }
+    ],
+    [
+     {
+      "name": "Brown spot",
+      "confidence": 0.32180914282798767,
+      "area": 0.006447136332564772
+     },
+     {
+      "name": "healthy",
+      "confidence": 0.07309692353010178,
+      "area": 0.3942031216130001
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Brown spot",
+     "confidence": 0.2431817427277565,
+     "area": 0.007508645954517138
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "dom-nau",
+    "confidence": 0.2432,
+    "severity": "LOW",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 1% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "than-la/uci-than-la-02.jpg": {
+   "size": [
+    3081,
+    897
+   ],
+   "runs": [
+    [
+     {
+      "name": "Brown spot",
+      "confidence": 0.5192819833755493,
+      "area": 0.4437406054916791
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.3019118905067444,
+      "area": 0.011894038937543414
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.2730148136615753,
+      "area": 0.017480372625361704
+     },
+     {
+      "name": "Brown spot",
+      "confidence": 0.1125888004899025,
+      "area": 0.015364148595302076
+     },
+     {
+      "name": "Leaf blast",
+      "confidence": 0.09541039913892746,
+      "area": 0.014095622607711177
+     }
+    ],
+    [
+     {
+      "name": "Leaf smut",
+      "confidence": 0.5043147802352905,
+      "area": 0.014518064559507597
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.3368457555770874,
+      "area": 0.013439654980634156
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.2810179591178894,
+      "area": 0.0031758582786187454
+     },
+     {
+      "name": "Brown spot",
+      "confidence": 0.12341540306806564,
+      "area": 0.013077535730585326
+     },
+     {
+      "name": "Brown spot",
+      "confidence": 0.09638665616512299,
+      "area": 0.004511872100241515
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.06891268491744995,
+      "area": 0.007912785571555985
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.06028243154287338,
+      "area": 0.04942089328202205
+     },
+     {
+      "name": "Brown spot",
+      "confidence": 0.059151362627744675,
+      "area": 0.0026154710041068124
+     },
+     {
+      "name": "Rice Brownspot",
+      "confidence": 0.0588822141289711,
+      "area": 0.0022114311424917097
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Brown spot",
+     "confidence": 0.3213486932218075,
+     "area": 0.24076053203220327
+    },
+    {
+     "name": "Leaf smut",
+     "confidence": 0.40311333537101746,
+     "area": 0.05892083411762183
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "than-la",
+    "confidence": 0.4031,
+    "severity": "MEDIUM",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 6% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "than-la/uci-than-la-03.jpg": {
+   "size": [
+    3081,
+    897
+   ],
+   "runs": [
+    [
+     {
+      "name": "Leaf smut",
+      "confidence": 0.12468655407428741,
+      "area": 0.01828147686196869
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.11332760006189346,
+      "area": 0.046009924101863206
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.0679774358868599,
+      "area": 0.016016974823259936
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.06272007524967194,
+      "area": 0.003297413088428807
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.05519965663552284,
+      "area": 0.005970038288000543
+     }
+    ],
+    [
+     {
+      "name": "Leaf smut",
+      "confidence": 0.6565632820129395,
+      "area": 0.007423209754533862
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.5847440958023071,
+      "area": 0.01479198614019182
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.3958548903465271,
+      "area": 0.01542224961137843
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.39184650778770447,
+      "area": 0.010975211899535866
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.2273096740245819,
+      "area": 0.004819078080105059
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.18929970264434814,
+      "area": 0.004570962066263885
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.1602872759103775,
+      "area": 0.02034351823388724
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.10950083285570145,
+      "area": 0.05119835514899943
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.10866743326187134,
+      "area": 0.002576033542531245
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.09206904470920563,
+      "area": 0.30072743038399297
+     },
+     {
+      "name": "Leaf smut",
+      "confidence": 0.09052319824695587,
+      "area": 0.008532213837521951
+     }
+    ]
+   ],
+   "merged": [
+    {
+     "name": "Leaf smut",
+     "confidence": 0.39062491804361343,
+     "area": 0.2654780379312314
+    }
+   ],
+   "diagnosis": {
+    "riceLeaf": true,
+    "diseaseCode": "than-la",
+    "confidence": 0.3906,
+    "severity": "HIGH",
+    "symptoms": [],
+    "summary": "Phát hiện vùng nghi bệnh, che khoảng 27% khung ảnh. Độ tin cậy chưa cao, nên đối chiếu với thư viện bệnh hoặc hỏi cán bộ bảo vệ thực vật.",
+    "recommendations": [],
+    "retakeAdvice": null
+   }
+  },
+  "than-la/uci-than-la-04.jpg": {
+   "size": [
+    3081,
+    897
+   ],
+   "runs": [
+    [],
+    [
+     {
+      "name": "Brown spot",
+      "confidence": 0.11236689984798431,
+      "area": 0.008586728877177983
+     }
+    ]
+   ],
+   "merged": [],
+   "diagnosis": {
+    "riceLeaf": false,
+    "diseaseCode": "unknown",
+    "confidence": 0.0,
+    "severity": "NONE",
+    "symptoms": [],
+    "summary": "AI chưa nhận ra dấu hiệu bệnh nào đủ rõ trong ảnh này.",
+    "recommendations": [],
+    "retakeAdvice": "Hãy chụp cận vùng lá có vết bệnh, đủ sáng, vết bệnh nằm giữa khung hình và không rung tay; có thể chụp thêm một vài góc."
+   }
+  }
+ }
+}

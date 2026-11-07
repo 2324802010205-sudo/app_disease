@@ -23,6 +23,8 @@ dependencies {
     implementation("com.google.firebase:firebase-admin:9.11.0")
     implementation("com.cloudinary:cloudinary-http5:2.5.0")
     implementation("com.anthropic:anthropic-java:2.34.0")
+    // Chạy best.pt (đã xuất ONNX) ngay trong backend, thay cho dịch vụ Python (DIAGNOSIS_PROVIDER=onnx)
+    implementation("com.microsoft.onnxruntime:onnxruntime:1.22.0")
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.17")
 

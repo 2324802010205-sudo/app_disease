@@ -34,6 +34,19 @@ Dịch vụ phải tải được `imageUrl` mà backend gửi (ảnh lưu local
 
 Trên máy phát triển Windows: chạy `scripts\RunModel.cmd` (dùng WSL, Python ở `~/riceguard-venv`, token lấy từ `backend/.env`) rồi mới chạy backend. Dịch vụ tắt thì ảnh quét vào `dataset/cho-phan-tich` và được phân tích lại khi mở lượt quét đó.
 
+### Chạy thẳng trong backend Java (`DIAGNOSIS_PROVIDER=onnx`, không cần Python lúc chạy)
+
+Backend có sẵn engine ONNX Runtime (`backend/.../diagnosis/OnnxDiagnosisEngine.java`) chạy chính `best.pt` đã xuất sang ONNX, cùng quy tắc với dịch vụ Python (`YoloPostprocess.java` là bản chuyển của `postprocess.py`). Chỉ cần Python **một lần** để xuất file:
+
+```bash
+bash model/export-onnx.sh        # tạo model/weights/best.onnx (~100 MB, không commit; chạy lại khi đổi best.pt)
+# backend/.env:  DIAGNOSIS_PROVIDER=onnx        (không cần DIAGNOSIS_HTTP_URL / token)
+```
+
+Cấu hình tùy chọn (mặc định trùng dịch vụ Python): `DIAGNOSIS_ONNX_MODEL` (`../model/weights/best.onnx`), `DIAGNOSIS_ONNX_CLASS_MAP`, `DIAGNOSIS_ONNX_IMGSZ` (`640,800`), `DIAGNOSIS_ONNX_AUGMENT` (`true`), `DIAGNOSIS_ONNX_RUN_CONF` (0.05), `DIAGNOSIS_ONNX_CONF` (0.15). Đường dẫn tương đối tính từ thư mục chạy backend (`backend/`).
+
+Độ ổn định: Java tái hiện đúng tiền xử lý của ultralytics (letterbox hình chữ nhật nhỏ nhất `rect=True`, không phải hình vuông; TTA ba tỉ lệ có lật; NMS theo lớp). Test `YoloOnnxParityTest` so với kết quả Python lưu ở `backend/src/test/resources/yolo-parity.json` trên 28 ảnh mẫu: cùng kết luận bệnh 28/28, độ tin cậy lệch trung bình ~0.002 (tối đa ~0.012; do cv2 và Java làm tròn khác nhau khi thu phóng ảnh). Đổi `best.pt` hay thông số thì sinh lại file đó từ dịch vụ Python. Dịch vụ Python vẫn giữ nguyên làm đường lui (`DIAGNOSIS_PROVIDER=http`).
+
 ## Gỡ lỗi
 
 * `GET /health`: trọng số có tồn tại không, mô hình đã nạp chưa (nạp ở yêu cầu đầu tiên, vài giây).
